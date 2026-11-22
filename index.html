@@ -267,6 +267,10 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
             <a href="#album" class="btn2" style="text-decoration:none">Album →</a>
           </div>
           <div class="prog" style="margin-top:10px"><i id="gBar" style="width:0"></i></div>
+          <div class="board" style="margin-top:12px;text-align:center;padding:12px">
+            <div class="bh" style="justify-content:center">RETARD CUMULÉ DE TA COLLECTION</div>
+            <div id="gDelay" style="font-size:26px;font-weight:700;color:var(--red)">0 min</div>
+          </div>
           <div class="muted" style="margin-top:10px;font-size:14px" id="lastPull"></div>
         </div>
         <div class="panel" style="margin-top:14px">
@@ -296,7 +300,6 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
       <div class="pn" id="pName">—</div>
       <div class="muted" id="pSince" style="font-size:14px"></div>
       <div style="margin-top:8px" id="pTitle"></div>
-      <button class="btn2 amber" data-export style="margin-top:12px;position:relative;z-index:1">🔑 Mon code de sauvegarde</button>
     </div>
     <div class="statgrid" style="margin-top:14px" id="stats"></div>
     <h3>🏆 Seigneurs du retard</h3>
@@ -325,11 +328,6 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
     <div class="panel"><button class="btn2 amber" data-install>📲 Voir comment l'installer</button></div>
     <h3>Mon compte</h3>
     <div class="panel" style="margin-bottom:10px" id="accBox"></div>
-    <div class="panel" style="margin-bottom:10px">
-      <b>🔑 Code de sauvegarde</b>
-      <div class="muted" style="font-size:14px;margin:4px 0 10px">Une sécurité en plus : ce code permet de récupérer ta collection même sans compte.</div>
-      <div class="row"><button class="btn2 amber" data-export>📋 Copier mon code</button><button class="btn2" data-import>📥 Restaurer avec un code</button></div>
-    </div>
     <div class="panel row">
       <button class="btn2" id="renameBtn">✏️ Changer de pseudo</button>
       <button class="btn2" id="resetBtn" style="color:var(--red)">🗑️ Tout recommencer</button>
@@ -478,6 +476,23 @@ const RAW = [
 const CARDS = RAW.map((c,i)=>({...c,id:i+1}));
 const BYID = Object.fromEntries(CARDS.map(c=>[c.id,c]));
 const TOTAL = CARDS.length;
+/* minutes de retard d'une carte (0 si ce n'est pas une durée) */
+function delayMin(c){
+  const d=c.d; if(/km|%|€|\?|∞|×|\//.test(d)) return 0;
+  let m=0; const h=d.match(/(\d+)\s*h(?:\s*(\d+))?/);
+  if(h){ m+=(+h[1])*60+(+(h[2]||0)); } else { const mn=d.match(/(\d+)\s*min/); if(mn) m+=+mn[1]; }
+  return m;
+}
+function fmtDelay(m){
+  const j=Math.floor(m/1440), h=Math.floor(m%1440/60), mn=m%60, out=[];
+  if(j) out.push(j+" j"); if(h||j) out.push(h+" h"); out.push(String(mn).padStart(j||h?2:1,"0")+" min");
+  return out.join(" ");
+}
+function totalDelay(){
+  let m=0; for(const [id,e] of Object.entries(state.coll)) m+=delayMin(BYID[id])*e.n;
+  return m;
+}
+const hasMelo=()=>{ const c=CARDS.find(x=>x.r==="M"); return !!(c&&state.coll[c.id]); };
 
 const CFG = {max:5, start:3, price:50, perPack:5, holo:.04};
 
@@ -787,9 +802,11 @@ async function revealCards(results, skipped){
 function showSummary(results){
   const st=$("#stage");
   const nNew=results.filter(r=>r.isNew).length, bons=results.reduce((s,r)=>s+r.bons,0);
+  const packDelay=results.reduce((s,r)=>s+delayMin(BYID[r.id]),0);
   st.innerHTML=`<div class="summary">
     <h2 style="margin:0">Ton tirage</h2>
     <div class="muted">${nNew} nouvelle${nNew>1?"s":""} carte${nNew>1?"s":""}${bons?` · +${bons} 🪙`:""} · ${owned()}/${TOTAL} dans l'album</div>
+    ${packDelay?`<div class="mono" style="color:var(--red);font-weight:700;font-size:14px;text-align:center">+${fmtDelay(packDelay)} de retard ajoutés · total ${fmtDelay(totalDelay())}</div>`:""}
     <div class="sg">${results.map((p,i)=>`<div class="slot" data-id="${p.id}" data-holo="${p.holo?1:0}" style="animation-delay:${i*80}ms">${p.isNew?'<div class="cnt" style="background:#3ddc84;color:#04220f">NEW</div>':""}${cardHTML(BYID[p.id],{holo:p.holo})}</div>`).join("")}</div>
     <div class="row" style="justify-content:center">
       <button class="bigbtn" id="againBtn" style="width:auto;padding:14px 22px" ${state.tickets?"":"disabled"}>🎫 Encore un (${state.tickets})</button>
@@ -844,7 +861,7 @@ function askPseudo(first){
     <input class="txt" id="ps" maxlength="20" placeholder="ex. Voyageuse_en_retard" value="${state?esc(state.pseudo):""}">
     <button class="bigbtn" id="psOk">${first?"Monter dans le train":"Valider"}</button>
     ${first&&online()?'<button class="btn2" style="width:100%;margin-top:12px" id="psAcc">👤 Plutôt créer un compte</button>':""}
-    ${first?'<button class="btn2" style="width:100%;margin-top:12px" id="psImp">🔑 J\'ai déjà une collection (code de sauvegarde)</button>':""}`, m=>{
+`, m=>{
       const imp=m.querySelector("#psImp"); if(imp) imp.onclick=()=>showImport(true);
       const acc=m.querySelector("#psAcc"); if(acc) acc.onclick=()=>showAuth("new");
       const i=m.querySelector("#ps"); setTimeout(()=>i.focus(),50);
@@ -956,6 +973,7 @@ function renderGuichet(){
   $("#openBtn").textContent=state.tickets>0?`🎫 Composter un billet (${state.tickets})`:"🎫 Aucun billet";
   $("#buyBtn").disabled=state.bons<CFG.price||state.tickets>=CFG.max;
   const o=owned(); $("#gProg").textContent=`${o} / ${TOTAL}`; $("#gBar").style.width=(o/TOTAL*100)+"%";
+  $("#gDelay").textContent=fmtDelay(totalDelay())+(hasMelo()?" + ∞":"");
   const b=state.best[0];
   $("#lastPull").textContent = b ? `Plus belle prise récente : ${BYID[b.id].t} (${RAR[BYID[b.id].r].n})` : "Aucune carte Super rare pour l'instant. Patience, voyageur.";
   tickTimer();
@@ -1006,7 +1024,8 @@ function renderHall(){
     [state.stats.opened,"billets compostés"],[state.stats.pulled,"cartes tirées"],
     [`${o}/${TOTAL}`,"motifs uniques"],[state.stats.holo,"cartes holo"],
     [cnt(5),"légendaires & mythiques"],[state.stats.bonsWon,"bons gagnés 🪙"],
-    [Math.round(o/TOTAL*100)+" %","indice de poisse"],[state.bons,"bons en poche"]
+    [Math.round(o/TOTAL*100)+" %","indice de poisse"],[state.bons,"bons en poche"],
+    [fmtDelay(totalDelay())+(hasMelo()?" + ∞":""),"de retard cumulé ⏱️"]
   ].map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("");
   $("#bestGrid").innerHTML = state.best.length ? state.best.slice(0,8).map(b=>`<div class="slot" data-id="${b.id}" data-holo="${b.holo?1:0}">${cardHTML(BYID[b.id],{holo:b.holo})}</div>`).join("")
     : `<div class="muted" style="grid-column:1/-1">Tes cartes Super rares et plus apparaîtront ici.</div>`;
@@ -1138,7 +1157,7 @@ function showAuth(mode="login"){
     <div id="aE" style="color:var(--red);font-size:14px;margin:-6px 0 10px"></div>
     <button class="bigbtn" id="aGo">${mode==="login"?"Monter dans le train":"Créer mon compte"}</button>
     ${mode==="new"&&state&&!session?'<p class="muted" style="font-size:13px;margin-bottom:0">Ta collection actuelle sur ce téléphone sera reprise dans ton compte.</p>':""}
-    ${canSkip?'<button class="btn2" style="width:100%;margin-top:12px" id="aImp">🔑 J\'ai un code de sauvegarde</button><button class="btn2" style="width:100%;margin-top:8px" id="aSkip">Jouer sans compte</button>':'<button class="btn2" style="width:100%;margin-top:12px" id="aNo">Plus tard</button>'}`, m=>{
+    ${canSkip?'<button class="btn2" style="width:100%;margin-top:12px" id="aSkip">Jouer sans compte</button>':'<button class="btn2" style="width:100%;margin-top:12px" id="aNo">Plus tard</button>'}`, m=>{
       m.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>showAuth(b.dataset.m));
       const P=m.querySelector("#aP"), W=m.querySelector("#aW"), E=m.querySelector("#aE"), G=m.querySelector("#aGo");
       const go=async()=>{
