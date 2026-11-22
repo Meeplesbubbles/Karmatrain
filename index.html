@@ -471,9 +471,35 @@ const RAW = [
  {l:5,r:"PC",e:"📵",t:"Le tunnel qui coupe",m:"Votre appel a été interrompu.",d:"Allô ? ×12",f:"Tu étais au milieu de la phrase la plus importante de ta journée."},
  {l:5,r:"R",e:"🙃",t:"Le mauvais train",m:"Ce train ne dessert pas la gare de Vierzon.",d:"+1 h 10",f:"Même quai, même heure, mauvaise destination."},
  {l:5,r:"UR",e:"🏚️",t:"L'hôtel du dernier recours",m:"Dernier train annulé. Une nuit d'hôtel vous est proposée à proximité de la gare.",d:"Nuit blanche",f:"Le lit grince, la douche goutte, le petit-déj est servi à 6 h 30."},
- {l:4,r:"R",e:"🚔",t:"L'intrus recherché",m:"Intervention des forces de l'ordre à bord : un individu recherché a été repéré en voiture 12. Le train est retenu à quai.",d:"+30 min",f:"Tout le wagon fait semblant de ne pas regarder. Tout le wagon regarde."}
+ {l:4,r:"R",e:"🚔",t:"L'intrus recherché",m:"Intervention des forces de l'ordre à bord : un individu recherché a été repéré en voiture 12. Le train est retenu à quai.",d:"+30 min",f:"Tout le wagon fait semblant de ne pas regarder. Tout le wagon regarde."},
+ // ---- ajout n°3 : gares de France et de Belgique (ids 89+)
+ {l:1,r:"C",e:"🚪",t:"Fermeture des portes",m:"Défaut de fermeture des portes en gare de Lyon Part-Dieu.",d:"+6 min",f:"Quelqu'un retient la porte pour sa tante. Qui arrive. Doucement."},
+ {l:1,r:"C",e:"🅿️",t:"Paris est complet",m:"Votre train est retenu à l'entrée de Paris-Montparnasse : toutes les voies sont occupées.",d:"+15 min",f:"Paris est complet. Merci de repasser plus tard."},
+ {l:1,r:"C",e:"🌁",t:"Brouillard à Liège",m:"Brouillard épais à Liège-Guillemins : circulation en marche à vue.",d:"+10 min",f:"La gare est magnifique, paraît-il."},
+ {l:1,r:"C",e:"🔁",t:"Relève à Laroche-Migennes",m:"Arrêt prolongé à Laroche-Migennes pour relève du conducteur.",d:"+5 min",f:"Le seul endroit de France où l'on s'arrête pour ça."},
+ {l:1,r:"PC",e:"🚧",t:"Le train de devant",m:"Un train en panne bloque la voie devant nous à Juvisy.",d:"+25 min",f:"Il est en panne. Toi aussi, intérieurement."},
+ {l:1,r:"PC",e:"🧊",t:"Givre sur la caténaire",m:"Givre sur la caténaire aux abords de Strasbourg.",d:"+20 min",f:"Le train aurait besoin d'un grattoir."},
+ {l:1,r:"PC",e:"⛔",t:"Intrusion à Schaerbeek",m:"Intrusion sur les voies à Schaerbeek. Circulation interrompue vers Bruxelles-Nord.",d:"+20 min",f:"Une seule personne sur les voies, dix-huit trains supprimés."},
+ {l:1,r:"R",e:"✂️",t:"La rame de queue",m:"Séparation des rames à Saint-Pierre-des-Corps : seule la rame de tête continue vers Bordeaux.",d:"Mauvaise moitié",f:"Tu étais dans la rame de queue. Évidemment."},
+ {l:1,r:"R",e:"🌊",t:"Voies inondées",m:"Voies inondées entre Bayonne et Hendaye. Circulation interrompue.",d:"+1 h",f:"Le train a hésité à devenir bateau."},
+ {l:1,r:"R",e:"🧇",t:"Objet suspect à Bruxelles-Midi",m:"Objet suspect signalé en gare de Bruxelles-Midi. Évacuation des quais.",d:"+40 min",f:"C'était une gaufre de Liège abandonnée. Personne n'a compris."},
+ {l:1,r:"R",e:"💻",t:"Panne informatique",m:"Panne informatique au poste d'aiguillage de Lille-Flandres.",d:"+45 min",f:"Quelqu'un a essayé de l'éteindre et de le rallumer."},
+ {l:1,r:"UR",e:"🌑",t:"Panne géante à Montparnasse",m:"Panne électrique majeure à Paris-Montparnasse : tous les départs sont suspendus.",d:"+24 h",f:"Même les TGV déviés vers Austerlitz sont en retard."},
+ {l:2,r:"PC",e:"🐦",t:"Mouette de Quimper",m:"Une mouette a dérobé le sandwich du conducteur en gare de Quimper.",d:"+7 min",f:"Elle n'avait pas composté non plus."},
+ {l:2,r:"R",e:"🐂",t:"Taureaux de Camargue",m:"Taureaux sur la voie entre Arles et Nîmes.",d:"+35 min",f:"Ils voulaient voir le TER de près."},
+ {l:3,r:"C",e:"🍟",t:"Les frites de Namur",m:"Un voyageur ouvre un cornet de frites tout juste acheté à Namur.",d:"Faim +7",f:"Personne ne s'est plaint. Tout le monde a eu faim."},
+ {x:1,l:3,r:"PC",e:"🪜",t:"Place à l'étage",m:"Votre place est à l'étage de la voiture 4. Votre valise aussi.",d:"Escalier ×2",f:"Paris–Lille. Toujours en haut. Toujours."},
+ {l:4,r:"PC",e:"🇧🇪",t:"Annonce trilingue",m:"Annonce en français, puis en néerlandais, puis en allemand, en gare de Bruxelles-Central.",d:"+0 min",f:"Le train est parti pendant la version allemande."},
+ {l:4,r:"PC",e:"🚫",t:"Arrêt non desservi",m:"Exceptionnellement, ce train ne s'arrêtera pas à Brive-la-Gaillarde.",d:"+1 h (retour)",f:"Tu l'as vue passer. Elle était jolie."},
+ {l:4,r:"R",e:"🛑",t:"Terminus imprévu",m:"Ce train sera terminus à Châlons-en-Champagne. Merci de descendre.",d:"Fin du voyage",f:"Ton billet disait Strasbourg. Le train a dit non."},
+ {l:5,r:"C",e:"🫨",t:"Châtelet à 18 h",m:"Affluence exceptionnelle à Châtelet–Les Halles. Merci de ne pas gêner la fermeture des portes.",d:"Debout 0 cm",f:"Tu n'as pas touché le sol de Châtelet à Gare du Nord."},
+ {l:5,r:"PC",e:"🗺️",t:"Le touriste de Bruxelles-Central",m:"Un touriste vous demande si ce train va bien à Bruges.",d:"Doute +5",f:"Tu ne sais pas non plus. Vous descendez ensemble à Gand."},
+ {l:5,r:"R",e:"⏱️",t:"4 minutes à Part-Dieu",m:"Correspondance à Lyon Part-Dieu : 4 minutes, de la voie A à la voie M.",d:"Sprint ×3",f:"Avec une valise, un sandwich et beaucoup d'espoir."},
+ {l:5,r:"SR",e:"🛏️",t:"Le train de nuit",m:"Train de nuit Paris–Nice : couchette du haut, voisin qui ronfle, arrivée retardée.",d:"+48 min",f:"Tu as dormi 14 minutes, entre Avignon et Toulon."},
+ {l:5,r:"PC",e:"🔍",t:"Le billet perdu",m:"Voyager sans titre de transport entraîne une régularisation de 50 € minimum.",d:"Amende 50 €",f:"Il était dans ta poche. L'autre poche. Celle du manteau d'hier."},
+ {l:5,r:"R",e:"🏰",t:"Terminus Marne-la-Vallée",m:"Arrivée à Marne-la-Vallée–Chessy : 400 serre-têtes à grandes oreilles rondes descendent en même temps.",d:"+12 min",f:"Le seul quai de France où l'attente dépasse celle des manèges."}
 ];
-const CARDS = RAW.map((c,i)=>({...c,id:i+1}));
+const CARDS = RAW.map((c,i)=>({...c,id:i+1})).filter(c=>!c.x);
 const BYID = Object.fromEntries(CARDS.map(c=>[c.id,c]));
 const TOTAL = CARDS.length;
 /* minutes de retard d'une carte (0 si ce n'est pas une durée) */
@@ -505,8 +531,14 @@ function fresh(pseudo){
   return {pseudo, since:Date.now(), tickets:CFG.start, last:Date.now(), bons:0,
           coll:{}, stats:{opened:0,pulled:0,holo:0,bonsWon:0}, best:[], savedAt:Date.now(), muted:false};
 }
+function clean(s){
+  if(!s) return s;
+  const coll={}; for(const [id,e] of Object.entries(s.coll||{})) if(BYID[id]&&e) coll[id]=e; s.coll=coll;
+  s.best=(s.best||[]).filter(b=>BYID[b.id]);
+  return s;
+}
 function loadLocal(){
-  try{ const s = localStorage.getItem(KEY); return s ? JSON.parse(s) : null; }catch(e){ return null; }
+  try{ const s = localStorage.getItem(KEY); return s ? clean(JSON.parse(s)) : null; }catch(e){ return null; }
 }
 function save(){
   if(!state) return;
@@ -1039,7 +1071,7 @@ function renderRules(){
 function renderAll(){ renderHeader(); renderGuichet(); renderAlbum(); renderHall(); renderRules(); }
 
 /* tableau des départs */
-const DESTS=["VIERZON","BOURGES","CHÂTEAUROUX","HAZEBROUCK","TOURS","ORLÉANS","NEVERS","SALBRIS","LES AUBRAIS","LIMOGES","AMBOISE","ISSOUDUN"];
+const DESTS=["VIERZON","BOURGES","CHÂTEAUROUX","HAZEBROUCK","TOURS","ORLÉANS","NEVERS","SALBRIS","LES AUBRAIS","LIMOGES","AMBOISE","ISSOUDUN","LYON PART-DIEU","MARSEILLE ST-CHARLES","BORDEAUX ST-JEAN","LILLE-FLANDRES","STRASBOURG","QUIMPER","HENDAYE","BRIVE-LA-GAILLARDE","LAROCHE-MIGENNES","CLERMONT-FD","PERPIGNAN","NICE-VILLE","ST-PIERRE-DES-CORPS","CHÂLONS-EN-CH.","BRUXELLES-MIDI","LIÈGE-GUILLEMINS","NAMUR","CHARLEROI","MONS","GAND-ST-PIERRE","BRUGES","OTTIGNIES","ARLON","SPA-GÉRONSTÈRE"];
 const TYPES=["TER","TGV","IC","TER"];
 function boardRow(){
   const c=pick(CARDS), h=6+Math.floor(Math.random()*16), m=Math.floor(Math.random()*60);
@@ -1100,8 +1132,7 @@ function packSave(){ const c={...state}; delete c.muted; return c; }
 function unpackSave(sv,pseudo){
   const s=Object.assign(fresh(pseudo),sv||{}); s.pseudo=pseudo;
   if(state) s.muted=state.muted;
-  const coll={}; for(const [id,e] of Object.entries(s.coll||{})) if(BYID[id]&&e) coll[id]=e; s.coll=coll;
-  return s;
+  return clean(s);
 }
 const stats4=()=>({p_uniques:owned(),p_mythic:Object.keys(state.coll).filter(id=>RAR[BYID[id].r].lvl>=5).length,p_opened:state.stats.opened});
 let cloudTimer=null, cloudBusy=false, cloudPending=false, lbLoaded=0;
