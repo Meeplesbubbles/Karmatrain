@@ -296,8 +296,11 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
         </div>
       </div>
     </div>
+      <h3>📢 Fil des exploits</h3>
+    <div class="panel" id="feedBox"><div class="muted">Chargement…</div></div>
   </section>
 
+  <!-- (fil des exploits affiché au Guichet) -->
   <!-- ALBUM -->
   <section id="album">
     <h2>Album</h2>
@@ -322,8 +325,6 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
     <div class="muted" style="font-size:14px;margin:-4px 0 8px">Classés selon le nombre de cartes différentes dans l'album.</div>
     <div class="panel" id="lbCards"><div class="muted">Chargement du classement…</div></div>
     <div class="muted" style="margin-top:10px;font-size:13px" id="lbHint"></div>
-    <h3>📢 Fil des exploits</h3>
-    <div class="panel" id="feedBox"><div class="muted">Chargement…</div></div>
     <h3>✨ Mes plus beaux tirages</h3>
     <div class="grid" id="bestGrid"></div>
   </section>
@@ -938,7 +939,7 @@ function showSummary(results){
   $("#closeSt").onclick=closeStage;
   opening=false;
 }
-function closeStage(){ $("#stage").classList.remove("on"); $("#stage").innerHTML=""; opening=false; renderAll(); }
+function closeStage(){ $("#stage").classList.remove("on"); $("#stage").innerHTML=""; opening=false; renderAll(); setTimeout(()=>loadFeed(true),1200); }
 
 /* =========================================================
    DÉTAIL D'UNE CARTE (inclinaison 3D)
@@ -1531,7 +1532,8 @@ function route(){
   document.querySelectorAll("main section").forEach(s=>s.classList.toggle("on",s.id===id));
   document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("on",a.dataset.nav===id));
   scrollTo(0,0);
-  if(id==="hall"){ loadLeaderboard(); loadFeed(); } if(id==="profil") renderAccount();
+  if(id==="hall") loadLeaderboard();
+  if(id==="guichet") loadFeed(); if(id==="profil") renderAccount();
 }
 addEventListener("hashchange",route);
 
