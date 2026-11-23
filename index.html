@@ -211,6 +211,15 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
 .lb{width:100%;border-collapse:collapse;font-size:15px}
 .lb td{padding:9px 6px;border-top:1px solid var(--line)}
 .lb tr.lbrow{cursor:pointer}
+.feed{list-style:none;margin:0;padding:0}
+.feed li{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.35}
+.feed li:first-child{border-top:0}
+.feed .fi{font-size:20px;line-height:1}
+.feed .ft{font-size:12px;color:var(--mute);font-family:"JetBrains Mono",monospace;margin-top:2px}
+.feed b.cn{cursor:pointer;text-decoration:underline dotted}
+.plist{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 14px}
+.plist button{border:1px solid var(--line);background:var(--bg2);color:var(--txt);border-radius:999px;padding:8px 13px;font-weight:600;font-size:14px}
+.plist button.on{background:var(--amber);color:#1a1100;border-color:var(--amber)}
 .lb td:first-child{width:36px;font-size:18px}
 .lb td.n{text-align:right;font-family:"JetBrains Mono",monospace;color:var(--amber)}
 .statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
@@ -313,6 +322,8 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
     <div class="muted" style="font-size:14px;margin:-4px 0 8px">Classés selon le nombre de cartes différentes dans l'album.</div>
     <div class="panel" id="lbCards"><div class="muted">Chargement du classement…</div></div>
     <div class="muted" style="margin-top:10px;font-size:13px" id="lbHint"></div>
+    <h3>📢 Fil des exploits</h3>
+    <div class="panel" id="feedBox"><div class="muted">Chargement…</div></div>
     <h3>✨ Mes plus beaux tirages</h3>
     <div class="grid" id="bestGrid"></div>
   </section>
@@ -349,6 +360,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
         <li>Chaque billet contient <b>5 cartes</b>. La dernière est toujours <b>Rare ou mieux</b>.</li>
         <li>Les doublons sont transformés en <b>bons de compensation 🪙</b>. 50 bons = 1 billet.</li>
         <li>Certaines cartes sortent en version <b>✦ Holo</b> (4 % de chance).</li>
+        <li>Tu peux <b>offrir tes doublons</b> à un autre joueur (touche une carte que tu as en double dans l'album). Une carte reçue complète l'album, mais n'ajoute pas de retard : le retard cumulé ne compte que les billets que tu as ouverts.</li>
         <li>Les cartes au retard <b>« ?? »</b> tirent un <b>retard mystère</b> au sort à chaque exemplaire (5 à 60 min pour les communes, jusqu'à 4 h pour les plus rares). Il s'ajoute à ton retard cumulé.</li>
         <li>Le but : compléter les 6 lignes de l'album. Bonne chance. Vraiment.</li>
       </ol>
@@ -576,7 +588,7 @@ function fmtDelay(m){
   return out.join(" ");
 }
 function delayOf(coll){
-  let m=0; for(const [id,e] of Object.entries(coll||{})) if(BYID[id]&&e) m+=delayMin(BYID[id])*(+e.n||0)+(+e.x||0);
+  let m=0; for(const [id,e] of Object.entries(coll||{})) if(BYID[id]&&e) m+=delayMin(BYID[id])*(e.o!=null?+e.o:Math.max((+e.n||0)-(+e.g||0),0))+(+e.x||0);
   return m;
 }
 /* retards mystère "??" : tirés au sort à chaque exemplaire obtenu */
@@ -604,6 +616,7 @@ function clean(s){
   if(!s) return s;
   const coll={}; for(const [id,e] of Object.entries(s.coll||{})) if(BYID[id]&&e) coll[id]=e; s.coll=coll;
   s.best=(s.best||[]).filter(b=>BYID[b.id]);
+  for(const e of Object.values(s.coll)) if(e.o==null) e.o=Math.max((+e.n||0)-(+e.g||0),0);
   for(const [id,e] of Object.entries(s.coll)) if(isMystery(BYID[id]) && e.x==null){ let x=0; for(let i=0;i<(+e.n||1);i++) x+=rollMystery(BYID[id]); e.x=x; }
   return s;
 }
@@ -659,9 +672,9 @@ function drawPack(){
 function addPull(p){
   const c = BYID[p.id]; const e = state.coll[p.id];
   let isNew=false, bons=0;
-  if(!e){ state.coll[p.id]={n:1,holo:!!p.holo}; isNew=true; }
+  if(!e){ state.coll[p.id]={n:1,o:1,holo:!!p.holo}; isNew=true; }
   else{
-    e.n++;
+    e.n++; e.o=(e.o!=null?+e.o:Math.max(e.n-1-(+e.g||0),0))+1;
     if(p.holo && !e.holo){ e.holo=true; isNew=true; }
     else { bons = RAR[c.r].bons*(p.holo?2:1); }
   }
@@ -791,8 +804,10 @@ async function openBooster(){
   if(state.tickets>=CFG.max) state.last=Date.now();
   state.tickets--; state.stats.opened++;
   const pack = drawPack();
+  const linesBefore=completedLines();
   const results = pack.map(p=>({...p, ...addPull(p)}));
   save(); renderAll();
+  feedAfterPack(results,linesBefore);
   ac(); // débloque l'audio sur iOS (appel depuis un clic)
 
   const st=$("#stage");
@@ -934,8 +949,11 @@ function showDetail(id,forceHolo,otherColl,otherName){
   ov.innerHTML=`<button class="iconbtn close" aria-label="Fermer">✕</button>
     <div class="detail-card"><div class="tilt">${cardHTML(c,{holo})}</div></div>
     <div class="dmeta">${LIGNES[c.l].ic} Ligne ${c.l} · ${LIGNES[c.l].n}<br>
-    <b style="color:${RAR[c.r].c}">${RAR[c.r].n}</b> · ${otherName?esc(otherName)+" la possède":"Possédée"} ×${e?e.n:0}${e&&e.x?` · retards mystère : ${fmtDelay(+e.x)}`:""}${e&&e.holo?" · ✦ Holo débloquée":""}</div>`;
+    <b style="color:${RAR[c.r].c}">${RAR[c.r].n}</b> · ${otherName?esc(otherName)+" la possède":"Possédée"} ×${e?e.n:0}${e&&+e.g?` (dont ${+e.g} reçue${+e.g>1?"s":""})`:""}${e&&e.x?` · retards mystère : ${fmtDelay(+e.x)}`:""}${e&&e.holo?" · ✦ Holo débloquée":""}</div>
+    ${!otherColl&&session&&e&&e.n>=2?`<button class="btn2 amber" id="giftBtn" style="margin-top:14px">🎁 Offrir un exemplaire</button>`:""}
+    ${!otherColl&&session&&e&&e.n===1?`<div class="muted" style="margin-top:12px;font-size:13px">Tu pourras l'offrir quand tu l'auras en double.</div>`:""}`;
   ov.classList.add("on");
+  const gb=ov.querySelector("#giftBtn"); if(gb) gb.onclick=ev=>{ ev.stopPropagation(); ov.classList.remove("on"); ov.innerHTML=""; showGift(id); };
   const tilt=ov.querySelector(".tilt"), card=ov.querySelector(".card");
   const mv=ev=>{
     const r=tilt.getBoundingClientRect(), x=(ev.clientX-r.left)/r.width-.5, y=(ev.clientY-r.top)/r.height-.5;
@@ -1236,6 +1254,7 @@ async function syncOnStart(){
       refill(); renderAll();
     } else if(state){ pushNow(); }
     setSync("ok");
+    checkInbox();
   }catch(e){
     if(String(e.message).includes("SESSION")){ setSession(null); showAuth(); }
     else setSync("err");
@@ -1247,6 +1266,8 @@ async function afterAuth(r,isNew){
   else if(state){ state.pseudo=r.pseudo; }
   else { state=fresh(r.pseudo); }
   save(); closeModal(); refill(); renderAll(); await pushNow(); loadLeaderboard(true);
+  if(isNew) sendEvent('join',null);
+  checkInbox();
   toast(isNew?`Bienvenue à bord, ${r.pseudo} !`:`Bon retour, ${r.pseudo} !`);
 }
 function showAuth(mode="login"){
@@ -1382,6 +1403,120 @@ function showOtherAlbum(v){
   });
 }
 
+/* ---------- fil des exploits ---------- */
+function completedLines(){
+  return Object.keys(LIGNES).filter(l=>CARDS.filter(c=>String(c.l)===l).every(c=>state.coll[c.id]));
+}
+function sendEvent(kind,card){
+  if(!session||!online()) return;
+  rpc("kt_event",{p_token:session.token,p_kind:kind,p_card:card}).then(()=>{ feedLoaded=0; }).catch(()=>{});
+}
+function feedAfterPack(results,linesBefore){
+  if(!session) return;
+  for(const p of results){
+    const lvl=RAR[BYID[p.id].r].lvl;
+    if(lvl>=4) sendEvent("pull",p.id);
+    else if(p.holo&&lvl>=3) sendEvent("holo",p.id);
+  }
+  const after=completedLines();
+  for(const l of after) if(!linesBefore.includes(l)) sendEvent("ligne",+l);
+  if(owned()===TOTAL && linesBefore.length<Object.keys(LIGNES).length) sendEvent("complete",null);
+}
+function fmtWhen(t){
+  const d=new Date(t), now=new Date(), hm=d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});
+  const day=x=>new Date(x.getFullYear(),x.getMonth(),x.getDate()).getTime();
+  const diff=Math.round((day(now)-day(d))/86400000);
+  return diff===0?`aujourd'hui · ${hm}`:diff===1?`hier · ${hm}`:`${d.toLocaleDateString("fr-FR",{day:"2-digit",month:"2-digit"})} · ${hm}`;
+}
+let feedLoaded=0;
+async function loadFeed(force){
+  const box=$("#feedBox"); if(!box) return;
+  if(!online()){ box.innerHTML='<div class="muted">Bientôt disponible.</div>'; return; }
+  if(!force && Date.now()-feedLoaded<15000) return;
+  feedLoaded=Date.now();
+  try{
+    const rows=await rpc("kt_feed_list",{});
+    if(!rows||!rows.length){ box.innerHTML='<div class="muted">Aucun exploit pour l\'instant. Le premier qui tire une Ultra rare ouvre le bal !</div>'; return; }
+    const cn=id=>BYID[id]?`<b class="cn" data-c="${id}">${esc(BYID[id].t)}</b>`:"une carte";
+    box.innerHTML=`<ul class="feed">${rows.map(v=>{
+      const who=`<b>${esc(String(v.pseudo).slice(0,20))}</b>`, c=BYID[v.card];
+      let ic="🚆", txt="";
+      if(v.kind==="pull"){ ic=c&&c.r==="M"?"🌈":c&&c.r==="L"?"🏆":"🔥"; txt=`${who} a tiré ${cn(v.card)}${c?` <span style="color:${RAR[c.r].c}">(${RAR[c.r].n})</span>`:""}`; }
+      else if(v.kind==="holo"){ ic="✦"; txt=`${who} a tiré ${cn(v.card)} en version Holo`; }
+      else if(v.kind==="ligne"){ ic="🏁"; txt=`${who} a complété la ligne ${+v.card}${LIGNES[v.card]?" · "+esc(LIGNES[v.card].n):""}`; }
+      else if(v.kind==="complete"){ ic="👑"; txt=`${who} a complété TOUT l'album !`; }
+      else if(v.kind==="join"){ ic="🚉"; txt=`${who} est monté·e à bord de Karmatrain`; }
+      else if(v.kind==="gift"){ ic="🎁"; txt=`${who} a offert ${cn(v.card)} à <b>${esc(String(v.target||"").slice(0,20))}</b>`; }
+      else return "";
+      return `<li><span class="fi">${ic}</span><div>${txt}<div class="ft">${fmtWhen(v.created_at)}</div></div></li>`;}).join("")}</ul>`;
+    box.querySelectorAll("b.cn").forEach(b=>b.onclick=()=>showDetail(+b.dataset.c));
+  }catch(e){
+    box.innerHTML=/kt_feed_list|function|PGRST|404/.test(String(e.message))?'<div class="muted">Le fil s\'affichera après la mise à jour du serveur.</div>':`<div class="muted">${esc(errMsg(e))}</div>`;
+    feedLoaded=0;
+  }
+}
+
+/* ---------- dons de cartes ---------- */
+async function showGift(id){
+  const c=BYID[id];
+  try{ const fr=await rpc("kt_leaderboard",{}); if(fr) lbRows=fr; }catch(e){}
+  const me=session.pseudo.toLowerCase();
+  const players=lbRows.map(v=>String(v.pseudo)).filter(p=>p.toLowerCase()!==me);
+  let chosen="";
+  modal(`<h3>🎁 Offrir une carte</h3>
+    <div style="width:46%;margin:0 auto 10px">${cardHTML(c,{})}</div>
+    <p class="muted" style="margin:0;font-size:14px">Tu offres <b>1 exemplaire</b> de « ${esc(c.t)} ». La carte complète l'album de ton ami·e, mais n'ajoute pas de retard à son compteur.</p>
+    <div style="margin-top:12px"><b>À qui ?</b></div>
+    <div class="plist">${players.map(p=>`<button data-p="${esc(p)}">${esc(p)}</button>`).join("")||'<span class="muted">Aucun autre joueur pour l\'instant.</span>'}</div>
+    <input class="txt" id="gTo" placeholder="…ou tape un pseudo" autocapitalize="off" style="margin-top:0">
+    <div id="gE" style="color:var(--red);font-size:14px;margin:-6px 0 10px"></div>
+    <button class="bigbtn" id="gGo">🎁 Offrir</button>
+    <button class="btn2" style="width:100%;margin-top:10px" id="gNo">Annuler</button>`, m=>{
+      const T=m.querySelector("#gTo"), E=m.querySelector("#gE"), G=m.querySelector("#gGo");
+      m.querySelectorAll(".plist button").forEach(b=>b.onclick=()=>{ m.querySelectorAll(".plist button").forEach(x=>x.classList.remove("on")); b.classList.add("on"); T.value=b.dataset.p; });
+      m.querySelector("#gNo").onclick=closeModal;
+      G.onclick=async()=>{
+        const to=T.value.trim(); E.textContent="";
+        if(!to){ E.textContent="Choisis à qui offrir la carte."; return; }
+        if(!state.coll[id]||state.coll[id].n<2){ E.textContent="Tu dois garder au moins un exemplaire."; return; }
+        G.disabled=true; G.textContent="Envoi…";
+        try{
+          await pushNow();
+          await rpc("kt_gift",{p_token:session.token,p_to:to,p_card:id});
+          const e=state.coll[id]; e.n--; if(e.o!=null&&e.o>e.n) e.o=e.n; if(+e.g&&e.g>e.n) e.g=e.n;
+          save(); renderAll(); closeModal(); SFX.coin(); toast(`🎁 « ${c.t} » offerte à ${to} !`); feedLoaded=0;
+        }catch(err){
+          const msg=String(err.message);
+          E.textContent=msg.includes("INCONNU")?"Ce pseudo n'existe pas.":msg.includes("SOI_MEME")?"Tu ne peux pas t'offrir une carte à toi-même 😉":msg.includes("PAS_DOUBLON")?"Le serveur ne voit pas encore ton doublon. Réessaie dans un instant.":/kt_gift|function|PGRST|404/.test(msg)?"Les dons ne sont pas encore activés sur le serveur.":errMsg(err);
+          G.disabled=false; G.textContent="🎁 Offrir";
+        }
+      };
+  });
+}
+let inboxBusy=false;
+async function checkInbox(){
+  if(!session||!state||!online()||inboxBusy) return;
+  inboxBusy=true;
+  try{
+    const rows=await rpc("kt_inbox",{p_token:session.token});
+    const got=(rows||[]).filter(r=>BYID[r.o_card]);
+    if(got.length){
+      for(const r of got){
+        const e=state.coll[r.o_card];
+        if(!e) state.coll[r.o_card]={n:1,o:0,g:1,holo:false};
+        else { if(e.o==null) e.o=Math.max((+e.n||0)-(+e.g||0),0); e.n++; e.g=(+e.g||0)+1; }
+      }
+      save(); renderAll(); SFX.reveal(3);
+      modal(`<h3>🎁 Tu as reçu ${got.length>1?got.length+" cadeaux":"un cadeau"} !</h3>
+        ${got.map(r=>`<div class="muted" style="margin:6px 0 4px"><b style="color:var(--txt)">${esc(String(r.o_from).slice(0,20))}</b> t'a offert :</div><div style="width:55%;margin:0 auto 10px">${cardHTML(BYID[r.o_card],{})}</div>`).join("")}
+        <p class="muted" style="font-size:13px">Les cartes reçues complètent ton album, sans ajouter de retard.</p>
+        <button class="bigbtn" id="ibOk">Merci !</button>`, m=>{ m.querySelector("#ibOk").onclick=closeModal; });
+      const r0=document.querySelector("#modal .modal"); if(r0){ const rr=r0.getBoundingClientRect(); burst(rr.left+rr.width/2,rr.top+80,["#ffb000","#ff4fd8","#4da3ff","#fff"],80,9); }
+    }
+  }catch(e){}
+  inboxBusy=false;
+}
+
 /* installation (vraie appli sur Android, guide sur iPhone) */
 let deferredPrompt=null;
 addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); deferredPrompt=e; });
@@ -1396,7 +1531,7 @@ function route(){
   document.querySelectorAll("main section").forEach(s=>s.classList.toggle("on",s.id===id));
   document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("on",a.dataset.nav===id));
   scrollTo(0,0);
-  if(id==="hall") loadLeaderboard(); if(id==="profil") renderAccount();
+  if(id==="hall"){ loadLeaderboard(); loadFeed(); } if(id==="profil") renderAccount();
 }
 addEventListener("hashchange",route);
 
@@ -1423,7 +1558,7 @@ if(standalone()) document.querySelectorAll("[data-install]").forEach(b=>{ const 
 syncOnStart(); loadLeaderboard(true);
 setInterval(()=>{ if(state){ tickTimer(); renderHeader(); } const d=new Date(); $("#clock").textContent=d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}); },1000);
 setInterval(scramble,4500);
-document.addEventListener("visibilitychange",()=>{ if(!document.hidden&&state){ refill(); renderAll(); } });
+document.addEventListener("visibilitychange",()=>{ if(!document.hidden&&state){ refill(); renderAll(); checkInbox(); } });
 </script>
 </body>
 </html>
