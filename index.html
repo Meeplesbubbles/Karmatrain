@@ -211,6 +211,16 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
 .lb{width:100%;border-collapse:collapse;font-size:15px}
 .lb td{padding:9px 6px;border-top:1px solid var(--line)}
 .lb tr.lbrow{cursor:pointer}
+.hero>*{min-width:0}
+#feedBox{max-width:100%;min-width:0}
+.tk{width:100%;max-width:100%;overflow:hidden;white-space:nowrap;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.tk-in{display:inline-block;animation:tk linear infinite;color:#fff;font-size:14px}
+.tk-in b{color:var(--amber);font-weight:600}
+.tk-it{margin-right:46px}
+.tk-sp{display:inline-block;width:22px}
+.tk-when{color:#ffffff77;font-family:"JetBrains Mono",monospace;font-size:12px}
+@keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+#feedBox:active .tk-in{animation-play-state:paused}
 .feed{list-style:none;margin:0;padding:0}
 .feed li{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.35}
 .feed li:first-child{border-top:0}
@@ -276,6 +286,9 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
           <div class="bh"><span>DÉPARTS</span><span id="clock">--:--</span></div>
           <div id="brows"></div>
         </div>
+        <h3 style="margin:14px 0 8px">📢 Fil des exploits</h3>
+        <div class="board" id="feedBox" style="padding:10px 0;cursor:pointer"><div class="muted" style="padding:0 12px">Chargement…</div></div>
+        <div class="muted" style="font-size:12px;margin-top:4px;text-align:right">Touche le fil pour tout voir</div>
         <div class="panel" style="margin-top:14px">
           <div class="row" style="justify-content:space-between">
             <div><b id="gProg">0 / 50</b> <span class="muted">motifs collectionnés</span></div>
@@ -296,8 +309,6 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
         </div>
       </div>
     </div>
-      <h3>📢 Fil des exploits</h3>
-    <div class="panel" id="feedBox"><div class="muted">Chargement…</div></div>
   </section>
 
   <!-- (fil des exploits affiché au Guichet) -->
@@ -1439,7 +1450,7 @@ async function loadFeed(force){
     const rows=await rpc("kt_feed_list",{});
     if(!rows||!rows.length){ box.innerHTML='<div class="muted">Aucun exploit pour l\'instant. Le premier qui tire une Ultra rare ouvre le bal !</div>'; return; }
     const cn=id=>BYID[id]?`<b class="cn" data-c="${id}">${esc(BYID[id].t)}</b>`:"une carte";
-    box.innerHTML=`<ul class="feed">${rows.map(v=>{
+    const items=rows.map(v=>{
       const who=`<b>${esc(String(v.pseudo).slice(0,20))}</b>`, c=BYID[v.card];
       let ic="🚆", txt="";
       if(v.kind==="pull"){ ic=c&&c.r==="M"?"🌈":c&&c.r==="L"?"🏆":"🔥"; txt=`${who} a tiré ${cn(v.card)}${c?` <span style="color:${RAR[c.r].c}">(${RAR[c.r].n})</span>`:""}`; }
@@ -1449,8 +1460,14 @@ async function loadFeed(force){
       else if(v.kind==="join"){ ic="🚉"; txt=`${who} est monté·e à bord de Karmatrain`; }
       else if(v.kind==="gift"){ ic="🎁"; txt=`${who} a offert ${cn(v.card)} à <b>${esc(String(v.target||"").slice(0,20))}</b>`; }
       else return "";
-      return `<li><span class="fi">${ic}</span><div>${txt}<div class="ft">${fmtWhen(v.created_at)}</div></div></li>`;}).join("")}</ul>`;
-    box.querySelectorAll("b.cn").forEach(b=>b.onclick=()=>showDetail(+b.dataset.c));
+      return {ic,txt,when:fmtWhen(v.created_at)};}).filter(Boolean);
+    const listHTML=`<ul class="feed">${items.map(it=>`<li><span class="fi">${it.ic}</span><div>${it.txt}<div class="ft">${it.when}</div></div></li>`).join("")}</ul>`;
+    const line=`<span class="tk-sp"></span>`+items.slice(0,5).map(it=>`<span class="tk-it">${it.ic} ${it.txt} <span class="tk-when">· ${it.when}</span></span>`).join("");
+    box.innerHTML=`<div class="tk"><div class="tk-in" style="animation-duration:${Math.max(10,Math.min(items.length,5)*8)}s">${line}${line}</div></div>`;
+    box.onclick=()=>{ modal(`<h3>📢 Fil des exploits</h3>${listHTML}<button class="btn2" style="width:100%;margin-top:14px" id="fdOk">Fermer</button>`, m=>{
+      m.querySelector("#fdOk").onclick=closeModal;
+      m.querySelectorAll("b.cn").forEach(b=>b.onclick=()=>showDetail(+b.dataset.c));
+    }); };
   }catch(e){
     box.innerHTML=/kt_feed_list|function|PGRST|404/.test(String(e.message))?'<div class="muted">Le fil s\'affichera après la mise à jour du serveur.</div>':`<div class="muted">${esc(errMsg(e))}</div>`;
     feedLoaded=0;
