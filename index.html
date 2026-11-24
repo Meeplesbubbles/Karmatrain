@@ -236,6 +236,21 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
 .gbig{font-size:19px;margin-bottom:4px}
 #gareBtn.pulse-b{border-color:#ffb00099;box-shadow:0 0 0 0 #ffb00066;animation:pb 2s infinite}
 @keyframes pb{70%{box-shadow:0 0 0 10px #ffb00000}100%{box-shadow:0 0 0 0 #ffb00000}}
+/* ---------- succès ---------- */
+.achgrid{display:grid;grid-template-columns:1fr;gap:8px}
+@media(min-width:700px){.achgrid{grid-template-columns:1fr 1fr}}
+.ach{display:flex;gap:12px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 12px;opacity:.65}
+.ach.on{opacity:1;border-color:#ffb00055;background:linear-gradient(135deg,#22305a,#161e2e);cursor:pointer}
+.ach.sel{border-color:var(--amber);box-shadow:0 0 0 1px var(--amber)}
+.achic{font-size:28px;width:40px;text-align:center;flex:none}
+.ach:not(.on) .achic{filter:grayscale(1)}
+.achtx{flex:1;min-width:0}
+.achbar{height:6px;background:#0006;border-radius:9px;overflow:hidden;margin:5px 0 2px}
+.achbar i{display:block;height:100%;background:linear-gradient(90deg,#ffb000,#ff4d5e)}
+.achpop{position:fixed;left:50%;top:calc(14px + var(--safe-t));transform:translateX(-50%);z-index:95;display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,#22305a,#141c30);border:1px solid var(--amber);border-radius:16px;padding:12px 16px;box-shadow:0 10px 30px #000a;width:min(92vw,380px);animation:achin .45s cubic-bezier(.2,.9,.3,1.3)}
+.achpop.out{animation:achout .4s forwards}
+@keyframes achin{from{transform:translate(-50%,-120%)}}
+@keyframes achout{to{transform:translate(-50%,-150%);opacity:0}}
 /* ---------- hall ---------- */
 .lb{width:100%;border-collapse:collapse;font-size:15px}
 .lb td{padding:9px 6px;border-top:1px solid var(--line)}
@@ -259,9 +274,12 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
 .feed .fi{font-size:20px;line-height:1}
 .feed .ft{font-size:12px;color:var(--mute);font-family:"JetBrains Mono",monospace;margin-top:2px}
 .feed b.cn{cursor:pointer;text-decoration:underline dotted}
+.duprow{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:14px;background:var(--bg2);margin-bottom:8px;cursor:pointer}
+.dupc{width:64px}
 .plist{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 14px}
 .plist button{border:1px solid var(--line);background:var(--bg2);color:var(--txt);border-radius:999px;padding:8px 13px;font-weight:600;font-size:14px}
-.plist button.on{background:var(--amber);color:#1a1100;border-color:var(--amber)}
+.plist button.has{opacity:.45}
+.plist button.on{opacity:1;background:var(--amber);color:#1a1100;border-color:var(--amber)}
 .lb td:first-child{width:36px;font-size:18px}
 .lb td.n{text-align:right;font-family:"JetBrains Mono",monospace;color:var(--amber)}
 .statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
@@ -310,7 +328,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
         <button class="bigbtn" id="openBtn">🎫 Composter un billet</button>
         <div class="timer" id="timer"></div>
         <div class="row" style="justify-content:center;margin-top:14px">
-          <button class="btn2 amber" id="buyBtn">Échanger 50 🪙 contre 1 billet</button>
+          <button class="btn2 amber" id="buyBtn">Échanger 150 🪙 contre 1 billet</button>
         </div>
         <button class="btn2" id="gareBtn" style="width:100%;margin-top:12px;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:8px"><b>🚉 La Gare du jour</b><span id="gareSt" class="muted" style="font-size:13px;text-align:right"></span></button>
       </div>
@@ -350,6 +368,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
     <h2>Album</h2>
     <div class="row" style="justify-content:space-between"><b id="aProg">0 / 50</b><span class="muted" id="aHolo"></span></div>
     <div class="prog" style="margin-top:8px"><i id="aBar" style="width:0"></i></div>
+    <button class="btn2 amber" id="dupBtn" style="width:100%;margin-top:12px">🎁 Mes doublons à offrir</button>
     <div class="tabs" id="tabs"></div>
     <div id="albumBody"></div>
   </section>
@@ -385,6 +404,8 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
     <h3>👤 Mon compte</h3>
     <div class="panel" id="accBox"></div>
     <div id="forgotBox"></div>
+    <h3>🏅 Succès <span class="muted mono" id="achCount" style="font-size:13px"></span></h3>
+    <div class="achgrid" id="achBox"></div>
     <h3>📊 Mes statistiques</h3>
     <div class="statgrid" id="stats"></div>
     <h3>📲 L'appli</h3>
@@ -403,7 +424,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
       <ol class="steps">
         <li>Un nouveau billet arrive toutes les <b>45 min</b> en semaine et toutes les <b>30 min</b> le week-end. Tu peux en stocker <b>5</b>.</li>
         <li>Chaque billet contient <b>5 cartes</b>. La dernière est toujours <b>Rare ou mieux</b>.</li>
-        <li>Les doublons sont transformés en <b>bons de compensation 🪙</b>. 50 bons = 1 billet.</li>
+        <li>Les doublons sont transformés en <b>bons de compensation 🪙</b>. 150 bons = 1 billet.</li>
         <li>Certaines cartes sortent en version <b>✦ Holo</b> (4 % de chance).</li>
         <li><b>🚉 La Gare du jour</b> : chaque jour à minuit, une nouvelle gare de France ou de Belgique à deviner en 6 essais (la même pour tout le monde). Trouvée : 1 billet, 2 si trouvée en 3 essais ou moins.</li>
         <li>Tu peux <b>offrir tes doublons</b> à un autre joueur (touche une carte que tu as en double dans l'album). Une carte reçue complète l'album, mais n'ajoute pas de retard : le retard cumulé ne compte que les billets que tu as ouverts.</li>
@@ -653,7 +674,7 @@ function totalDelay(){ return delayOf(state.coll); }
 const meloIn=coll=>{ const c=CARDS.find(x=>x.r==="M"); return !!(c&&coll&&coll[c.id]); };
 const hasMelo=()=>meloIn(state.coll);
 
-const CFG = {max:5, start:3, price:50, perPack:5, holo:.04};
+const CFG = {max:5, start:3, price:150, perPack:5, holo:.04};
 
 /* =========================================================
    ÉTAT + SAUVEGARDE
@@ -860,6 +881,7 @@ async function openBooster(){
   const results = pack.map(p=>({...p, ...addPull(p)}));
   save(); renderAll();
   feedAfterPack(results,linesBefore);
+  setTimeout(()=>checkAch(),300);
   ac(); // débloque l'audio sur iOS (appel depuis un clic)
 
   const st=$("#stage");
@@ -1169,6 +1191,7 @@ function renderAlbum(){
   if(!state) return;
   const o=owned(), holo=Object.values(state.coll).filter(e=>e.holo).length;
   $("#aProg").textContent=`${o} / ${TOTAL} motifs`; $("#aBar").style.width=(o/TOTAL*100)+"%";
+  $("#dupBtn").style.display=session?"":"none";
   $("#aHolo").textContent=`✦ ${holo} holo`;
   $("#tabs").innerHTML=[["all","Tout"],...Object.entries(LIGNES).map(([k,v])=>[k,`${v.ic} ${v.n}`])]
     .map(([k,n])=>`<button data-tab="${k}" class="${albumTab===k?"on":""}">${n}</button>`).join("");
@@ -1193,7 +1216,9 @@ function renderHall(){
   const o=owned();
   $("#pName").textContent=state.pseudo;
   $("#pSince").textContent="Inscrit·e le "+new Date(state.since).toLocaleDateString("fr-FR");
-  $("#pTitle").innerHTML=`<span class="chip" style="display:inline-flex">${titleFor(o/TOTAL)}</span>`;
+  const tt=state.title&&ACHBY[state.title];
+  $("#pTitle").innerHTML=`<span class="chip" style="display:inline-flex">${tt?tt.ic+" "+esc(tt.n):titleFor(o/TOTAL)}</span>`;
+  renderAch();
   const cnt=lvl=>Object.keys(state.coll).filter(id=>RAR[BYID[id].r].lvl>=lvl).length;
   $("#stats").innerHTML=[
     [state.stats.opened,"billets compostés"],[state.stats.pulled,"cartes tirées"],
@@ -1304,7 +1329,7 @@ async function syncOnStart(){
     const remote=r&&r.save;
     if(remote && (!state || (remote.savedAt||0)>(state.savedAt||0))){
       state=unpackSave(remote,r.pseudo); try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){}
-      refill(); renderAll();
+      refill(); renderAll(); setTimeout(()=>checkAch(true),800);
     } else if(state){ pushNow(); }
     setSync("ok");
     checkInbox();
@@ -1318,7 +1343,7 @@ async function afterAuth(r,isNew){
   if(r.save){ state=unpackSave(r.save,r.pseudo); }
   else if(state){ state.pseudo=r.pseudo; }
   else { state=fresh(r.pseudo); }
-  save(); closeModal(); refill(); renderAll(); await pushNow(); loadLeaderboard(true);
+  save(); closeModal(); refill(); renderAll(); await pushNow(); loadLeaderboard(true); setTimeout(()=>checkAch(true),1500);
   if(isNew) sendEvent('join',null);
   checkInbox();
   toast(isNew?`Bienvenue à bord, ${r.pseudo} !`:`Bon retour, ${r.pseudo} !`);
@@ -1419,7 +1444,7 @@ function lbTable(list,valFn,subFn){
   const me=session&&session.pseudo.toLowerCase(), medals=["🥇","🥈","🥉"];
   return `<table class="lb">${list.map((v,i)=>{
     const mine=me&&String(v.pseudo).toLowerCase()===me, hasC=v.coll&&typeof v.coll==="object", sub=subFn(v);
-    return `<tr data-p="${esc(String(v.pseudo))}"${mine?' style="background:#ffb00014"':""}${hasC?' class="lbrow"':""}><td>${medals[i]||(i+1)}</td><td>${esc(String(v.pseudo).slice(0,20))}${mine?' <span class="muted">(toi)</span>':""}${v.mythic?` <span title="Légendaires & mythiques">✨${+v.mythic}</span>`:""}${sub?`<div class="muted mono" style="font-size:12px;margin-top:2px">${sub}</div>`:""}</td><td class="n" style="white-space:nowrap">${valFn(v)}${hasC?' <span style="color:var(--mute)">›</span>':""}</td></tr>`;}).join("")}</table>`;
+    return `<tr data-p="${esc(String(v.pseudo))}"${mine?' style="background:#ffb00014"':""}${hasC?' class="lbrow"':""}><td>${medals[i]||(i+1)}</td><td>${esc(String(v.pseudo).slice(0,20))}${mine?' <span class="muted">(toi)</span>':""}${v.mythic?` <span title="Légendaires & mythiques">✨${+v.mythic}</span>`:""}${v.title&&ACHBY[v.title]?`<div style="font-size:12px;color:var(--amber)">${ACHBY[v.title].ic} ${esc(ACHBY[v.title].n)}</div>`:""}${sub?`<div class="muted mono" style="font-size:12px;margin-top:2px">${sub}</div>`:""}</td><td class="n" style="white-space:nowrap">${valFn(v)}${hasC?' <span style="color:var(--mute)">›</span>':""}</td></tr>`;}).join("")}</table>`;
 }
 function renderLb(){
   const rows=lbRows.map(v=>({...v,_d:(v.coll&&typeof v.coll==="object")?delayOf(v.coll):null}));
@@ -1499,6 +1524,7 @@ async function loadFeed(force){
       else if(v.kind==="ligne"){ ic="🏁"; txt=`${who} a complété la ligne ${+v.card}${LIGNES[v.card]?" · "+esc(LIGNES[v.card].n):""}`; }
       else if(v.kind==="complete"){ ic="👑"; txt=`${who} a complété TOUT l'album !`; }
       else if(v.kind==="join"){ ic="🚉"; txt=`${who} est monté·e à bord de Karmatrain`; }
+      else if(v.kind==="succes"){ const a=ACH[+v.card]; if(!a) return ""; ic="🏅"; txt=`${who} a débloqué le succès <b>${a.ic} ${esc(a.n)}</b>`; }
       else if(v.kind==="gare"){ ic="🚉"; txt=`${who} a trouvé la Gare du jour en ${+v.card} essai${+v.card>1?"s":""}`; }
       else if(v.kind==="gift"){ ic="🎁"; txt=`${who} a offert ${cn(v.card)} à <b>${esc(String(v.target||"").slice(0,20))}</b>`; }
       else return "";
@@ -1528,17 +1554,46 @@ async function loadFeed(force){
 }
 
 /* ---------- dons de cartes ---------- */
+async function showDups(){
+  if(!session) return toast("Connecte-toi pour offrir des cartes");
+  const dups=CARDS.filter(c=>state.coll[c.id]&&state.coll[c.id].n>=2);
+  if(!dups.length) return toast("Tu n'as pas encore de doublon à offrir");
+  const B=$("#dupBtn"); B.disabled=true; B.textContent="🔎 Je regarde les albums…";
+  try{ const fr=await rpc("kt_leaderboard",{}); if(fr) lbRows=fr; }catch(e){ return toast(errMsg(e)); }
+  finally{ B.disabled=false; B.textContent="🎁 Mes doublons à offrir"; }
+  const me=session.pseudo.toLowerCase(), others=lbRows.filter(v=>String(v.pseudo).toLowerCase()!==me);
+  const rows=dups.map(c=>({c,who:others.filter(v=>!(v.coll&&v.coll[c.id]&&v.coll[c.id].n>0)).map(v=>String(v.pseudo))}))
+    .sort((a,b)=>b.who.length-a.who.length);
+  const useful=rows.filter(r=>r.who.length);
+  modal(`<h3>🎁 Mes doublons à offrir</h3>
+    <p class="muted" style="margin:-4px 0 12px;font-size:14px">Pour chaque doublon, les joueurs qui ne l'ont pas encore. Touche une carte pour l'offrir.</p>
+    ${useful.length?useful.map(r=>`<div class="duprow" data-id="${r.c.id}">
+      <div class="dupc">${cardHTML(r.c,{})}</div>
+      <div style="min-width:0"><b>${esc(r.c.t)}</b> <span class="muted mono">×${state.coll[r.c.id].n-1}</span>
+      <div class="muted" style="font-size:13px;margin-top:4px">Manque à : ${r.who.map(esc).join(", ")}</div></div>
+    </div>`).join(""):'<p class="muted">Tous les joueurs ont déjà tes doublons 😅</p>'}
+    ${rows.length>useful.length?`<p class="muted" style="font-size:13px;margin-top:10px">${rows.length-useful.length} autre(s) doublon(s) que tout le monde possède déjà.</p>`:""}
+    <button class="btn2" style="width:100%;margin-top:12px" id="dNo">Fermer</button>`, m=>{
+      m.querySelector("#dNo").onclick=closeModal;
+      m.querySelectorAll(".duprow").forEach(d=>d.onclick=()=>{ SFX.tap(); closeModal(); setTimeout(()=>showGift(+d.dataset.id),60); });
+  });
+}
 async function showGift(id){
   const c=BYID[id];
   try{ const fr=await rpc("kt_leaderboard",{}); if(fr) lbRows=fr; }catch(e){}
   const me=session.pseudo.toLowerCase();
-  const players=lbRows.map(v=>String(v.pseudo)).filter(p=>p.toLowerCase()!==me);
-  let chosen="";
+  const others=lbRows.filter(v=>String(v.pseudo).toLowerCase()!==me);
+  const lacks=v=>!(v.coll&&v.coll[id]&&v.coll[id].n>0);
+  const need=others.filter(lacks).map(v=>String(v.pseudo)), has=others.filter(v=>!lacks(v)).map(v=>String(v.pseudo));
+  const btns=(arr,cls)=>arr.map(p=>`<button data-p="${esc(p)}" class="${cls}">${esc(p)}</button>`).join("");
   modal(`<h3>🎁 Offrir une carte</h3>
     <div style="width:46%;margin:0 auto 10px">${cardHTML(c,{})}</div>
     <p class="muted" style="margin:0;font-size:14px">Tu offres <b>1 exemplaire</b> de « ${esc(c.t)} ». La carte complète l'album de ton ami·e, mais n'ajoute pas de retard à son compteur.</p>
     <div style="margin-top:12px"><b>À qui ?</b></div>
-    <div class="plist">${players.map(p=>`<button data-p="${esc(p)}">${esc(p)}</button>`).join("")||'<span class="muted">Aucun autre joueur pour l\'instant.</span>'}</div>
+    ${!others.length?'<div class="plist"><span class="muted">Aucun autre joueur pour l\'instant.</span></div>':`
+    <div class="muted" style="font-size:13px;margin-top:6px">✨ Ne l'ont pas encore (${need.length})</div>
+    <div class="plist" style="margin-top:6px">${btns(need,"")||'<span class="muted" style="font-size:13px">Tout le monde l\'a déjà !</span>'}</div>
+    ${has.length?`<div class="muted" style="font-size:13px">L'ont déjà (${has.length})</div><div class="plist" style="margin-top:6px">${btns(has,"has")}</div>`:""}`}
     <input class="txt" id="gTo" placeholder="…ou tape un pseudo" autocapitalize="off" style="margin-top:0">
     <div id="gE" style="color:var(--red);font-size:14px;margin:-6px 0 10px"></div>
     <button class="bigbtn" id="gGo">🎁 Offrir</button>
@@ -1554,7 +1609,7 @@ async function showGift(id){
         try{
           await pushNow();
           await rpc("kt_gift",{p_token:session.token,p_to:to,p_card:id});
-          const e=state.coll[id]; e.n--; if(e.o!=null&&e.o>e.n) e.o=e.n; if(+e.g&&e.g>e.n) e.g=e.n;
+          const e=state.coll[id]; e.n--; if(e.o!=null&&e.o>e.n) e.o=e.n; if(+e.g&&e.g>e.n) e.g=e.n; state.stats.given=(state.stats.given||0)+1;
           save(); renderAll(); closeModal(); SFX.coin(); toast(`🎁 « ${c.t} » offerte à ${to} !`); feedLoaded=0;
         }catch(err){
           const msg=String(err.message);
@@ -1577,7 +1632,7 @@ async function checkInbox(){
         if(!e) state.coll[r.o_card]={n:1,o:0,g:1,holo:false};
         else { if(e.o==null) e.o=Math.max((+e.n||0)-(+e.g||0),0); e.n++; e.g=(+e.g||0)+1; }
       }
-      save(); renderAll(); SFX.reveal(3);
+      save(); renderAll(); SFX.reveal(3); setTimeout(()=>checkAch(),3500);
       modal(`<h3>🎁 Tu as reçu ${got.length>1?got.length+" cadeaux":"un cadeau"} !</h3>
         ${got.map(r=>`<div class="muted" style="margin:6px 0 4px"><b style="color:var(--txt)">${esc(String(r.o_from).slice(0,20))}</b> t'a offert :</div><div style="width:55%;margin:0 auto 10px">${cardHTML(BYID[r.o_card],{})}</div>`).join("")}
         <p class="muted" style="font-size:13px">Les cartes reçues complètent ton album, sans ajouter de retard.</p>
@@ -1595,6 +1650,88 @@ const standalone=()=>matchMedia("(display-mode: standalone)").matches||navigator
 
 const GARES="FCLAMECY FROSPORDEN BDINANT FAURAY BRIXENSART FJUVISY FBAYONNE FTOULOUSE FLONGWY BBRUGES BLIEGE FETAPLES FMONTAUBAN FTHANN FBEAUGENCY FAVIGNON BHASSELT FARRAS FBEAUNE BTONGRES BNAMUR FHYERES BTERMONDE FLIMOGES BVIRTON FAMIENS FMONTMELIAN FTOURCOING FGISORS FTONNERRE FMURET BLESSINES FCHATEAUDUN FBEZIERS FNEVERS FBERGERAC FEPERNAY FBREST FFORBACH FSANCOINS FPORNIC FANNECY FDUNKERQUE FBIARRITZ FDIJON FCHINON BANTOING FVALOGNES FBOURGES FLAVAL FMORTEAU FBETHUNE BWATERLOO FPOITIERS BENGHIEN FGRENOBLE FTULLE FTOURNUS FLILLE FFREJUS BWALCOURT FYVETOT BLOBBES FCAMBRAI FCOMPIEGNE FGRANVILLE FSOISSONS FVICHY FMARMANDE FARGENTAN FPAMIERS FBELFORT FEPERNON FSTRASBOURG FCOLMAR BMOUSCRON FMAUBEUGE BCOUVIN FROANNE FVITRE FAUTUN FQUIMPER BTHUIN FMOULINS FTRAPPES FCULOZ FGUERET BCOURTRAI FLISIEUX BGOUVY FROYAN BKNOKKE FARCACHON FLANGRES BANVERS FBRIARE BNINOVE FISSOUDUN FFIGEAC FANNEMASSE BBEAURAING FORANGE BDIXMUDE BOTTIGNIES FLIBOURNE FMONTARGIS FCHELLES FCHERBOURG FCHATEAUROUX FEVREUX BLOKEREN FUSSEL FNANTES FVIENNE FREIMS FCAVAILLON FBORDEAUX FROCHEFORT FBESANCON FCARHAIX FISTRES FNIORT FVALDAHON FROUEN FNARBONNE FQUIMPERLE FSURGERES BCINEY FAVORD FLUNEVILLE FCOGNAC FPERPIGNAN FCORTE BFLEURUS FCHAGNY FCHOLET FEPINAL BAUVELAIS FVERSAILLES FMORLAIX FHAYANGE FSAUMUR FBRIANCON FTHIONVILLE FMIRAMAS FVOIRON FPONTARLIER FLOUHANS BJETTE FLESPARRE FMONTBARD FMASSY FCAHORS FLIMOUX BZEEBRUGGE FBERNAY FTARARE FDIEPPE FCERGY FVALENCE BJAMBES BPEPINSTER FOYONNAX FDINAN FJOIGNY FVIERZON FMODANE FRODEZ BCHARLEROI FPAIMPOL BLIBRAMONT FCOMMERCY FVERNON FARLES FTHOUARS FVENDOME BUCCLE BBINCHE BLOUVAIN FLUNEL BSCHAERBEEK BTURNHOUT FETAMPES FSOUILLAC FCREIL FBASTIA FBELLEGARDE FANGERS FAUBUSSON FLOCHES BTOURNAI FVERDUN FLUSIGNAN FSALBRIS FBRUNOY BDENDERLEEUW FMELUN FANGOULEME BDIEST FMILLAU BYPRES FSISTERON FGUINGAMP BVERVIERS BQUIEVRAIN BZOTTEGEM FABBEVILLE FDREUX FARGENTON FBANYULS BMALINES FMONTLUCON FRENNES FNEMOURS BMARIEMBOURG BARLON FMANOSQUE BVIELSALM BLANDEN FPERIGUEUX BHERENTALS FDIGNE FBAYEUX FSEDAN FTROYES FPARIS FCARMAUX FORTHEZ FEVIAN BESNEUX FTOURS FPERTUIS FCALAIS FCHAMPAGNOLE FAMBOISE BWELKENRAEDT BGEDINNE BGENVAL BROULERS BHERSTAL FMEAUX BGEMBLOUX FNANCY FPLOUARET FGRASSE FANTIBES FLORIENT FNOYON BLIERRE FREDON FANCENIS FCANNES BTIRLEMONT FCHAUMONT BMANAGE BWAREMME FORLEANS BSOIGNIES FAVALLON FCOUTANCES FMORCENX FCERBERE FAUXERRE FCARPENTRAS FDOUAI FCOLLIOURE FFLERS FSARLAT FMACON FNEUFCHATEAU FCHARTRES BBERTRIX FISSOIRE BBRUXELLES FMULHOUSE FFECAMP FMENTON FMONTELIMAR FCALVI FNIMES FPONTOISE BWAVRE FLANGON FLANDERNEAU FLAMBALLE FMEHUN BNIVELLES FVANNES BPALISEUL FLANNION BAYWAILLE FVITTEL FAURILLAC FLUCON BOSTENDE FHAZEBROUCK BAARSCHOT FWISSEMBOURG FTOULON FTARBES FSELESTAT FPROVINS FHIRSON BALOST FCHAMONIX BETTERBEEK FSAVERNE BJEMELLE BERQUELINNES FCASTRES FSARREBOURG BTAMINES FTARASCON BPOPERINGE FAUBAGNE FVESOUL FMOUTIERS FHENDAYE FBLOIS BRENAIX BANDENNE FAJACCIO FCHAMBERY FSAINTES BEUPEN FPOISSY FTHIERS FLOURDES FPRADES FMONTEREAU BPERUWELZ FHAGUENAU FBEAUVAIS FALENCON FMARSEILLE".split(" ");
 /* =========================================================
+   SUCCÈS
+   ========================================================= */
+const H=60, D=1440;
+const lineDone=l=>{ const cs=CARDS.filter(c=>String(c.l)===String(l)); return [cs.filter(c=>state.coll[c.id]).length,cs.length]; };
+const holoCount=()=>Object.values(state.coll).filter(e=>e.holo).length;
+const gs=()=>state.gare||{};
+const ACH=[
+ {id:"b1",ic:"🎟️",n:"Premier voyage",d:"Composter son 1er billet",v:()=>[state.stats.opened,1]},
+ {id:"b25",ic:"🚃",n:"Navetteur·se",d:"Composter 25 billets",v:()=>[state.stats.opened,25]},
+ {id:"b100",ic:"🚄",n:"Abonné·e Grand Voyageur",d:"Composter 100 billets",v:()=>[state.stats.opened,100]},
+ {id:"b365",ic:"🧳",n:"Le train-train quotidien",d:"Composter 365 billets",v:()=>[state.stats.opened,365]},
+ {id:"c25",ic:"🃏",n:"Petit album",d:"25 cartes différentes",v:()=>[owned(),25]},
+ {id:"c50",ic:"📚",n:"Moitié du chemin",d:"La moitié de l'album",v:()=>[owned(),Math.ceil(TOTAL/2)]},
+ {id:"call",ic:"👑",n:"Panini du rail",d:"Compléter tout l'album",v:()=>[owned(),TOTAL]},
+ {id:"h1",ic:"✦",n:"Ça brille !",d:"Obtenir 1 carte Holo",v:()=>[holoCount(),1]},
+ {id:"h10",ic:"🌈",n:"Collection arc-en-ciel",d:"Obtenir 10 cartes Holo",v:()=>[holoCount(),10]},
+ {id:"l1",ic:"📋",n:"Agent·e du règlement",d:"Compléter la ligne Motifs officiels",v:()=>lineDone(1)},
+ {id:"l2",ic:"🐾",n:"Dresseur·se du Bestiaire",d:"Compléter la ligne Bestiaire du rail",v:()=>lineDone(2)},
+ {id:"l3",ic:"🚃",n:"Passager·ère modèle",d:"Compléter la ligne À bord",v:()=>lineDone(3)},
+ {id:"l4",ic:"📢",n:"Voix du haut-parleur",d:"Compléter la ligne Annonces & voyageurs",v:()=>lineDone(4)},
+ {id:"l5",ic:"😩",n:"Survivant·e du quotidien",d:"Compléter la ligne Situations",v:()=>lineDone(5)},
+ {id:"l6",ic:"🏡",n:"Habitué·e de la Villa",d:"Compléter la ligne La Villa des jeux",v:()=>lineDone(6)},
+ {id:"d1h",ic:"⏳",n:"Une heure de perdue",d:"1 h de retard cumulé",v:()=>[totalDelay(),H],fmt:fmtDelay},
+ {id:"d1j",ic:"🌙",n:"Nuit sur le quai",d:"24 h de retard cumulé",v:()=>[totalDelay(),D],fmt:fmtDelay},
+ {id:"d7j",ic:"🗓️",n:"Semaine perdue",d:"7 jours de retard cumulé",v:()=>[totalDelay(),7*D],fmt:fmtDelay},
+ {id:"d30j",ic:"📅",n:"Un mois de perdu",d:"30 jours de retard cumulé",v:()=>[totalDelay(),30*D],fmt:fmtDelay},
+ {id:"heure",ic:"🏆",n:"Ça existe vraiment !",d:"Obtenir la carte « Train à l'heure »",v:()=>[state.coll[49]?1:0,1]},
+ {id:"melo",ic:"🌧️",n:"Touché·e par la poisse",d:"Obtenir la carte Mélodye",v:()=>[state.coll[50]?1:0,1]},
+ {id:"wagon",ic:"🌩️",n:"Mauvais wagon",d:"Avoir « Le wagon de Mélodye » et la carte Mélodye",v:()=>[(state.coll[50]?1:0)+(state.coll[125]?1:0),2]},
+ {id:"g1",ic:"🔍",n:"Chef·fe de gare",d:"Trouver 1 Gare du jour",v:()=>[gs().wins||0,1]},
+ {id:"g10",ic:"🗺️",n:"Guide du réseau",d:"Trouver 10 Gares du jour",v:()=>[gs().wins||0,10]},
+ {id:"g25",ic:"🧭",n:"Atlas ferroviaire",d:"Trouver 25 Gares du jour",v:()=>[gs().wins||0,25]},
+ {id:"g50",ic:"🌍",n:"GPS humain",d:"Trouver 50 Gares du jour",v:()=>[gs().wins||0,50]},
+ {id:"gfast",ic:"🎯",n:"Coup d'œil",d:"Trouver une gare en 2 essais ou moins",v:()=>[(gs().minTries&&gs().minTries<=2)?1:0,1]},
+ {id:"gs7",ic:"🔥",n:"Régularité SNCF",d:"Série de 7 jours à la Gare du jour",v:()=>[Math.max(gs().best||0,gs().streak||0),7]},
+ {id:"gift5",ic:"💝",n:"Bon·ne camarade",d:"Offrir 5 cartes",v:()=>[state.stats.given||0,5]},
+ {id:"gift20",ic:"🎅",n:"Père Noël du rail",d:"Offrir 20 cartes",v:()=>[state.stats.given||0,20]},
+ {id:"all",ic:"🏅",n:"Collectionneur·se de succès",d:"Débloquer tous les autres succès",v:()=>[ACH.filter(a=>a.id!=="all"&&state.ach&&state.ach[a.id]).length,ACH.length-1]}
+];
+const ACHBY=Object.fromEntries(ACH.map(a=>[a.id,a]));
+let achQueue=[], achShowing=false;
+function checkAch(silent){
+  if(!state) return;
+  state.ach=state.ach||{};
+  const fresh=[];
+  for(const a of ACH){ if(state.ach[a.id]) continue; const [c,t]=a.v(); if(c>=t){ state.ach[a.id]=Date.now(); fresh.push(a); } }
+  if(!fresh.length) return;
+  save();
+  if(silent){ if(fresh.length) toast(`🏅 ${fresh.length} succès débloqué${fresh.length>1?"s":""} ! Va voir ton Profil.`); return; }
+  for(const a of fresh){ achQueue.push(a); sendEvent("succes",ACH.indexOf(a)); }
+  showNextAch();
+}
+function showNextAch(){
+  if(achShowing||!achQueue.length) return;
+  const a=achQueue.shift(); achShowing=true;
+  const el=document.createElement("div"); el.className="achpop";
+  el.innerHTML=`<div class="achic">${a.ic}</div><div><div class="mono" style="font-size:11px;color:var(--amber);letter-spacing:1px">SUCCÈS DÉBLOQUÉ</div><b>${esc(a.n)}</b><div class="muted" style="font-size:13px">${esc(a.d)}</div></div>`;
+  document.body.appendChild(el); SFX.reveal(3); vibrate([30,40,30]);
+  const r=el.getBoundingClientRect(); burst(r.left+40,r.top+30,["#ffb000","#fff","#3ddc84"],50,7);
+  setTimeout(()=>{ el.classList.add("out"); setTimeout(()=>{ el.remove(); achShowing=false; showNextAch(); },400); },2800);
+}
+function renderAch(){
+  const box=$("#achBox"); if(!box||!state) return;
+  state.ach=state.ach||{};
+  const got=ACH.filter(a=>state.ach[a.id]).length;
+  $("#achCount").textContent=`${got} / ${ACH.length}`;
+  box.innerHTML=ACH.map(a=>{
+    const on=!!state.ach[a.id], [c,t]=a.v(), p=Math.min(1,c/t), f=a.fmt||(x=>x);
+    const sel=state.title===a.id;
+    return `<div class="ach${on?" on":""}${sel?" sel":""}" data-a="${a.id}">
+      <div class="achic">${on?a.ic:"🔒"}</div>
+      <div class="achtx"><b>${esc(a.n)}</b><div class="muted" style="font-size:12px">${esc(a.d)}</div>
+      ${on?`<div style="font-size:11px;color:var(--amber);margin-top:3px">${sel?"★ Titre affiché":"Touche pour l'afficher comme titre"}</div>`:`<div class="achbar"><i style="width:${p*100}%"></i></div><div class="mono" style="font-size:11px;color:var(--mute)">${f(Math.min(c,t))} / ${f(t)}</div>`}</div></div>`;
+  }).join("");
+  box.querySelectorAll(".ach.on").forEach(el=>el.onclick=()=>{
+    state.title = state.title===el.dataset.a ? null : el.dataset.a;
+    save(); renderAch(); renderHall(); SFX.tap();
+    toast(state.title?`Titre affiché : ${ACHBY[state.title].n}`:"Titre retiré");
+  });
+}
+
+/* =========================================================
    LA GARE DU JOUR (mini-jeu quotidien)
    ========================================================= */
 const GARE_TRIES=6;
@@ -1605,7 +1742,7 @@ function gDaily(){
   const k=todayKey();
   if(!state.gare||state.gare.date!==k){
     const p=state.gare||{};
-    state.gare={date:k,guesses:[],done:false,won:false,streak:p.streak||0,lastWin:p.lastWin||null,wins:p.wins||0,played:p.played||0,best:p.best||0};
+    state.gare={date:k,guesses:[],done:false,won:false,streak:p.streak||0,lastWin:p.lastWin||null,wins:p.wins||0,played:p.played||0,best:p.best||0,minTries:p.minTries||(p.won?p.guesses.length:null)};
   }
   return state.gare;
 }
@@ -1696,7 +1833,9 @@ function gKey(k){
       state.tickets+=reward; save(); renderAll();
       drawGare(true);
       setTimeout(()=>{ SFX.reveal(4); const b=$("#gameOv .gboard").getBoundingClientRect(); burst(b.left+b.width/2,b.top+b.height/2,["#3ddc84","#ffb000","#fff","#4da3ff"],120,11); flash("#3ddc84",500); },L*110+300);
+      g.minTries=Math.min(g.minTries||99,g.guesses.length);
       sendEvent("gare",g.guesses.length);
+      setTimeout(()=>checkAch(),L*110+1400);
       return;
     }
     if(g.guesses.length>=GARE_TRIES){ g.done=true; g.won=false; g.played++; g.streak=0; save(); drawGare(true); return; }
@@ -1741,6 +1880,7 @@ $("#buyBtn").onclick=()=>{
   state.bons-=CFG.price; state.tickets++; save(); SFX.coin(); renderAll(); toast("Billet acheté au guichet !");
 };
 $("#chipT").onclick=()=>{ SFX.tap(); if(!state) return; toast(state.tickets>=CFG.max?`🎫 ${state.tickets} billets : ton stock est plein, composte-les !`:`🎫 ${state.tickets} billet${state.tickets>1?"s":""} à composter. Un nouveau arrive dans ${Math.ceil(nextIn()/60000)} min.`); };
+$("#dupBtn").onclick=()=>{ SFX.tap(); showDups(); };
 $("#chipB").onclick=()=>{ SFX.tap(); if(!state) return; toast(`🪙 Bons de compensation : ${state.bons}. Tu en gagnes avec tes doublons, et ${CFG.price} bons = 1 billet au Guichet.`); };
 $("#muteBtn").onclick=()=>{ if(!state) return; state.muted=!state.muted; save(); renderHeader(); if(!state.muted) SFX.tap(); };
 document.querySelectorAll("[data-install]").forEach(b=>b.onclick=showInstall);
@@ -1751,7 +1891,7 @@ $("#resetBtn").onclick=askReset;
 
 state=loadLocal();
 route(); renderRules(); renderBoard(); renderAccount();
-if(state){ refill(); renderAll(); if(!session&&online()) setTimeout(()=>{ if(!$("#modal").classList.contains("on")) toast("Astuce : crée un compte dans l'onglet Profil"); },1500); }
+if(state){ refill(); renderAll(); setTimeout(()=>checkAch(true),1200); if(!session&&online()) setTimeout(()=>{ if(!$("#modal").classList.contains("on")) toast("Astuce : crée un compte dans l'onglet Profil"); },1500); }
 else { renderHeader(); if(online()) showAuth(); else askPseudo(true); }
 if(standalone()) document.querySelectorAll("[data-install]").forEach(b=>{ const p=b.closest(".panel"); if(p) p.style.display="none"; });
 syncOnStart(); loadLeaderboard(true);
