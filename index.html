@@ -207,17 +207,49 @@ input.txt,textarea.txt{width:100%;padding:13px 14px;border-radius:12px;border:1p
 canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
 .flash{position:fixed;inset:0;z-index:79;pointer-events:none;opacity:0}
 
+
+/* ---------- Gare du jour ---------- */
+#gameOv{justify-content:flex-start;overflow-y:auto;background:radial-gradient(800px 600px at 50% 20%,#1a2540,#05070b)}
+.gwrap{width:100%;max-width:460px;margin:0 auto;padding-top:26px}
+.gtitle{font-family:Bungee;color:var(--amber);font-size:22px;text-align:center;margin-bottom:4px}
+.gboard{display:flex;flex-direction:column;gap:6px;align-items:center;margin:8px 0}
+.grow{display:flex;gap:5px}
+.gt{display:grid;place-items:center;background:#05070b;border:2px solid #26324a;border-radius:7px;font-family:"JetBrains Mono",monospace;font-weight:700;color:#fff;box-shadow:inset 0 -2px 0 #ffffff10, inset 0 50% 0 #ffffff05;position:relative}
+.gt:empty::after{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px solid #00000099}
+.gt.typed{border-color:#5d6a85;animation:pop2 .12s}
+.gt.ok{background:#2e9d57;border-color:#2e9d57}
+.gt.mid{background:#c99400;border-color:#c99400}
+.gt.no{background:#2a3346;border-color:#2a3346;color:#b9c2d3}
+.gt[data-flip]{animation:gflip .5s both}
+@keyframes gflip{0%{transform:rotateX(0)}50%{transform:rotateX(90deg)}100%{transform:rotateX(0)}}
+@keyframes pop2{50%{transform:scale(1.08)}}
+.kbd{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.krow{display:flex;gap:4px;justify-content:center}
+.key{flex:1;max-width:40px;height:48px;border:0;border-radius:7px;background:#3a4560;color:#fff;font-weight:700;font-size:15px;padding:0}
+.key.wide{max-width:78px;flex:1.6;font-size:13px}
+.key.ok{background:#2e9d57}.key.mid{background:#c99400}.key.no{background:#1a2131;color:#6b768c}
+.key:active{transform:translateY(2px)}
+.ghint{text-align:center;color:var(--amber2);font-size:14px;margin:6px 0}
+.gmsg{text-align:center;color:var(--red);font-weight:700;min-height:20px;font-size:14px}
+.gmsg.shk{animation:shake .12s linear 3}
+.gend{text-align:center;margin-top:10px}
+.gbig{font-size:19px;margin-bottom:4px}
+#gareBtn.pulse-b{border-color:#ffb00099;box-shadow:0 0 0 0 #ffb00066;animation:pb 2s infinite}
+@keyframes pb{70%{box-shadow:0 0 0 10px #ffb00000}100%{box-shadow:0 0 0 0 #ffb00000}}
 /* ---------- hall ---------- */
 .lb{width:100%;border-collapse:collapse;font-size:15px}
 .lb td{padding:9px 6px;border-top:1px solid var(--line)}
 .lb tr.lbrow{cursor:pointer}
 .hero>*{min-width:0}
 #feedBox{max-width:100%;min-width:0}
+#feedBox>.muted{padding:0 14px;font-family:Outfit,system-ui,sans-serif;font-size:14px}
 .tk{width:100%;max-width:100%;overflow:hidden;white-space:nowrap;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
-.tk-in{display:inline-block;animation:tk linear infinite;color:#fff;font-size:14px}
+.tk-in{display:inline-block;animation:tk 30s linear infinite;color:#fff;font-size:14px}
 .tk-in b{color:var(--amber);font-weight:600}
-.tk-it{margin-right:46px}
+.tk-it{margin-right:28px}
+.tk-dot{color:var(--amber);margin-right:28px;font-size:10px;vertical-align:middle}
 .tk-sp{display:inline-block;width:22px}
+.tk-gap{display:inline-block;width:70vw;max-width:420px}
 .tk-when{color:#ffffff77;font-family:"JetBrains Mono",monospace;font-size:12px}
 @keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 #feedBox:active .tk-in{animation-play-state:paused}
@@ -280,6 +312,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
         <div class="row" style="justify-content:center;margin-top:14px">
           <button class="btn2 amber" id="buyBtn">Échanger 50 🪙 contre 1 billet</button>
         </div>
+        <button class="btn2" id="gareBtn" style="width:100%;margin-top:12px;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:8px"><b>🚉 La Gare du jour</b><span id="gareSt" class="muted" style="font-size:13px;text-align:right"></span></button>
       </div>
       <div>
         <div class="board" id="board">
@@ -372,6 +405,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
         <li>Chaque billet contient <b>5 cartes</b>. La dernière est toujours <b>Rare ou mieux</b>.</li>
         <li>Les doublons sont transformés en <b>bons de compensation 🪙</b>. 50 bons = 1 billet.</li>
         <li>Certaines cartes sortent en version <b>✦ Holo</b> (4 % de chance).</li>
+        <li><b>🚉 La Gare du jour</b> : chaque jour à minuit, une nouvelle gare de France ou de Belgique à deviner en 6 essais (la même pour tout le monde). Trouvée : 1 billet, 2 si trouvée en 3 essais ou moins.</li>
         <li>Tu peux <b>offrir tes doublons</b> à un autre joueur (touche une carte que tu as en double dans l'album). Une carte reçue complète l'album, mais n'ajoute pas de retard : le retard cumulé ne compte que les billets que tu as ouverts.</li>
         <li>Les cartes au retard <b>« ?? »</b> tirent un <b>retard mystère</b> au sort à chaque exemplaire (5 à 60 min pour les communes, jusqu'à 4 h pour les plus rares). Il s'ajoute à ton retard cumulé.</li>
         <li>Le but : compléter les 6 lignes de l'album. Bonne chance. Vraiment.</li>
@@ -398,6 +432,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
 <!-- overlays -->
 <div class="ov" id="stage"></div>
 <div class="ov" id="detail"></div>
+<div class="ov" id="gameOv"></div>
 <div class="ov" id="modal"></div>
 <canvas id="fx"></canvas>
 <div class="flash" id="flash"></div>
@@ -1111,6 +1146,7 @@ function renderGuichet(){
   const b=state.best[0];
   $("#lastPull").textContent = b ? `Plus belle prise récente : ${BYID[b.id].t} (${RAR[BYID[b.id].r].n})` : "Aucune carte Super rare pour l'instant. Patience, voyageur.";
   tickTimer();
+  renderGareBtn();
 }
 function tickTimer(){
   if(!state) return;
@@ -1458,12 +1494,24 @@ async function loadFeed(force){
       else if(v.kind==="ligne"){ ic="🏁"; txt=`${who} a complété la ligne ${+v.card}${LIGNES[v.card]?" · "+esc(LIGNES[v.card].n):""}`; }
       else if(v.kind==="complete"){ ic="👑"; txt=`${who} a complété TOUT l'album !`; }
       else if(v.kind==="join"){ ic="🚉"; txt=`${who} est monté·e à bord de Karmatrain`; }
+      else if(v.kind==="gare"){ ic="🚉"; txt=`${who} a trouvé la Gare du jour en ${+v.card} essai${+v.card>1?"s":""}`; }
       else if(v.kind==="gift"){ ic="🎁"; txt=`${who} a offert ${cn(v.card)} à <b>${esc(String(v.target||"").slice(0,20))}</b>`; }
       else return "";
       return {ic,txt,when:fmtWhen(v.created_at)};}).filter(Boolean);
     const listHTML=`<ul class="feed">${items.map(it=>`<li><span class="fi">${it.ic}</span><div>${it.txt}<div class="ft">${it.when}</div></div></li>`).join("")}</ul>`;
-    const line=`<span class="tk-sp"></span>`+items.slice(0,5).map(it=>`<span class="tk-it">${it.ic} ${it.txt} <span class="tk-when">· ${it.when}</span></span>`).join("");
-    box.innerHTML=`<div class="tk"><div class="tk-in" style="animation-duration:${Math.max(10,Math.min(items.length,5)*8)}s">${line}${line}</div></div>`;
+    const line=`<span class="tk-sp"></span>`+items.slice(0,5).map((it,k)=>`<span class="tk-it">${k?'<span class="tk-dot">◆</span>':""}${it.ic} ${it.txt} <span class="tk-when">· ${it.when}</span></span>`).join("");
+    const sig=line;
+    if(box.dataset.sig!==sig){
+      box.dataset.sig=sig;
+      const gap=`<span class="tk-gap"></span>`;
+      box.innerHTML=`<div class="tk"><div class="tk-in">${line}${gap}${line}${gap}</div></div>`;
+      const tin=box.querySelector(".tk-in"), tk=box.querySelector(".tk");
+      requestAnimationFrame(()=>{
+        const half=tin.scrollWidth/2;
+        if(items.length===1 && half<=tk.clientWidth){ tin.innerHTML=line; tin.style.animation="none"; return; }
+        tin.style.animationDuration=Math.max(8,half/70)+"s";
+      });
+    }
     box.onclick=()=>{ modal(`<h3>📢 Fil des exploits</h3>${listHTML}<button class="btn2" style="width:100%;margin-top:14px" id="fdOk">Fermer</button>`, m=>{
       m.querySelector("#fdOk").onclick=closeModal;
       m.querySelectorAll("b.cn").forEach(b=>b.onclick=()=>showDetail(+b.dataset.c));
@@ -1540,6 +1588,132 @@ let deferredPrompt=null;
 addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); deferredPrompt=e; });
 const standalone=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
 
+const GARES="FCLAMECY FROSPORDEN BDINANT FAURAY BRIXENSART FJUVISY FBAYONNE FTOULOUSE FLONGWY BBRUGES BLIEGE FETAPLES FMONTAUBAN FTHANN FBEAUGENCY FAVIGNON BHASSELT FARRAS FBEAUNE BTONGRES BNAMUR FHYERES BTERMONDE FLIMOGES BVIRTON FAMIENS FMONTMELIAN FTOURCOING FGISORS FTONNERRE FMURET BLESSINES FCHATEAUDUN FBEZIERS FNEVERS FBERGERAC FEPERNAY FBREST FFORBACH FSANCOINS FPORNIC FANNECY FDUNKERQUE FBIARRITZ FDIJON FCHINON BANTOING FVALOGNES FBOURGES FLAVAL FMORTEAU FBETHUNE BWATERLOO FPOITIERS BENGHIEN FGRENOBLE FTULLE FTOURNUS FLILLE FFREJUS BWALCOURT FYVETOT BLOBBES FCAMBRAI FCOMPIEGNE FGRANVILLE FSOISSONS FVICHY FMARMANDE FARGENTAN FPAMIERS FBELFORT FEPERNON FSTRASBOURG FCOLMAR BMOUSCRON FMAUBEUGE BCOUVIN FROANNE FVITRE FAUTUN FQUIMPER BTHUIN FMOULINS FTRAPPES FCULOZ FGUERET BCOURTRAI FLISIEUX BGOUVY FROYAN BKNOKKE FARCACHON FLANGRES BANVERS FBRIARE BNINOVE FISSOUDUN FFIGEAC FANNEMASSE BBEAURAING FORANGE BDIXMUDE BOTTIGNIES FLIBOURNE FMONTARGIS FCHELLES FCHERBOURG FCHATEAUROUX FEVREUX BLOKEREN FUSSEL FNANTES FVIENNE FREIMS FCAVAILLON FBORDEAUX FROCHEFORT FBESANCON FCARHAIX FISTRES FNIORT FVALDAHON FROUEN FNARBONNE FQUIMPERLE FSURGERES BCINEY FAVORD FLUNEVILLE FCOGNAC FPERPIGNAN FCORTE BFLEURUS FCHAGNY FCHOLET FEPINAL BAUVELAIS FVERSAILLES FMORLAIX FHAYANGE FSAUMUR FBRIANCON FTHIONVILLE FMIRAMAS FVOIRON FPONTARLIER FLOUHANS BJETTE FLESPARRE FMONTBARD FMASSY FCAHORS FLIMOUX BZEEBRUGGE FBERNAY FTARARE FDIEPPE FCERGY FVALENCE BJAMBES BPEPINSTER FOYONNAX FDINAN FJOIGNY FVIERZON FMODANE FRODEZ BCHARLEROI FPAIMPOL BLIBRAMONT FCOMMERCY FVERNON FARLES FTHOUARS FVENDOME BUCCLE BBINCHE BLOUVAIN FLUNEL BSCHAERBEEK BTURNHOUT FETAMPES FSOUILLAC FCREIL FBASTIA FBELLEGARDE FANGERS FAUBUSSON FLOCHES BTOURNAI FVERDUN FLUSIGNAN FSALBRIS FBRUNOY BDENDERLEEUW FMELUN FANGOULEME BDIEST FMILLAU BYPRES FSISTERON FGUINGAMP BVERVIERS BQUIEVRAIN BZOTTEGEM FABBEVILLE FDREUX FARGENTON FBANYULS BMALINES FMONTLUCON FRENNES FNEMOURS BMARIEMBOURG BARLON FMANOSQUE BVIELSALM BLANDEN FPERIGUEUX BHERENTALS FDIGNE FBAYEUX FSEDAN FTROYES FPARIS FCARMAUX FORTHEZ FEVIAN BESNEUX FTOURS FPERTUIS FCALAIS FCHAMPAGNOLE FAMBOISE BWELKENRAEDT BGEDINNE BGENVAL BROULERS BHERSTAL FMEAUX BGEMBLOUX FNANCY FPLOUARET FGRASSE FANTIBES FLORIENT FNOYON BLIERRE FREDON FANCENIS FCANNES BTIRLEMONT FCHAUMONT BMANAGE BWAREMME FORLEANS BSOIGNIES FAVALLON FCOUTANCES FMORCENX FCERBERE FAUXERRE FCARPENTRAS FDOUAI FCOLLIOURE FFLERS FSARLAT FMACON FNEUFCHATEAU FCHARTRES BBERTRIX FISSOIRE BBRUXELLES FMULHOUSE FFECAMP FMENTON FMONTELIMAR FCALVI FNIMES FPONTOISE BWAVRE FLANGON FLANDERNEAU FLAMBALLE FMEHUN BNIVELLES FVANNES BPALISEUL FLANNION BAYWAILLE FVITTEL FAURILLAC FLUCON BOSTENDE FHAZEBROUCK BAARSCHOT FWISSEMBOURG FTOULON FTARBES FSELESTAT FPROVINS FHIRSON BALOST FCHAMONIX BETTERBEEK FSAVERNE BJEMELLE BERQUELINNES FCASTRES FSARREBOURG BTAMINES FTARASCON BPOPERINGE FAUBAGNE FVESOUL FMOUTIERS FHENDAYE FBLOIS BRENAIX BANDENNE FAJACCIO FCHAMBERY FSAINTES BEUPEN FPOISSY FTHIERS FLOURDES FPRADES FMONTEREAU BPERUWELZ FHAGUENAU FBEAUVAIS FALENCON FMARSEILLE".split(" ");
+/* =========================================================
+   LA GARE DU JOUR (mini-jeu quotidien)
+   ========================================================= */
+const GARE_TRIES=6;
+function todayKey(d=new Date()){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function dayIndex(){ const d=new Date(); return Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-Date.UTC(2026,10,24))/86400000); }
+function gareDuJour(){ const i=((dayIndex()%GARES.length)+GARES.length)%GARES.length, g=GARES[i]; return {n:dayIndex()+1,country:g[0],word:g.slice(1)}; }
+function gDaily(){
+  const k=todayKey();
+  if(!state.gare||state.gare.date!==k){
+    const p=state.gare||{};
+    state.gare={date:k,guesses:[],done:false,won:false,streak:p.streak||0,lastWin:p.lastWin||null,wins:p.wins||0,played:p.played||0,best:p.best||0};
+  }
+  return state.gare;
+}
+function scoreGuess(guess,word){
+  const res=Array(word.length).fill("no"), left={};
+  for(let i=0;i<word.length;i++){ if(guess[i]===word[i]) res[i]="ok"; else left[word[i]]=(left[word[i]]||0)+1; }
+  for(let i=0;i<word.length;i++){ if(res[i]!=="ok" && left[guess[i]]>0){ res[i]="mid"; left[guess[i]]--; } }
+  return res;
+}
+function renderGareBtn(){
+  const el=$("#gareSt"); if(!el||!state) return;
+  const g=gDaily();
+  el.innerHTML = !g.done ? `à jouer · 🎫 à gagner` : g.won ? `✅ trouvée en ${g.guesses.length} · reviens demain` : `❌ ratée · reviens demain`;
+  $("#gareBtn").classList.toggle("pulse-b",!g.done);
+}
+let gCur="";
+function openGare(){
+  if(!state) return;
+  const G=gareDuJour(), g=gDaily(); gCur="";
+  const ov=$("#gameOv"); ov.classList.add("on"); SFX.tap();
+  drawGare();
+}
+function drawGare(anim){
+  const G=gareDuJour(), g=gDaily(), L=G.word.length, ov=$("#gameOv");
+  const tile=Math.floor(Math.min(46,(Math.min(innerWidth,460)-48-(L-1)*5)/L));
+  const rows=[];
+  for(let r=0;r<GARE_TRIES;r++){
+    const gs=g.guesses[r], sc=gs?scoreGuess(gs,G.word):null, cur=!g.done&&r===g.guesses.length;
+    let cells="";
+    for(let i=0;i<L;i++){
+      const ch=gs?gs[i]:(cur?(gCur[i]||""):"");
+      const cls=sc?sc[i]:(cur&&gCur[i]?"typed":"");
+      const flip=anim&&r===g.guesses.length-1?` data-flip="1"`:"";
+      cells+=`<div class="gt ${cls}"${flip} style="width:${tile}px;height:${Math.round(tile*1.15)}px;font-size:${Math.round(tile*0.55)}px${anim&&r===g.guesses.length-1?`;animation-delay:${i*110}ms`:""}">${ch}</div>`;
+    }
+    rows.push(`<div class="grow">${cells}</div>`);
+  }
+  const keys={}; for(const gs of g.guesses){ const sc=scoreGuess(gs,G.word); [...gs].forEach((c,i)=>{ const v=sc[i], o=keys[c]; if(v==="ok"||(v==="mid"&&o!=="ok")||(!o)) keys[c]=v; }); }
+  const krow=s=>`<div class="krow">${s.split(" ").map(k=>k==="ENTER"?`<button class="key wide" data-k="ENTER">Valider</button>`:k==="DEL"?`<button class="key wide" data-k="DEL">⌫</button>`:`<button class="key ${keys[k]||""}" data-k="${k}">${k}</button>`).join("")}</div>`;
+  const fails=g.guesses.length;
+  const hint = !g.done && fails>=3 ? `<div class="ghint">💡 Indice : c'est une gare ${G.country==="B"?"de Belgique 🇧🇪":"de France 🇫🇷"}${fails>=5?` · elle commence par « ${G.word[0]} »`:""}</div>` : "";
+  let end="";
+  if(g.done){
+    const nm=G.word[0]+G.word.slice(1).toLowerCase();
+    const reward=g.won?(g.guesses.length<=3?2:1):0;
+    end=`<div class="gend">
+      ${g.won?`<div class="gbig">🎉 Bravo ! C'était <b>${esc(nm)}</b></div><div class="muted">Trouvée en ${g.guesses.length} essai${g.guesses.length>1?"s":""} · +${reward} billet${reward>1?"s":""} 🎫 · série 🔥 ${g.streak}</div>`
+             :`<div class="gbig">🚫 Train manqué ! C'était <b>${esc(nm)}</b></div><div class="muted">Retente ta chance demain.</div>`}
+      <div class="mono" style="margin-top:8px;font-size:13px">Prochaine gare dans <b id="gCount" style="color:var(--amber)"></b></div>
+      <div class="row" style="justify-content:center;margin-top:12px"><button class="btn2 amber" id="gShare">📤 Partager mon résultat</button><button class="btn2" id="gClose2">Fermer</button></div>
+    </div>`;
+  }
+  ov.innerHTML=`<button class="iconbtn close" id="gClose" aria-label="Fermer">✕</button>
+    <div class="gwrap">
+      <div class="gtitle">🚉 LA GARE DU JOUR <span class="mono" style="color:#ffffff88;font-size:13px">n°${G.n}</span></div>
+      <div class="muted" style="font-size:13px;text-align:center;margin-bottom:10px">Devine la gare en ${GARE_TRIES} essais · ${L} lettres · 🎫 1 billet à gagner, 2 si trouvée en 3 essais ou moins</div>
+      <div class="gboard">${rows.join("")}</div>
+      ${hint}
+      <div class="gmsg" id="gMsg"></div>
+      ${g.done?end:`<div class="kbd">${krow("A Z E R T Y U I O P")}${krow("Q S D F G H J K L M")}${krow("ENTER W X C V B N DEL")}</div>`}
+      <div class="muted" style="font-size:12px;text-align:center;margin-top:10px">🟩 bonne place · 🟨 dans le nom mais ailleurs · ⬛ absente</div>
+    </div>`;
+  $("#gClose").onclick=closeGare;
+  ov.querySelectorAll(".key").forEach(b=>b.onclick=()=>gKey(b.dataset.k));
+  if(g.done){ $("#gClose2").onclick=closeGare; $("#gShare").onclick=shareGare; tickCount(); }
+}
+function tickCount(){
+  const el=$("#gCount"); if(!el) return;
+  const now=new Date(), mid=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1), s=Math.max(0,Math.floor((mid-now)/1000));
+  el.textContent=`${String(Math.floor(s/3600)).padStart(2,"0")}:${String(Math.floor(s/60)%60).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`;
+}
+setInterval(tickCount,1000);
+function closeGare(){ $("#gameOv").classList.remove("on"); $("#gameOv").innerHTML=""; renderGareBtn(); }
+function gMsg(t){ const m=$("#gMsg"); if(m){ m.textContent=t; m.classList.remove("shk"); void m.offsetWidth; m.classList.add("shk"); } }
+function gKey(k){
+  const G=gareDuJour(), g=gDaily(); if(g.done) return;
+  const L=G.word.length;
+  if(k==="DEL"){ gCur=gCur.slice(0,-1); SFX.tap(); }
+  else if(k==="ENTER"){
+    if(gCur.length<L){ gMsg(`Il faut ${L} lettres !`); vibrate(30); return; }
+    g.guesses.push(gCur); gCur="";
+    SFX.flip();
+    if(g.guesses[g.guesses.length-1]===G.word){
+      g.done=true; g.won=true; g.played++; g.wins++;
+      const y=new Date(); y.setDate(y.getDate()-1);
+      g.streak = g.lastWin===todayKey(y) ? (g.streak||0)+1 : 1; g.lastWin=g.date; g.best=Math.max(g.best||0,g.streak);
+      const reward=g.guesses.length<=3?2:1;
+      state.tickets+=reward; save(); renderAll();
+      drawGare(true);
+      setTimeout(()=>{ SFX.reveal(4); const b=$("#gameOv .gboard").getBoundingClientRect(); burst(b.left+b.width/2,b.top+b.height/2,["#3ddc84","#ffb000","#fff","#4da3ff"],120,11); flash("#3ddc84",500); },L*110+300);
+      sendEvent("gare",g.guesses.length);
+      return;
+    }
+    if(g.guesses.length>=GARE_TRIES){ g.done=true; g.won=false; g.played++; g.streak=0; save(); drawGare(true); return; }
+    save(); drawGare(true); return;
+  }
+  else if(/^[A-Z]$/.test(k) && gCur.length<L){ gCur+=k; SFX.tap(); }
+  drawGare();
+}
+document.addEventListener("keydown",e=>{
+  if(!$("#gameOv").classList.contains("on")) return;
+  if(e.key==="Enter") gKey("ENTER"); else if(e.key==="Backspace") gKey("DEL");
+  else { const c=e.key.normalize("NFD").replace(/[̀-ͯ]/g,"").toUpperCase(); if(/^[A-Z]$/.test(c)) gKey(c); }
+});
+async function shareGare(){
+  const G=gareDuJour(), g=gDaily();
+  const grid=g.guesses.map(gs=>scoreGuess(gs,G.word).map(v=>v==="ok"?"🟩":v==="mid"?"🟨":"⬛").join("")).join("\n");
+  const txt=`🚉 Karmatrain · Gare du jour n°${G.n} · ${g.won?g.guesses.length:"X"}/${GARE_TRIES}\n${grid}\n${location.href.split("#")[0]}`;
+  try{ if(navigator.share){ await navigator.share({text:txt}); return; } }catch(e){ if(e&&e.name==="AbortError") return; }
+  try{ await navigator.clipboard.writeText(txt); toast("Résultat copié, colle-le où tu veux !"); }
+  catch(e){ modal(`<h3>Ton résultat</h3><textarea class="txt mono" rows="8" readonly>${esc(txt)}</textarea><button class="bigbtn" id="shOk">OK</button>`,m=>m.querySelector("#shOk").onclick=closeModal); }
+}
+
 /* =========================================================
    NAVIGATION + DÉMARRAGE
    ========================================================= */
@@ -1555,6 +1729,7 @@ function route(){
 addEventListener("hashchange",route);
 
 $("#openBtn").onclick=openBooster;
+$("#gareBtn").onclick=openGare;
 $("#buyBtn").onclick=()=>{
   if(state.bons<CFG.price) return toast(`Il te faut ${CFG.price} 🪙`);
   if(state.tickets>=CFG.max) return toast("Ton stock de billets est déjà plein.");
