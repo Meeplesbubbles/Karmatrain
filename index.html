@@ -237,7 +237,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
 #gareBtn.pulse-b{border-color:#ffb00099;box-shadow:0 0 0 0 #ffb00066;animation:pb 2s infinite}
 @keyframes pb{70%{box-shadow:0 0 0 10px #ffb00000}100%{box-shadow:0 0 0 0 #ffb00000}}
 /* ---------- succès ---------- */
-.swap{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:8px 0 14px}
+.swap{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;margin:8px 0 14px}
 .swap .lbl{text-align:center;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
 .swap .arr{font-size:26px}
 .tplayer{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid var(--line);background:var(--bg2);color:var(--txt);border-radius:14px;padding:11px 13px;margin-bottom:8px;font-size:15px}
@@ -247,9 +247,16 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
 .tgrid .slot{cursor:pointer}
 .tsent{display:grid;grid-template-columns:auto 14px auto 1fr auto;gap:8px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:14px;background:var(--panel);margin-bottom:8px;font-size:13px}
 .tml{display:flex;gap:3px}.tml .tm{width:32px}
-.sidegrid{display:grid;grid-template-columns:1fr 1fr;gap:5px}.sidegrid.one{grid-template-columns:1fr}
+.swap .ownb,.ownb{margin-top:4px;text-align:center;font-size:10px!important;font-weight:800;border-radius:999px;padding:2px 4px;line-height:1.25;letter-spacing:0;text-transform:none;overflow:hidden}
+.ownb.new{background:#3ddc84;color:#04220f}
+.ownb.have{background:var(--line);color:var(--muted)}
+.ownb.keep{background:none;color:var(--muted);font-weight:600}
+.sidegrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:5px}.sidegrid.one{grid-template-columns:1fr}
 .tgrid .slot.sel{outline:3px solid var(--amber);outline-offset:2px;border-radius:12px}
 .cnt.tick{background:var(--amber);color:#1a1100}
+.recrow{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:14px;background:var(--bg2);margin-bottom:8px}
+.recbar{height:6px;border-radius:9px;background:var(--line);overflow:hidden;margin-top:6px}.recbar i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),#ff4f6d)}
+.recbtns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.recbtns .btn2{padding:6px 9px;font-size:12.5px}
 .achgrid{display:grid;grid-template-columns:1fr;gap:8px}
 @media(min-width:700px){.achgrid{grid-template-columns:1fr 1fr}}
 .ach{display:flex;gap:12px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 12px;opacity:.65}
@@ -381,7 +388,8 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
     <h2>Album</h2>
     <div class="row" style="justify-content:space-between"><b id="aProg">0 / 50</b><span class="muted" id="aHolo"></span></div>
     <div class="prog" style="margin-top:8px"><i id="aBar" style="width:0"></i></div>
-    <button class="btn2 amber" id="dupBtn" style="width:100%;margin-top:12px">🎁 Mes doublons à offrir</button>
+    <button class="btn2 amber" id="dupBtn" style="width:100%;margin-top:12px">🎁 Mes doublons à offrir ou échanger 🔁</button>
+    <button class="btn2 amber" id="recBtn" style="width:100%;margin-top:8px">🔧 Atelier de recyclage</button>
     <div class="tabs" id="tabs"></div>
     <div id="albumBody"></div>
   </section>
@@ -444,6 +452,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
         <li>Tu peux <b>offrir tes doublons</b> à un autre joueur (touche une carte que tu as en double dans l'album). Une carte reçue complète l'album, mais n'ajoute pas de retard : le retard cumulé ne compte que les billets que tu as ouverts.</li>
         <li>Les cartes au retard <b>« ?? »</b> tirent un <b>retard mystère</b> au sort à chaque exemplaire (5 à 60 min pour les communes, jusqu'à 4 h pour les plus rares). Il s'ajoute à ton retard cumulé.</li>
         <li><b>🔁 Échanges</b> : propose un de tes doublons contre un doublon d'un autre joueur. Ta carte est mise de côté jusqu'à sa réponse (3 propositions en attente maximum). Comme pour les dons, une carte échangée complète l'album sans ajouter de retard.</li>
+        <li><b>🔧 Atelier de recyclage</b> (dans l'Album) : recycle plusieurs exemplaires identiques (10 communes, 8 peu communes, 5 rares, 4 super rares, 3 ultra rares ou plus) contre sa version ✦ Holo, une carte au hasard de la rareté au-dessus, ou un billet. Tu gardes toujours 1 exemplaire, et ton retard cumulé ne bouge pas.</li>
         <li>Le but : compléter toutes les lignes de l'album. Bonne chance. Vraiment.</li>
       </ol>
     </div>
@@ -821,6 +830,7 @@ function mergeSaves(a,b){
   for(const [id,e] of Object.entries(older.coll||{})){
     if(!e) continue; const f=m.coll[id];
     if(!f){ m.coll[id]=JSON.parse(JSON.stringify(e)); continue; }
+    if(f.t||e.t){ if((+e.t||0)>(+f.t||0)) m.coll[id]=JSON.parse(JSON.stringify(e)); continue; }
     for(const k of ["n","o","g","x"]) if(e[k]!=null||f[k]!=null) f[k]=Math.max(+f[k]||0,+e[k]||0);
     f.holo=!!(f.holo||e.holo);
   }
@@ -837,6 +847,7 @@ function mergeIn(st,o){
   for(const [id,e] of Object.entries(o.coll||{})){
     if(!e) continue; const f=st.coll[id];
     if(!f){ st.coll[id]=JSON.parse(JSON.stringify(e)); ch=true; continue; }
+    if(f.t||e.t){ if((+e.t||0)>(+f.t||0)){ st.coll[id]=JSON.parse(JSON.stringify(e)); ch=true; } else if(e.holo&&!f.holo&&(+e.t||0)===(+f.t||0)){ f.holo=true; ch=true; } continue; }
     for(const k of ["n","o","g","x"]) if((+e[k]||0)>(+f[k]||0)){ f[k]=+e[k]; ch=true; }
     if(e.holo&&!f.holo){ f.holo=true; ch=true; }
   }
@@ -893,9 +904,9 @@ function drawPack(){
 function addPull(p){
   const c = BYID[p.id]; const e = state.coll[p.id];
   let isNew=false, bons=0;
-  if(!e){ state.coll[p.id]={n:1,o:1,holo:!!p.holo}; isNew=true; }
+  if(!e){ state.coll[p.id]={n:1,o:1,holo:!!p.holo,t:Date.now()}; isNew=true; }
   else{
-    e.n++; e.o=(e.o!=null?+e.o:Math.max(e.n-1-(+e.g||0),0))+1;
+    e.n++; e.t=Date.now(); e.o=(e.o!=null?+e.o:Math.max(e.n-1-(+e.g||0),0))+1;
     if(p.holo && !e.holo){ e.holo=true; isNew=true; }
     else { bons = RAR[c.r].bons*(p.holo?2:1); }
   }
@@ -1769,12 +1780,14 @@ function tradePickGive(T){
         SFX.tap(); const y=m.scrollTop; tradePickGive(T); const nm=document.querySelector("#modal .modal"); if(nm) nm.scrollTop=y; });
   });
 }
-function sideHTML(ids,lbl){
+function sideHTML(ids,lbl,badge){
   const one=ids.length===1;
-  return `<div><div class="lbl">${lbl}</div><div class="sidegrid${one?" one":""}">${ids.map(k=>`<div>${cardHTML(BYID[k],{})}</div>`).join("")}</div></div>`;
+  return `<div><div class="lbl">${lbl}</div><div class="sidegrid${one?" one":""}">${ids.map(k=>`<div>${cardHTML(BYID[k],{})}${badge?badge(k):""}</div>`).join("")}</div></div>`;
 }
-function swapHTML(give,get,lg,lr){
-  return `<div class="swap">${sideHTML(give,lg)}<div class="arr">⇄</div>${sideHTML(get,lr)}</div>`;
+const ownBadge=k=>{ const e=state.coll[k]; return e&&e.n>0?`<div class="ownb have">Déjà ×${e.n}</div>`:`<div class="ownb new">✨ Nouvelle</div>`; };
+const leftBadge=k=>{ const e=state.coll[k]; const n=e?e.n:0; return `<div class="ownb keep">${n>=2?`Il t'en restera ${n-1}`:"Plus en double"}</div>`; };
+function swapHTML(give,get,lg,lr,plain){
+  return `<div class="swap">${sideHTML(give,lg,plain?null:leftBadge)}<div class="arr">⇄</div>${sideHTML(get,lr,plain?null:ownBadge)}</div>`;
 }
 function tradeConfirm(T){
   modal(`<h3>🔁 Proposer l'échange</h3>
@@ -1791,7 +1804,7 @@ function tradeConfirm(T){
         try{
           await pushNow();
           await rpc("kt_trade_propose",{p_token:session.token,p_to:T.o.pseudo,p_give:T.give,p_want:T.want});
-          for(const k of T.give){ const e=state.coll[k]; e.n--; if(+e.g&&e.g>e.n) e.g=e.n; }
+          for(const k of T.give){ const e=state.coll[k]; e.n--; e.t=Date.now(); if(+e.g&&e.g>e.n) e.g=e.n; }
           save(); renderAll(); closeModal(); SFX.coin(); toast(`🔁 Proposition envoyée à ${T.o.pseudo} !`); loadTrades();
         }catch(err){
           const msg=String(err.message);
@@ -1803,8 +1816,8 @@ function tradeConfirm(T){
 }
 function addCard(id,asGift){
   const e=state.coll[id];
-  if(!e) state.coll[id]={n:1,o:0,g:asGift?1:0,holo:false};
-  else { if(e.o==null) e.o=Math.max((+e.n||0)-(+e.g||0),0); e.n++; if(asGift) e.g=(+e.g||0)+1; }
+  if(!e) state.coll[id]={n:1,o:0,g:asGift?1:0,holo:false,t:Date.now()};
+  else { if(e.o==null) e.o=Math.max((+e.n||0)-(+e.g||0),0); e.n++; e.t=Date.now(); if(asGift) e.g=(+e.g||0)+1; }
 }
 const arr=x=>(Array.isArray(x)?x:[x]).map(Number).filter(k=>BYID[k]);
 async function loadTrades(){
@@ -1842,7 +1855,7 @@ async function checkTrades(){
 function showTradeDone(r,next){
   const ok=r.o_kind==="accepted", pl=r.o_give.length>1;
   modal(`<h3>${ok?"🔁 Échange accepté !":"🔁 Échange refusé"}</h3>
-    ${ok?swapHTML(r.o_give,r.o_want,"Tu as donné","Tu as reçu"):`<div class="sidegrid${pl?"":" one"}" style="width:${pl?80:42}%;margin:0 auto 10px">${r.o_give.map(k=>`<div>${cardHTML(BYID[k],{})}</div>`).join("")}</div>`}
+    ${ok?swapHTML(r.o_give,r.o_want,"Tu as donné","Tu as reçu",true):`<div class="sidegrid${pl?"":" one"}" style="width:${pl?80:42}%;margin:0 auto 10px">${r.o_give.map(k=>`<div>${cardHTML(BYID[k],{})}</div>`).join("")}</div>`}
     <p class="muted" style="font-size:14px;margin:0 0 12px">${ok?`<b style="color:var(--txt)">${esc(String(r.o_who).slice(0,20))}</b> a accepté. Les cartes reçues complètent ton album, sans ajouter de retard.`:`<b style="color:var(--txt)">${esc(String(r.o_who).slice(0,20))}</b> a refusé. ${pl?"Tes cartes sont revenues":"Ta carte est revenue"} dans ton album.`}</p>
     <button class="bigbtn" id="tOk">${ok?"Génial !":"Tant pis"}</button>`, m=>{ m.querySelector("#tOk").onclick=()=>{ closeModal(); setTimeout(next,250); }; });
   if(ok){ SFX.reveal(3); const r0=document.querySelector("#modal .modal"); if(r0){ const rr=r0.getBoundingClientRect(); burst(rr.left+rr.width/2,rr.top+80,["#ffb000","#3ddc84","#4da3ff","#fff"],70,9); } }
@@ -1863,7 +1876,7 @@ function showTradeOffer(r,next){
         try{
           if(ok) await pushNow();
           await rpc("kt_trade_answer",{p_token:session.token,p_id:r.o_id,p_accept:ok});
-          if(ok){ for(const k of r.o_want){ const e=state.coll[k]; e.n--; if(+e.g&&e.g>e.n) e.g=e.n; } r.o_give.forEach(k=>addCard(k,true)); state.stats.traded=(state.stats.traded||0)+1; save(); renderAll(); SFX.coin(); toast("🔁 Échange réussi !"); setTimeout(()=>checkAch(),2000); }
+          if(ok){ for(const k of r.o_want){ const e=state.coll[k]; e.n--; e.t=Date.now(); if(+e.g&&e.g>e.n) e.g=e.n; } r.o_give.forEach(k=>addCard(k,true)); state.stats.traded=(state.stats.traded||0)+1; save(); renderAll(); SFX.coin(); toast("🔁 Échange réussi !"); setTimeout(()=>checkAch(),2000); }
           else toast("Proposition refusée.");
           closeModal(); feedLoaded=0; setTimeout(next,250);
         }catch(err){
@@ -1877,28 +1890,94 @@ function showTradeOffer(r,next){
       m.querySelector("#tLater").onclick=()=>{ closeModal(); setTimeout(next,250); };
   });
 }
+/* ================= ATELIER DE RECYCLAGE ================= */
+const RCOST={C:10,PC:8,R:5,SR:4,UR:3,L:3,M:3};
+function showAtelier(){
+  const rows=CARDS.filter(c=>state.coll[c.id]&&state.coll[c.id].n>=2).map(c=>{ const n=state.coll[c.id].n, cost=RCOST[c.r]; return {c,n,cost,ok:n-1>=cost}; })
+    .sort((a,b)=>(b.ok-a.ok)||((b.n-1)/b.cost-(a.n-1)/a.cost));
+  const nxt=r=>RORDER[RORDER.indexOf(r)+1];
+  modal(`<h3>🔧 Atelier de recyclage</h3>
+    <p class="muted" style="margin:-4px 0 12px;font-size:14px">Recycle des exemplaires identiques contre une récompense. Tu gardes toujours 1 exemplaire, et ton retard ne bouge pas.</p>
+    ${rows.length?rows.map(r=>{ const e=state.coll[r.c.id], up=nxt(r.c.r), full=state.tickets>=CFG.max;
+      return `<div class="recrow" data-id="${r.c.id}"><div class="dupc">${cardHTML(r.c,{holo:e.holo})}</div>
+      <div style="min-width:0"><b>${esc(r.c.t)}</b> <span class="muted mono">×${r.n}</span>
+      <div class="muted" style="font-size:12.5px;margin-top:2px">${r.ok?`Recycler <b style="color:var(--txt)">${r.cost}</b> exemplaires :`:`Encore ${r.cost-(r.n-1)} exemplaire${r.cost-(r.n-1)>1?"s":""} pour recycler (${r.n-1}/${r.cost})`}</div>
+      ${r.ok?`<div class="recbtns">
+        <button class="btn2 amber" data-k="holo" ${e.holo||r.c.ah?"disabled":""}>✦ Holo</button>
+        ${up?`<button class="btn2 amber" data-k="up">⬆️ ${RAR[up].n}</button>`:""}
+        <button class="btn2 amber" data-k="ticket" ${full?"disabled":""}>🎫 Billet</button></div>
+        ${e.holo||r.c.ah?'<div class="muted" style="font-size:11.5px;margin-top:4px">Déjà en Holo.</div>':""}${full?'<div class="muted" style="font-size:11.5px;margin-top:4px">Tes 5 billets sont déjà pleins.</div>':""}`
+      :`<div class="recbar"><i style="width:${Math.min(100,(r.n-1)/r.cost*100)}%"></i></div>`}</div></div>`; }).join("")
+    :'<p class="muted">Tu n\'as pas encore de doublons. Ouvre des billets !</p>'}
+    <button class="btn2" style="width:100%;margin-top:12px" id="rNo">Fermer</button>`, m=>{
+      m.querySelector("#rNo").onclick=closeModal;
+      m.querySelectorAll(".recrow [data-k]").forEach(b=>b.onclick=()=>{ SFX.tap(); recycleConfirm(+b.closest(".recrow").dataset.id,b.dataset.k); });
+  });
+}
+function recycleConfirm(id,k){
+  const c=BYID[id], cost=RCOST[c.r], up=RORDER[RORDER.indexOf(c.r)+1];
+  const what=k==="holo"?"sa version <b>✦ Holo</b>":k==="up"?`une carte <b style="color:${RAR[up].c}">${RAR[up].n}</b> au hasard`:"<b>1 billet 🎫</b>";
+  modal(`<h3>🔧 Recycler ?</h3>
+    <div style="width:42%;margin:0 auto 10px">${cardHTML(c,{holo:state.coll[id].holo})}</div>
+    <p style="text-align:center;margin:0 0 14px">Tu recycles <b>${cost} exemplaires</b> de « ${esc(c.t)} » contre ${what}.</p>
+    <button class="bigbtn" id="rGo">🔧 Recycler</button>
+    <button class="btn2" style="width:100%;margin-top:10px" id="rBack">← Retour</button>`, m=>{
+      m.querySelector("#rBack").onclick=showAtelier;
+      m.querySelector("#rGo").onclick=()=>doRecycle(id,k);
+  });
+}
+function doRecycle(id,k){
+  const c=BYID[id], e=state.coll[id], cost=RCOST[c.r];
+  if(!e||e.n-1<cost) return showAtelier();
+  if(k==="ticket"&&state.tickets>=CFG.max) return toast("Tes billets sont déjà pleins");
+  if(k==="holo"&&e.holo) return showAtelier();
+  e.n-=cost; e.t=Date.now(); if(+e.g&&e.g>e.n) e.g=e.n;
+  state.stats.recycled=(state.stats.recycled||0)+1;
+  let html="", got=null;
+  if(k==="holo"){ e.holo=true; got=id; html=`<p style="text-align:center">« ${esc(c.t)} » brille désormais dans ton album.</p>`; }
+  else if(k==="up"){
+    const up=RORDER[RORDER.indexOf(c.r)+1], pool=CARDS.filter(x=>x.r===up);
+    const w=pick(pool), isNew=!state.coll[w.id]; addCard(w.id,false); got=w.id;
+    if(w.ah) state.coll[w.id].holo=true;
+    html=`<p style="text-align:center;margin-bottom:0">${isNew?'<b style="color:#3ddc84">NOUVELLE CARTE !</b>':"Tu l'avais déjà : un exemplaire de plus."}</p>`;
+  } else { state.tickets++; html=`<p style="text-align:center">Un billet de plus au Guichet. Bon voyage !</p>`; }
+  save(); renderAll(); SFX.coin(); setTimeout(()=>checkAch(),1500);
+  modal(`<h3>🔧 Recyclage réussi !</h3>
+    ${got?`<div style="width:55%;margin:0 auto 10px">${cardHTML(BYID[got],{holo:k==="holo"||state.coll[got].holo})}</div>`:`<div style="font-size:64px;text-align:center">🎫</div>`}
+    ${html}
+    <button class="bigbtn" id="rOk">Super !</button>
+    <button class="btn2" style="width:100%;margin-top:10px" id="rMore">🔧 Retour à l'atelier</button>`, m=>{
+      m.querySelector("#rOk").onclick=closeModal; m.querySelector("#rMore").onclick=showAtelier;
+  });
+  SFX.reveal(k==="up"?RAR[BYID[got].r].lvl:2);
+  const r0=document.querySelector("#modal .modal"); if(r0){ const rr=r0.getBoundingClientRect(); burst(rr.left+rr.width/2,rr.top+90,["#ffb000","#ff4fd8","#4da3ff","#fff"],70,9); }
+}
 async function showDups(){
   if(!session) return toast("Connecte-toi pour offrir des cartes");
   const dups=CARDS.filter(c=>state.coll[c.id]&&state.coll[c.id].n>=2);
   if(!dups.length) return toast("Tu n'as pas encore de doublon à offrir");
   const B=$("#dupBtn"); B.disabled=true; B.textContent="🔎 Je regarde les albums…";
   try{ const fr=await rpc("kt_leaderboard",{}); if(fr) lbRows=fr; }catch(e){ return toast(errMsg(e)); }
-  finally{ B.disabled=false; B.textContent="🎁 Mes doublons à offrir"; }
+  finally{ B.disabled=false; B.textContent="🎁 Mes doublons à offrir ou échanger 🔁"; }
   const me=session.pseudo.toLowerCase(), others=lbRows.filter(v=>String(v.pseudo).toLowerCase()!==me);
   const rows=dups.map(c=>({c,who:others.filter(v=>!(v.coll&&v.coll[c.id]&&v.coll[c.id].n>0)).map(v=>String(v.pseudo))}))
     .sort((a,b)=>b.who.length-a.who.length);
-  const useful=rows.filter(r=>r.who.length);
-  modal(`<h3>🎁 Mes doublons à offrir</h3>
-    <p class="muted" style="margin:-4px 0 12px;font-size:14px">Pour chaque doublon, les joueurs qui ne l'ont pas encore. Touche une carte pour l'offrir.</p>
-    ${useful.length?useful.map(r=>`<div class="duprow" data-id="${r.c.id}">
+  modal(`<h3>🎁 Mes doublons à offrir ou échanger</h3>
+    <p class="muted" style="margin:-4px 0 12px;font-size:14px">Pour chaque doublon, les joueurs qui ne l'ont pas encore. Choisis de l'offrir ou de l'échanger.</p>
+    ${rows.map(r=>`<div class="duprow" data-id="${r.c.id}">
       <div class="dupc">${cardHTML(r.c,{})}</div>
       <div style="min-width:0"><b>${esc(r.c.t)}</b> <span class="muted mono">×${state.coll[r.c.id].n-1}</span>
-      <div class="muted" style="font-size:13px;margin-top:4px">Manque à : ${r.who.map(esc).join(", ")}</div></div>
-    </div>`).join(""):'<p class="muted">Tous les joueurs ont déjà tes doublons 😅</p>'}
-    ${rows.length>useful.length?`<p class="muted" style="font-size:13px;margin-top:10px">${rows.length-useful.length} autre(s) doublon(s) que tout le monde possède déjà.</p>`:""}
+      <div class="muted" style="font-size:13px;margin-top:4px">${r.who.length?"Manque à : "+r.who.map(esc).join(", "):"Tout le monde l'a déjà : idéal pour un échange."}</div>
+      <div class="row" style="gap:6px;margin-top:8px">${r.who.length?`<button class="btn2 amber dg" style="padding:6px 10px;font-size:13px">🎁 Offrir</button>`:""}<button class="btn2 amber dt" style="padding:6px 10px;font-size:13px">🔁 Échanger</button></div></div>
+    </div>`).join("")}
     <button class="btn2" style="width:100%;margin-top:12px" id="dNo">Fermer</button>`, m=>{
       m.querySelector("#dNo").onclick=closeModal;
-      m.querySelectorAll(".duprow").forEach(d=>d.onclick=()=>{ SFX.tap(); closeModal(); setTimeout(()=>showGift(+d.dataset.id),60); });
+      m.querySelectorAll(".duprow").forEach(d=>{ const id=+d.dataset.id;
+        const g=d.querySelector(".dg"), t=d.querySelector(".dt");
+        if(g) g.onclick=ev=>{ ev.stopPropagation(); SFX.tap(); closeModal(); setTimeout(()=>showGift(id),60); };
+        t.onclick=ev=>{ ev.stopPropagation(); SFX.tap(); closeModal(); setTimeout(()=>showTrade(id),60); };
+        d.onclick=()=>{ SFX.tap(); closeModal(); setTimeout(()=>showDetail(id),60); };
+      });
   });
 }
 async function showGift(id){
@@ -1932,7 +2011,7 @@ async function showGift(id){
         try{
           await pushNow();
           await rpc("kt_gift",{p_token:session.token,p_to:to,p_card:id});
-          const e=state.coll[id]; e.n--; if(e.o!=null&&e.o>e.n) e.o=e.n; if(+e.g&&e.g>e.n) e.g=e.n; state.stats.given=(state.stats.given||0)+1;
+          const e=state.coll[id]; e.n--; e.t=Date.now(); if(+e.g&&e.g>e.n) e.g=e.n; state.stats.given=(state.stats.given||0)+1;
           save(); renderAll(); closeModal(); SFX.coin(); toast(`🎁 « ${c.t} » offerte à ${to} !`); feedLoaded=0;
         }catch(err){
           const msg=String(err.message);
@@ -1952,8 +2031,8 @@ async function checkInbox(){
     if(got.length){
       for(const r of got){
         const e=state.coll[r.o_card];
-        if(!e) state.coll[r.o_card]={n:1,o:0,g:1,holo:false};
-        else { if(e.o==null) e.o=Math.max((+e.n||0)-(+e.g||0),0); e.n++; e.g=(+e.g||0)+1; }
+        if(!e) state.coll[r.o_card]={n:1,o:0,g:1,holo:false,t:Date.now()};
+        else { if(e.o==null) e.o=Math.max((+e.n||0)-(+e.g||0),0); e.n++; e.t=Date.now(); e.g=(+e.g||0)+1; }
       }
       save(); renderAll(); SFX.reveal(3); setTimeout(()=>checkAch(),3500);
       modal(`<h3>🎁 Tu as reçu ${got.length>1?got.length+" cadeaux":"un cadeau"} !</h3>
@@ -2015,7 +2094,9 @@ const ACH=[
  {id:"l7",ic:"🎲",n:"Ludothécaire du rail",d:"Compléter la ligne Ludothèque du rail",v:()=>lineDone(7)},
  {id:"l8",ic:"🤝",n:"Sociable du rail",d:"Compléter la ligne Rencontres à bord",v:()=>lineDone(8)},
  {id:"trade1",ic:"🔁",n:"Troc du rail",d:"Réussir un échange",v:()=>[state.stats.traded||0,1]},
- {id:"trade10",ic:"🤝",n:"Bourse aux doublons",d:"Réussir 10 échanges",v:()=>[state.stats.traded||0,10]}
+ {id:"trade10",ic:"🤝",n:"Bourse aux doublons",d:"Réussir 10 échanges",v:()=>[state.stats.traded||0,10]},
+ {id:"rec1",ic:"🔧",n:"Ferrailleur·se",d:"Recycler des cartes à l'atelier",v:()=>[state.stats.recycled||0,1]},
+ {id:"rec10",ic:"🏭",n:"Casse ferroviaire",d:"Recycler 10 fois à l'atelier",v:()=>[state.stats.recycled||0,10]}
 ];
 const ACHBY=Object.fromEntries(ACH.map(a=>[a.id,a]));
 let achQueue=[], achShowing=false;
@@ -2208,6 +2289,7 @@ $("#buyBtn").onclick=()=>{
   state.bons-=CFG.price; state.tickets++; save(); SFX.coin(); renderAll(); toast("Billet acheté au guichet !");
 };
 $("#chipT").onclick=()=>{ SFX.tap(); if(!state) return; toast(state.tickets>=CFG.max?`🎫 ${state.tickets} billets : ton stock est plein, composte-les !`:`🎫 ${state.tickets} billet${state.tickets>1?"s":""} à composter. Un nouveau arrive dans ${Math.ceil(nextIn()/60000)} min.`); };
+$("#recBtn").onclick=()=>{ SFX.tap(); showAtelier(); };
 $("#dupBtn").onclick=()=>{ SFX.tap(); showDups(); };
 $("#chipB").onclick=()=>{ SFX.tap(); if(!state) return; toast(`🪙 Bons de compensation : ${state.bons}. Tu en gagnes avec tes doublons, et ${CFG.price} bons = 1 billet au Guichet.`); };
 $("#muteBtn").onclick=()=>{ if(!state) return; state.muted=!state.muted; save(); renderHeader(); if(!state.muted) SFX.tap(); };
