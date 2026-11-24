@@ -696,6 +696,38 @@ function clean(s){
 function loadLocal(){
   try{ const s = localStorage.getItem(KEY); return s ? clean(JSON.parse(s)) : null; }catch(e){ return null; }
 }
+/* Fusion de deux sauvegardes du même joueur : on ne perd jamais une carte */
+function mergeSaves(a,b){
+  if(!a) return b; if(!b) return a;
+  const newer=(a.savedAt||0)>=(b.savedAt||0)?a:b, older=newer===a?b:a;
+  const m=JSON.parse(JSON.stringify(newer));
+  m.coll=m.coll||{};
+  for(const [id,e] of Object.entries(older.coll||{})){
+    if(!e) continue; const f=m.coll[id];
+    if(!f){ m.coll[id]=JSON.parse(JSON.stringify(e)); continue; }
+    for(const k of ["n","o","g","x"]) if(e[k]!=null||f[k]!=null) f[k]=Math.max(+f[k]||0,+e[k]||0);
+    f.holo=!!(f.holo||e.holo);
+  }
+  m.stats=m.stats||{}; for(const [k,v] of Object.entries(older.stats||{})) if(typeof v==="number") m.stats[k]=Math.max(+m.stats[k]||0,v);
+  if(older.ach){ m.ach=m.ach||{}; for(const [k,v] of Object.entries(older.ach)) if(!m.ach[k]||v<m.ach[k]) m.ach[k]=v; }
+  if(older.gare&&(!m.gare||(older.gare.played||0)>(m.gare.played||0))) m.gare=older.gare;
+  if((older.best||[]).length>(m.best||[]).length) m.best=older.best;
+  m.since=Math.min(a.since||Date.now(),b.since||Date.now());
+  return m;
+}
+/* Ajoute dans la partie en cours ce que l'autre appareil a en plus (sans rien retirer) */
+function mergeIn(st,o){
+  let ch=false;
+  for(const [id,e] of Object.entries(o.coll||{})){
+    if(!e) continue; const f=st.coll[id];
+    if(!f){ st.coll[id]=JSON.parse(JSON.stringify(e)); ch=true; continue; }
+    for(const k of ["n","o","g","x"]) if((+e[k]||0)>(+f[k]||0)){ f[k]=+e[k]; ch=true; }
+    if(e.holo&&!f.holo){ f.holo=true; ch=true; }
+  }
+  st.stats=st.stats||{}; for(const [k,v] of Object.entries(o.stats||{})) if(typeof v==="number"&&v>(+st.stats[k]||0)){ st.stats[k]=v; ch=true; }
+  if(o.ach){ st.ach=st.ach||{}; for(const [k,v] of Object.entries(o.ach)) if(!st.ach[k]){ st.ach[k]=v; ch=true; } }
+  return ch;
+}
 function save(){
   if(!state) return;
   state.savedAt = Date.now();
@@ -1310,11 +1342,15 @@ function cloudSave(){
   clearTimeout(cloudTimer);
   cloudTimer=setTimeout(pushNow,1500);
 }
+let cloudReady=false;
 async function pushNow(){
   if(!session||!state) return;
+  if(!cloudReady){ cloudPending=true; return; }
   if(cloudBusy){ cloudPending=true; return; }
   cloudBusy=true;
-  try{ await rpc("kt_save",{p_token:session.token,p_save:packSave(),...stats4()}); setSync("ok"); lbLoaded=0; }
+  try{
+    try{ const r=await rpc("kt_load",{p_token:session.token}); if(r&&r.save&&mergeIn(state,clean(unpackSave(r.save,state.pseudo)))){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} renderAll(); } }catch(e){ if(String(e.message).includes("SESSION")) throw e; }
+    await rpc("kt_save",{p_token:session.token,p_save:packSave(),...stats4()}); setSync("ok"); lbLoaded=0; }
   catch(e){ if(String(e.message).includes("SESSION")){ setSession(null); showAuth(); } else setSync("err"); }
   cloudBusy=false;
   if(cloudPending){ cloudPending=false; pushNow(); }
@@ -1327,20 +1363,24 @@ async function syncOnStart(){
   try{
     const r=await rpc("kt_load",{p_token:session.token});
     const remote=r&&r.save;
-    if(remote && (!state || (remote.savedAt||0)>(state.savedAt||0))){
-      state=unpackSave(remote,r.pseudo); try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){}
+    if(remote){
+      const same=state&&String(state.pseudo||"").toLowerCase()===String(r.pseudo).toLowerCase();
+      state=same?clean(mergeSaves(state,unpackSave(remote,r.pseudo))):unpackSave(remote,r.pseudo);
+      state.pseudo=r.pseudo; try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){}
       refill(); renderAll(); setTimeout(()=>checkAch(true),800);
-    } else if(state){ pushNow(); }
+    }
+    cloudReady=true; if(state) pushNow();
     setSync("ok");
     checkInbox();
   }catch(e){
     if(String(e.message).includes("SESSION")){ setSession(null); showAuth(); }
-    else setSync("err");
+    else { setSync("err"); setTimeout(syncOnStart,15000); }
   }
 }
 async function afterAuth(r,isNew){
+  cloudReady=true;
   setSession({token:r.token,pseudo:r.pseudo});
-  if(r.save){ state=unpackSave(r.save,r.pseudo); }
+  if(r.save){ const same=state&&String(state.pseudo||"").toLowerCase()===String(r.pseudo).toLowerCase(); state=same?clean(mergeSaves(state,unpackSave(r.save,r.pseudo))):unpackSave(r.save,r.pseudo); state.pseudo=r.pseudo; }
   else if(state){ state.pseudo=r.pseudo; }
   else { state=fresh(r.pseudo); }
   save(); closeModal(); refill(); renderAll(); await pushNow(); loadLeaderboard(true); setTimeout(()=>checkAch(true),1500);
