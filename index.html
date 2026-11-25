@@ -1669,7 +1669,7 @@ function renderHall(){
   renderAch();
   const cnt=lvl=>Object.keys(state.coll).filter(id=>RAR[BYID[id].r].lvl>=lvl).length;
   $("#stats").innerHTML=[
-    [state.stats.opened,"billets compostés"],[state.stats.pulled,"cartes tirées"],
+    [state.stats.opened,"billets compostés"],[Object.values(state.coll).reduce((a,e)=>a+(+e.n||0),0),"cartes en stock"],
     [`${o}/${TOTAL}`,"motifs uniques"],[state.stats.holo,"cartes holo"],
     [cnt(5),"légendaires & mythiques"],[state.stats.bonsWon,"bons gagnés 🪙"],
     [Math.round(o/TOTAL*100)+" %","indice de poisse"],[state.bons,"bons en poche"],
