@@ -229,6 +229,9 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
 .key.wide{max-width:78px;flex:1.6;font-size:13px}
 .key.ok{background:#2e9d57}.key.mid{background:#c99400}.key.no{background:#1a2131;color:#6b768c}
 .key:active{transform:translateY(2px)}
+.gphoto{margin:12px auto 0;max-width:340px}
+.gphoto img{display:block;width:100%;max-height:220px;object-fit:cover;border-radius:14px;border:1px solid var(--line)}
+.gcap{font-size:11px;color:var(--muted);margin-top:5px;text-align:center}
 .ghint{text-align:center;color:var(--amber2);font-size:14px;margin:6px 0}
 .gmsg{text-align:center;color:var(--red);font-weight:700;min-height:20px;font-size:14px}
 .gmsg.shk{animation:shake .12s linear 3}
@@ -2051,7 +2054,9 @@ let deferredPrompt=null;
 addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); deferredPrompt=e; });
 const standalone=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
 
-const GARES="FCLAMECY FROSPORDEN BDINANT FAURAY BRIXENSART FJUVISY FBAYONNE FTOULOUSE FLONGWY BBRUGES BLIEGE FETAPLES FMONTAUBAN FTHANN FBEAUGENCY FAVIGNON BHASSELT FARRAS FBEAUNE BTONGRES BNAMUR FHYERES BTERMONDE FLIMOGES BVIRTON FAMIENS FMONTMELIAN FTOURCOING FGISORS FTONNERRE FMURET BLESSINES FCHATEAUDUN FBEZIERS FNEVERS FBERGERAC FEPERNAY FBREST FFORBACH FSANCOINS FPORNIC FANNECY FDUNKERQUE FBIARRITZ FDIJON FCHINON BANTOING FVALOGNES FBOURGES FLAVAL FMORTEAU FBETHUNE BWATERLOO FPOITIERS BENGHIEN FGRENOBLE FTULLE FTOURNUS FLILLE FFREJUS BWALCOURT FYVETOT BLOBBES FCAMBRAI FCOMPIEGNE FGRANVILLE FSOISSONS FVICHY FMARMANDE FARGENTAN FPAMIERS FBELFORT FEPERNON FSTRASBOURG FCOLMAR BMOUSCRON FMAUBEUGE BCOUVIN FROANNE FVITRE FAUTUN FQUIMPER BTHUIN FMOULINS FTRAPPES FCULOZ FGUERET BCOURTRAI FLISIEUX BGOUVY FROYAN BKNOKKE FARCACHON FLANGRES BANVERS FBRIARE BNINOVE FISSOUDUN FFIGEAC FANNEMASSE BBEAURAING FORANGE BDIXMUDE BOTTIGNIES FLIBOURNE FMONTARGIS FCHELLES FCHERBOURG FCHATEAUROUX FEVREUX BLOKEREN FUSSEL FNANTES FVIENNE FREIMS FCAVAILLON FBORDEAUX FROCHEFORT FBESANCON FCARHAIX FISTRES FNIORT FVALDAHON FROUEN FNARBONNE FQUIMPERLE FSURGERES BCINEY FAVORD FLUNEVILLE FCOGNAC FPERPIGNAN FCORTE BFLEURUS FCHAGNY FCHOLET FEPINAL BAUVELAIS FVERSAILLES FMORLAIX FHAYANGE FSAUMUR FBRIANCON FTHIONVILLE FMIRAMAS FVOIRON FPONTARLIER FLOUHANS BJETTE FLESPARRE FMONTBARD FMASSY FCAHORS FLIMOUX BZEEBRUGGE FBERNAY FTARARE FDIEPPE FCERGY FVALENCE BJAMBES BPEPINSTER FOYONNAX FDINAN FJOIGNY FVIERZON FMODANE FRODEZ BCHARLEROI FPAIMPOL BLIBRAMONT FCOMMERCY FVERNON FARLES FTHOUARS FVENDOME BUCCLE BBINCHE BLOUVAIN FLUNEL BSCHAERBEEK BTURNHOUT FETAMPES FSOUILLAC FCREIL FBASTIA FBELLEGARDE FANGERS FAUBUSSON FLOCHES BTOURNAI FVERDUN FLUSIGNAN FSALBRIS FBRUNOY BDENDERLEEUW FMELUN FANGOULEME BDIEST FMILLAU BYPRES FSISTERON FGUINGAMP BVERVIERS BQUIEVRAIN BZOTTEGEM FABBEVILLE FDREUX FARGENTON FBANYULS BMALINES FMONTLUCON FRENNES FNEMOURS BMARIEMBOURG BARLON FMANOSQUE BVIELSALM BLANDEN FPERIGUEUX BHERENTALS FDIGNE FBAYEUX FSEDAN FTROYES FPARIS FCARMAUX FORTHEZ FEVIAN BESNEUX FTOURS FPERTUIS FCALAIS FCHAMPAGNOLE FAMBOISE BWELKENRAEDT BGEDINNE BGENVAL BROULERS BHERSTAL FMEAUX BGEMBLOUX FNANCY FPLOUARET FGRASSE FANTIBES FLORIENT FNOYON BLIERRE FREDON FANCENIS FCANNES BTIRLEMONT FCHAUMONT BMANAGE BWAREMME FORLEANS BSOIGNIES FAVALLON FCOUTANCES FMORCENX FCERBERE FAUXERRE FCARPENTRAS FDOUAI FCOLLIOURE FFLERS FSARLAT FMACON FNEUFCHATEAU FCHARTRES BBERTRIX FISSOIRE BBRUXELLES FMULHOUSE FFECAMP FMENTON FMONTELIMAR FCALVI FNIMES FPONTOISE BWAVRE FLANGON FLANDERNEAU FLAMBALLE FMEHUN BNIVELLES FVANNES BPALISEUL FLANNION BAYWAILLE FVITTEL FAURILLAC FLUCON BOSTENDE FHAZEBROUCK BAARSCHOT FWISSEMBOURG FTOULON FTARBES FSELESTAT FPROVINS FHIRSON BALOST FCHAMONIX BETTERBEEK FSAVERNE BJEMELLE BERQUELINNES FCASTRES FSARREBOURG BTAMINES FTARASCON BPOPERINGE FAUBAGNE FVESOUL FMOUTIERS FHENDAYE FBLOIS BRENAIX BANDENNE FAJACCIO FCHAMBERY FSAINTES BEUPEN FPOISSY FTHIERS FLOURDES FPRADES FMONTEREAU BPERUWELZ FHAGUENAU FBEAUVAIS FALENCON FMARSEILLE".split(" ");
+const GARES_RAW="F|Clamecy|Gare de Clamecy;F|Rosporden|Gare de Rosporden;F|Nantes|Gare de Nantes;F|Laval|Gare de Laval;F|Granville|Gare de Granville;F|Carcassonne|Gare de Carcassonne;F|Limoges|Gare de Limoges-Bénédictins;F|Nîmes|Gare de Nîmes;F|Laon|Gare de Laon;B|Eupen|Gare d'Eupen;F|Dijon|Gare de Dijon-Ville;B|Ottignies|Gare d'Ottignies;B|Mouscron|Gare de Mouscron;F|Marseille|Gare de Marseille-Saint-Charles;F|Blois|Gare de Blois - Chambord;F|Dunkerque|Gare de Dunkerque;F|Strasbourg|Gare de Strasbourg;F|Brest|Gare de Brest;F|Biarritz|Gare de Biarritz;F|Mâcon|Gare de Mâcon-Ville;F|Versailles|Gare de Versailles-Château-Rive-Gauche;F|Toulouse|Gare de Toulouse-Matabiau;F|Cherbourg|Gare de Cherbourg;F|Évian|Gare d'Évian-les-Bains;B|Louvain|Gare de Louvain;F|Quimper|Gare de Quimper;F|Royan|Gare de Royan;F|Nice|Gare de Nice-Ville;B|Wavre|Gare de Wavre;F|Dax|Gare de Dax;F|Lens|Gare de Lens;F|Angoulême|Gare d'Angoulême;B|Genk|Gare de Genk;F|Lourdes|Gare de Lourdes;F|Bergerac|Gare de Bergerac;F|Millau|Gare de Millau;F|Roanne|Gare de Roanne;F|Juvisy|Gare de Juvisy;F|Alençon|Gare d'Alençon;F|Lisieux|Gare de Lisieux;F|Bayeux|Gare de Bayeux;B|Hasselt|Gare de Hasselt;B|Namur|Gare de Namur;F|Menton|Gare de Menton;F|Lorient|Gare de Lorient;F|Nevers|Gare de Nevers;F|Cannes|Gare de Cannes;F|Tarbes|Gare de Tarbes;B|Anvers|Gare d'Anvers-Central;F|Beaune|Gare de Beaune;F|Montluçon|Gare de Montluçon-Ville;F|Morlaix|Gare de Morlaix;F|Cambrai|Gare de Cambrai-Ville;F|Metz|Gare de Metz-Ville;F|Avignon|Gare d'Avignon-Centre;F|Mulhouse|Gare de Mulhouse-Ville;B|Bruges|Gare de Bruges;F|Moulins|Gare de Moulins-sur-Allier;F|Douai|Gare de Douai;F|Chartres|Gare de Chartres;F|Périgueux|Gare de Périgueux;F|Vannes|Gare de Vannes;F|Grenoble|Gare de Grenoble;B|Courtrai|Gare de Courtrai;B|Ypres|Gare d'Ypres;F|Vierzon|Gare de Vierzon-Ville;F|Troyes|Gare de Troyes;B|Huy|Gare de Huy;F|Cognac|Gare de Cognac;F|Châteauroux|Gare de Châteauroux;F|Dieppe|Gare de Dieppe;F|Sedan|Gare de Sedan;F|Haguenau|Gare de Haguenau;F|Rodez|Gare de Rodez;F|Briançon|Gare de Briançon;F|Colmar|Gare de Colmar;F|Hyères|Gare d'Hyères;B|La Louvière|Gare de La Louvière-Sud;B|Charleroi|Gare de Charleroi-Central;F|Orléans|Gare d'Orléans;F|Chambéry|Gare de Chambéry - Challes-les-Eaux;F|Amboise|Gare d'Amboise;F|Foix|Gare de Foix;F|Narbonne|Gare de Narbonne;F|Épernay|Gare d'Épernay;F|Beauvais|Gare de Beauvais;F|Nancy|Gare de Nancy-Ville;F|Vienne|Gare de Vienne;F|Rennes|Gare de Rennes;F|Angers|Gare d'Angers-Saint-Laud;B|Malines|Gare de Malines;F|Belfort|Gare de Belfort;F|Thionville|Gare de Thionville;F|Orange|Gare d'Orange;F|Montélimar|Gare de Montélimar;B|Spa|Gare de Spa;F|Ajaccio|Gare d'Ajaccio;B|Liège|Gare de Liège-Guillemins;F|Bourges|Gare de Bourges;F|Antibes|Gare d'Antibes;F|Agen|Gare d'Agen;F|Sète|Gare de Sète;F|Arras|Gare d'Arras;F|Melun|Gare de Melun;F|Verdun|Gare de Verdun;B|Gand|Gare de Gand-Saint-Pierre;F|Lannion|Gare de Lannion;F|Tours|Gare de Tours;F|Arles|Gare d'Arles;F|Gap|Gare de Gap;F|Mende|Gare de Mende;F|Arcachon|Gare d'Arcachon;F|Reims|Gare de Reims;F|La Rochelle|Gare de La Rochelle-Ville;F|Albi|Gare d'Albi-Ville;F|Bayonne|Gare de Bayonne;F|Pau|Gare de Pau;F|Saintes|Gare de Saintes;F|Aurillac|Gare d'Aurillac;F|Bordeaux|Gare de Bordeaux-Saint-Jean;F|Le Mans|Gare du Mans;B|Tournai|Gare de Tournai;B|Bruxelles|Gare de Bruxelles-Midi;F|Saumur|Gare de Saumur;F|Le Havre|Gare du Havre;B|Dinant|Gare de Dinant;F|Rouen|Gare de Rouen-Rive-Droite;F|Montauban|Gare de Montauban-Ville-Bourbon;F|Auxerre|Gare d'Auxerre-Saint-Gervais;F|Calais|Gare de Calais-Ville;F|Poitiers|Gare de Poitiers;F|Deauville|Gare de Trouville - Deauville;F|Caen|Gare de Caen;B|Verviers|Gare de Verviers-Central;F|Vichy|Gare de Vichy;F|Cholet|Gare de Cholet;F|Saint-Malo|Gare de Saint-Malo;F|Valence|Gare de Valence-Ville;F|Épinal|Gare d'Épinal;F|Niort|Gare de Niort;F|Compiègne|Gare de Compiègne;B|Waterloo|Gare de Waterloo;F|Lille|Gare de Lille-Flandres;F|Chamonix|Gare de Chamonix-Mont-Blanc;F|Perpignan|Gare de Perpignan;F|Bastia|Gare de Bastia;F|Annecy|Gare d'Annecy;F|Amiens|Gare d'Amiens;F|Lyon|Gare de Lyon-Part-Dieu;F|Béziers|Gare de Béziers;F|Saint-Brieuc|Gare de Saint-Brieuc;F|Figeac|Gare de Figeac;B|Mons|Gare de Mons;B|Arlon|Gare d'Arlon;F|Montpellier|Gare de Montpellier-Saint-Roch;B|Ostende|Gare d'Ostende;B|Nivelles|Gare de Nivelles;F|Cahors|Gare de Cahors;F|Toulon|Gare de Toulon;F|Soissons|Gare de Soissons;F|Le Puy|Gare du Puy-en-Velay;F|Évreux|Gare d'Évreux-Normandie;F|Besançon|Gare de Besançon-Viotte";
+const gNorm=n=>n.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^A-Za-z]/g,"").toUpperCase();
+const GARES=GARES_RAW.split(";").map(x=>{ const [c,n,q]=x.split("|"); return {c,n,q:q||("Gare de "+n),w:gNorm(n)}; });
 /* =========================================================
    SUCCÈS
    ========================================================= */
@@ -2146,7 +2151,7 @@ function renderAch(){
 const GARE_TRIES=6;
 function todayKey(d=new Date()){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function dayIndex(){ const d=new Date(); return Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-Date.UTC(2026,10,24))/86400000); }
-function gareDuJour(){ const i=((dayIndex()%GARES.length)+GARES.length)%GARES.length, g=GARES[i]; return {n:dayIndex()+1,country:g[0],word:g.slice(1)}; }
+function gareDuJour(){ const i=((dayIndex()%GARES.length)+GARES.length)%GARES.length, g=GARES[i]; return {n:dayIndex()+1,country:g.c,word:g.w,name:g.n,q:g.q}; }
 function gDaily(){
   const k=todayKey();
   if(!state.gare||state.gare.date!==k){
@@ -2195,11 +2200,12 @@ function drawGare(anim){
   const hint = !g.done && fails>=3 ? `<div class="ghint">💡 Indice : c'est une gare ${G.country==="B"?"de Belgique 🇧🇪":"de France 🇫🇷"}${fails>=5?` · elle commence par « ${G.word[0]} »`:""}</div>` : "";
   let end="";
   if(g.done){
-    const nm=G.word[0]+G.word.slice(1).toLowerCase();
+    const nm=G.name;
     const reward=g.won?(g.guesses.length<=3?2:1):0;
     end=`<div class="gend">
       ${g.won?`<div class="gbig">🎉 Bravo ! C'était <b>${esc(nm)}</b></div><div class="muted">Trouvée en ${g.guesses.length} essai${g.guesses.length>1?"s":""} · +${reward} billet${reward>1?"s":""} 🎫 · série 🔥 ${g.streak}</div>`
              :`<div class="gbig">🚫 Train manqué ! C'était <b>${esc(nm)}</b></div><div class="muted">Retente ta chance demain.</div>`}
+      <div class="gphoto" id="gPhoto"><div class="muted" style="font-size:12px">📷 Chargement de la photo…</div></div>
       <div class="mono" style="margin-top:8px;font-size:13px">Prochaine gare dans <b id="gCount" style="color:var(--amber)"></b></div>
       <div class="row" style="justify-content:center;margin-top:12px"><button class="btn2 amber" id="gShare">📤 Partager mon résultat</button><button class="btn2" id="gClose2">Fermer</button></div>
     </div>`;
@@ -2212,11 +2218,24 @@ function drawGare(anim){
       ${hint}
       <div class="gmsg" id="gMsg"></div>
       ${g.done?end:`<div class="kbd">${krow("A Z E R T Y U I O P")}${krow("Q S D F G H J K L M")}${krow("ENTER W X C V B N DEL")}</div>`}
-      <div class="muted" style="font-size:12px;text-align:center;margin-top:10px">🟩 bonne place · 🟨 dans le nom mais ailleurs · ⬛ absente</div>
+      <div class="muted" style="font-size:12px;text-align:center;margin-top:10px">🟩 bonne place · 🟨 dans le nom mais ailleurs · ⬛ absente<br>Sans accents ; les noms composés s'écrivent attachés (ex. SAINTMALO)</div>
     </div>`;
   $("#gClose").onclick=closeGare;
   ov.querySelectorAll(".key").forEach(b=>b.onclick=()=>gKey(b.dataset.k));
-  if(g.done){ $("#gClose2").onclick=closeGare; $("#gShare").onclick=shareGare; tickCount(); }
+  if(g.done){ $("#gClose2").onclick=closeGare; $("#gShare").onclick=shareGare; tickCount(); loadGarePhoto(G); }
+}
+const garePhotoCache={};
+async function loadGarePhoto(G){
+  const box=$("#gPhoto"); if(!box) return;
+  const show=p=>{ const b=$("#gPhoto"); if(!b) return;
+    b.innerHTML=p&&p.img?`<a href="${esc(p.url)}" target="_blank" rel="noopener"><img src="${esc(p.img)}" alt="${esc(G.q)}" loading="lazy"></a><div class="gcap">${esc(p.title)} · photo Wikipédia</div>`:""; };
+  if(garePhotoCache[G.q]!==undefined) return show(garePhotoCache[G.q]);
+  try{
+    const u="https://fr.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrlimit=1&gsrnamespace=0&gsrsearch="+encodeURIComponent(G.q)+"&prop=pageimages|info&inprop=url&piprop=thumbnail&pithumbsize=800";
+    const r=await fetch(u); const j=await r.json(); const pg=j.query&&Object.values(j.query.pages||{})[0];
+    garePhotoCache[G.q]=pg&&pg.thumbnail?{img:pg.thumbnail.source,url:pg.fullurl,title:pg.title}:null;
+  }catch(e){ garePhotoCache[G.q]=null; }
+  show(garePhotoCache[G.q]);
 }
 function tickCount(){
   const el=$("#gCount"); if(!el) return;
