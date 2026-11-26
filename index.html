@@ -1541,13 +1541,14 @@ function showDetail(id,forceHolo,otherColl,otherName,view){
     ${tabs}
     <div class="dmeta">${LIGNES[c.l].ic} Ligne ${c.l} · ${LIGNES[c.l].n}<br>
     <b style="color:${RAR[c.r].c}">${RAR[c.r].n}</b> · ${otherName?esc(otherName)+" la possède":"Possédée"} ×${e?e.n:0}${e&&+e.g?` (dont ${+e.g} reçue${+e.g>1?"s":""})`:""}${e&&e.x?` · retards mystère : ${fmtDelay(+e.x)}`:""}${vers}${kline}<div id="ownPct" style="margin-top:6px;font-size:13px"></div></div>
-    ${!otherColl&&e&&(spareOf(e,id)>=1||(+e.h||0)>=3)?`<div class="row" style="margin-top:14px;gap:8px;justify-content:center">${session&&spareOf(e,id)>=1?`<button class="btn2 amber" id="giftBtn">🎁 Offrir</button><button class="btn2 amber" id="tradeBtn">🔁 Échanger</button>`:""}<button class="btn2 amber" id="recDBtn">${(+e.h||0)>=3?"✨ Surclasser":"🔧 Recycler"}</button></div>`:""}
+    ${!otherColl&&e&&(spareOf(e,id)>=1||(+e.h||0)>=3)?`<div class="row" style="margin-top:14px;gap:8px;justify-content:center">${session&&spareOf(e,id)>=1?`<button class="btn2 amber" id="giftBtn">🎁 Offrir</button><button class="btn2 amber" id="tradeBtn">🔁 Échanger</button>`:""}${(+e.h||0)>=3?`<button class="btn2" id="karDBtn" style="background:linear-gradient(180deg,#fff3b0,#e0a92b);color:#3a2400;border:0">✨ Surclasser en Karma</button>`:""}${spareOf(e,id)>=1?`<button class="btn2 amber" id="recDBtn">🔧 Recycler</button>`:""}</div>`:""}
     ${!otherColl&&session&&e&&spareOf(e,id)<1?`<div class="muted" style="margin-top:12px;font-size:13px">${e.n>=2?"Seuls les exemplaires classiques en double peuvent être offerts ou échangés.":"Tu pourras l'offrir ou l'échanger quand tu l'auras en double."}</div>`:""}`;
   ov.querySelectorAll(".vtabs button").forEach(b=>b.onclick=ev=>{ ev.stopPropagation(); showDetail(id,false,otherColl,otherName,b.dataset.v); });
   ov.classList.add("on");
   fillOwnPct(id);
   const gb=ov.querySelector("#giftBtn"); if(gb) gb.onclick=ev=>{ ev.stopPropagation(); ov.classList.remove("on"); ov.innerHTML=""; showGift(id); };
   const rb=ov.querySelector("#recDBtn"); if(rb) rb.onclick=ev=>{ ev.stopPropagation(); ov.classList.remove("on"); ov.innerHTML=""; showAtelier(id); };
+  const kb=ov.querySelector("#karDBtn"); if(kb) kb.onclick=ev=>{ ev.stopPropagation(); ov.classList.remove("on"); ov.innerHTML=""; atFocus=id; recycleConfirm(id,"karma"); };
   const tb=ov.querySelector("#tradeBtn"); if(tb) tb.onclick=ev=>{ ev.stopPropagation(); ov.classList.remove("on"); ov.innerHTML=""; showTrade(id); };
   const tilt=ov.querySelector(".tilt"), card=ov.querySelector(".card");
   const mv=ev=>{
