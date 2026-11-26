@@ -137,13 +137,9 @@ h3{margin:18px 0 8px;font-size:17px}
   background:linear-gradient(110deg,transparent 35%,#fff5c866 46%,#fff8e0aa 50%,#fff5c866 54%,transparent 65%),radial-gradient(circle at 18% 22%,#fff 0 .5cqw,transparent 1.2cqw),radial-gradient(circle at 82% 12%,#fff 0 .4cqw,transparent 1cqw),radial-gradient(circle at 70% 58%,#fff 0 .45cqw,transparent 1.1cqw),radial-gradient(circle at 26% 74%,#fff 0 .35cqw,transparent .9cqw),radial-gradient(circle at 88% 86%,#fff 0 .4cqw,transparent 1cqw);background-size:300% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%;animation:kshine 3.2s ease-in-out infinite,ktw 2.4s ease-in-out infinite}
 @keyframes ktw{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6)}}
 @keyframes kshine{0%{background-position:120% 0}60%,100%{background-position:-60% 0}}
-.card.karma .c-art:not([style*="url("]){background:radial-gradient(circle at 50% 35%,#f6cf6a,#9a6a0c 78%)!important}
-.card.karma .c-art{filter:sepia(1) saturate(2.6) hue-rotate(-10deg) contrast(1.12) brightness(.96)}
 .card.karma .cw-sp,.card.karma .in::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;mix-blend-mode:color-dodge;opacity:.3;
   background:linear-gradient(115deg,transparent 18%,#ffd75e66 28%,#fff3b099 36%,#ffb00055 44%,#fffbe0aa 52%,#e0a92b66 60%,#fff3b077 68%,transparent 78%);
   background-size:300% 300%;background-position:var(--hx,50%) var(--hy,50%);animation:holo 4s linear infinite}
-.card.karma .c-ph{filter:grayscale(1) contrast(1.2) brightness(.98)}
-.card.karma .c-art[style*="url("]{filter:grayscale(1) contrast(1.2) sepia(1) saturate(2.5) hue-rotate(-12deg) brightness(.98)}
 .card.karma .c-ph{border-color:#ffe27a}
 .card.karma .c-name{background:linear-gradient(180deg,#fffbe6,#ffd75e 55%,#e0a92b);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 .3cqw 0 #5a3700) drop-shadow(0 0 1.5cqw #ffcf4d88)}
 .card.karma .c-board{background:#1a1102e6;color:#ffe7a0;border:.35cqw solid #e0a92b99;box-shadow:inset 0 0 2cqw #ffcf4d22}
@@ -161,6 +157,18 @@ h3{margin:18px 0 8px;font-size:17px}
 .slot .card.karma .in::before,.dupc .card.karma .in::before,.tw .card.karma .in::before,.door .card.karma .in::before{animation:none}
 .slot .card.karma .in::after,.dupc .card.karma .in::after,.door .card.karma .in::after{animation:none;background-position:30% 0,0 0,0 0,0 0,0 0,0 0}
 @media (prefers-reduced-motion:reduce){.card.karma,.card.karma .in::before,.card.karma .in::after{animation:none!important}}
+.card.karma .c-art{height:auto;flex:1 1 0;min-height:20%}
+.card.karma .c-name{padding-top:2cqw;font-size:6.2cqw}
+.card.karma .c-board{flex:0 0 auto;font-size:3.5cqw;line-height:1.25}
+.card.karma .c-fl.kfl{padding-bottom:2.6cqw;font-size:3.5cqw;line-height:1.2}
+.card.karma .c-fl.kfl s{font-size:3cqw}
+/* Karma « noir & or » : illustration en couleurs, feuille d'or qui tourne, reflets irisés dorés */
+.card.karma{background:conic-gradient(from var(--ang,0deg),#7a4e08,#ffe9a3,#c8901c,#fffaf0,#b07a12,#ffd75e,#8a5a10,#fff3c4,#7a4e08)!important;animation:spin 7s linear infinite!important}
+.card.karma .in{background:linear-gradient(170deg,#1b140a,#0b0906 55%,#17110a)}
+.card.karma .c-art{box-shadow:0 0 0 .55cqw #e8b84a,0 0 0 .9cqw #6b4410,0 0 4cqw #ffcf4d55}
+.card.karma .c-ph{border-color:#ffe08a;box-shadow:0 0 3cqw #ffcf4d88}
+.card.karma .in::before{opacity:.5;background:linear-gradient(115deg,transparent 18%,#ffd75e66 28%,#ff9ec455 36%,#fff3b088 44%,#b8a0ff44 52%,#ffd75e66 60%,#fffaf066 66%,transparent 76%);background-size:300% 300%}
+.card.karma .c-board{background:#07060499;border-color:#c8901c}
 .c-kar{position:absolute;left:50%;transform:translateX(-50%);font-size:3.4cqw;font-weight:700;color:#ffe27a;text-shadow:0 0 2cqw #ffb000;white-space:nowrap}
 .c-fl.kfl{display:flex;flex-direction:column;gap:.6cqw;padding-top:1cqw}
 .c-fl.kfl s{font-size:3.3cqw;color:#e6d6ae;text-decoration-color:#ffd75eaa;text-decoration-thickness:.35cqw}
