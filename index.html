@@ -583,7 +583,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
         <li><b>🚉 La Gare du jour</b> : chaque jour à minuit, une nouvelle gare de France ou de Belgique à deviner en 6 essais (la même pour tout le monde). Trouvée : 1 billet, 2 si trouvée en 3 essais ou moins.</li>
         <li>Tu peux <b>offrir tes doublons</b> à un autre joueur (touche une carte que tu as en double dans l'album). Une carte reçue complète l'album, mais n'ajoute pas de retard : le retard cumulé ne compte que les billets que tu as ouverts.</li>
         <li>Les cartes au retard <b>« ?? »</b> tirent un <b>retard mystère</b> au sort à chaque exemplaire (5 à 60 min pour les communes, jusqu'à 4 h pour les plus rares). Il s'ajoute à ton retard cumulé.</li>
-        <li><b>🔁 Échanges</b> : propose un de tes doublons contre un doublon d'un autre joueur. Ta carte est mise de côté jusqu'à sa réponse (3 propositions en attente maximum). Comme pour les dons, une carte échangée complète l'album sans ajouter de retard.</li>
+        <li><b>🔁 Échanges</b> : propose jusqu'à 3 de tes doublons contre des doublons d'un autre joueur, qu'il te manquent ou que tu aies déjà (pratique pour l'Atelier). Ta carte est mise de côté jusqu'à sa réponse (3 propositions en attente maximum). Comme pour les dons, une carte échangée complète l'album sans ajouter de retard.</li>
         <li><b>🔧 Atelier de recyclage</b> (dans l'Album) : recycle des exemplaires classiques identiques d'une carte contre un exemplaire ✦ Holo, une carte au hasard de la rareté au-dessus (déjà possédée ou non), ou un billet. Nombre d'exemplaires recyclés selon la rareté : <b>10</b> communes, <b>8</b> peu communes, <b>5</b> rares, <b>4</b> super rares, <b>3</b> ultra rares, légendaires ou mythiques. <b>Tu gardes toujours 1 exemplaire</b> : il faut donc en avoir un de plus (par exemple 11 communes pour en recycler 10, ou 4 ultra rares pour en recycler 3). Ton retard cumulé ne bouge pas.</li>
         <li><b>🎄 Calendrier de l'Avent</b> : du 1ᵉʳ au 24 décembre, une case à ouvrir chaque jour au Guichet, avec une carte de Noël exclusive (ligne Noël du rail) et un billet. Les cases 1, 6, 15 et 24 offrent en plus un billet doré : un booster avec au moins une Ultra rare garantie. Une case manquée ne se rattrape pas, mais les cartes de Noël s'échangent et s'offrent. Elles ne comptent pas dans le total de l'album, mais leur retard s'ajoute à ton retard cumulé (sauf pour celles reçues en cadeau ou par échange, comme toujours).</li>
         <li><b>🏅 Succès</b> : chaque nouveau succès débloqué rapporte des bons (10, 25, 50 ou 100 🪙 selon la difficulté).</li>
@@ -1477,12 +1477,13 @@ function showDetail(id,forceHolo,otherColl,otherName,view){
     ${tabs}
     <div class="dmeta">${LIGNES[c.l].ic} Ligne ${c.l} · ${LIGNES[c.l].n}<br>
     <b style="color:${RAR[c.r].c}">${RAR[c.r].n}</b> · ${otherName?esc(otherName)+" la possède":"Possédée"} ×${e?e.n:0}${e&&+e.g?` (dont ${+e.g} reçue${+e.g>1?"s":""})`:""}${e&&e.x?` · retards mystère : ${fmtDelay(+e.x)}`:""}${vers}${kline}<div id="ownPct" style="margin-top:6px;font-size:13px"></div></div>
-    ${!otherColl&&session&&e&&spareOf(e,id)>=1?`<div class="row" style="margin-top:14px;gap:8px;justify-content:center"><button class="btn2 amber" id="giftBtn">🎁 Offrir</button><button class="btn2 amber" id="tradeBtn">🔁 Échanger</button></div>`:""}
+    ${!otherColl&&e&&(spareOf(e,id)>=1||(+e.h||0)>=3)?`<div class="row" style="margin-top:14px;gap:8px;justify-content:center">${session&&spareOf(e,id)>=1?`<button class="btn2 amber" id="giftBtn">🎁 Offrir</button><button class="btn2 amber" id="tradeBtn">🔁 Échanger</button>`:""}<button class="btn2 amber" id="recDBtn">${(+e.h||0)>=3?"✨ Surclasser":"🔧 Recycler"}</button></div>`:""}
     ${!otherColl&&session&&e&&spareOf(e,id)<1?`<div class="muted" style="margin-top:12px;font-size:13px">${e.n>=2?"Seuls les exemplaires classiques en double peuvent être offerts ou échangés.":"Tu pourras l'offrir ou l'échanger quand tu l'auras en double."}</div>`:""}`;
   ov.querySelectorAll(".vtabs button").forEach(b=>b.onclick=ev=>{ ev.stopPropagation(); showDetail(id,false,otherColl,otherName,b.dataset.v); });
   ov.classList.add("on");
   fillOwnPct(id);
   const gb=ov.querySelector("#giftBtn"); if(gb) gb.onclick=ev=>{ ev.stopPropagation(); ov.classList.remove("on"); ov.innerHTML=""; showGift(id); };
+  const rb=ov.querySelector("#recDBtn"); if(rb) rb.onclick=ev=>{ ev.stopPropagation(); ov.classList.remove("on"); ov.innerHTML=""; showAtelier(id); };
   const tb=ov.querySelector("#tradeBtn"); if(tb) tb.onclick=ev=>{ ev.stopPropagation(); ov.classList.remove("on"); ov.innerHTML=""; showTrade(id); };
   const tilt=ov.querySelector(".tilt"), card=ov.querySelector(".card");
   const mv=ev=>{
@@ -2231,14 +2232,16 @@ async function showTrade(id){
   const me=session.pseudo.toLowerCase();
   const others=lbRows.filter(v=>String(v.pseudo).toLowerCase()!==me).map(v=>{
     const coll=v.coll||{};
-    const offer=Object.entries(coll).filter(([k,e])=>BYID[k]&&e&&spareOf(e,k)>=1&&!(state.coll[k]&&state.coll[k].n>0)).map(([k])=>+k).sort((x,y)=>x-y);
+    const miss=k=>!(state.coll[k]&&state.coll[k].n>0);
+    const offer=Object.entries(coll).filter(([k,e])=>BYID[k]&&e&&spareOf(e,k)>=1).map(([k])=>+k).sort((x,y)=>(miss(y)-miss(x))||(x-y));
+    const nmiss=offer.filter(miss).length;
     const lacks=!(coll[id]&&coll[id].n>0);
-    return {pseudo:String(v.pseudo),coll,offer,lacks};
-  }).filter(o=>o.offer.length).sort((a,b)=>(b.lacks-a.lacks)||(b.offer.length-a.offer.length));
+    return {pseudo:String(v.pseudo),coll,offer,lacks,nmiss};
+  }).filter(o=>o.offer.length).sort((a,b)=>(b.lacks-a.lacks)||(b.nmiss-a.nmiss)||(b.offer.length-a.offer.length));
   modal(`<h3>🔁 Échanger des cartes</h3>
     <div style="width:38%;margin:0 auto 8px">${cardHTML(BYID[id],{})}</div>
     <p class="muted" style="margin:0 0 12px;font-size:14px;text-align:center">Tu proposes « ${esc(BYID[id].t)} ». Avec qui ?</p>
-    ${others.length?others.map((o,i)=>`<button class="tplayer" data-i="${i}"><span><b>${esc(o.pseudo.slice(0,20))}</b><small>${o.offer.length} doublon${o.offer.length>1?"s":""} qui te manque${o.offer.length>1?"nt":""}</small></span>${o.lacks?'<span class="tag">✨ n\'a pas ta carte</span>':""}</button>`).join(""):'<p class="muted">Personne n\'a de doublon qui te manque pour l\'instant.</p>'}
+    ${others.length?others.map((o,i)=>`<button class="tplayer" data-i="${i}"><span><b>${esc(o.pseudo.slice(0,20))}</b><small>${o.offer.length} doublon${o.offer.length>1?"s":""}${o.nmiss?` · ${o.nmiss} qui te manque${o.nmiss>1?"nt":""}`:""}</small></span>${o.lacks?'<span class="tag">✨ n\'a pas ta carte</span>':""}</button>`).join(""):'<p class="muted">Personne n\'a de doublon qui te manque pour l\'instant.</p>'}
     <button class="btn2" style="width:100%;margin-top:6px" id="tNo">Annuler</button>`, m=>{
       m.querySelector("#tNo").onclick=closeModal;
       m.querySelectorAll(".tplayer").forEach(b=>b.onclick=()=>{ SFX.tap(); tradePickWant({first:id,o:others[+b.dataset.i],want:[],give:[id]}); });
@@ -2249,8 +2252,8 @@ function pickGrid(ids,sel,mark){
 }
 function tradePickWant(T){
   modal(`<h3>🔁 Tu reçois…</h3>
-    <p class="muted" style="margin:0;font-size:14px">Choisis jusqu'à ${TMAX} doublons de <b style="color:var(--txt)">${esc(T.o.pseudo.slice(0,20))}</b> :</p>
-    ${pickGrid(T.o.offer,T.want)}
+    <p class="muted" style="margin:0;font-size:14px">Choisis jusqu'à ${TMAX} doublons de <b style="color:var(--txt)">${esc(T.o.pseudo.slice(0,20))}</b>. ✨ = tu ne l'as pas encore. Les autres sont parfaites pour l'Atelier !</p>
+    ${pickGrid(T.o.offer,T.want,k=>!(state.coll[k]&&state.coll[k].n>0))}
     <button class="bigbtn" id="tNext" ${T.want.length?"":"disabled"}>Suivant (${T.want.length}/${TMAX}) →</button>
     <button class="btn2" style="width:100%;margin-top:10px" id="tBack">← Changer de joueur</button>`, m=>{
       m.querySelector("#tBack").onclick=()=>showTrade(T.first);
@@ -2388,8 +2391,10 @@ function showTradeOffer(r,next){
 }
 /* ================= ATELIER DE RECYCLAGE ================= */
 const RCOST={C:10,PC:8,R:5,SR:4,UR:3,L:3,M:3};
-function showAtelier(){
-  const rows=CARDS.filter(c=>{ const e=state.coll[c.id]; return e&&(spare(c.id)>=1||(+vn(e,c.id).h||0)>=3); }).map(c=>{ const e=state.coll[c.id], sp=spare(c.id), cost=RCOST[c.r]; return {c,e,sp,cost,ok:sp>=cost,kok:(+e.h||0)>=3}; })
+let atFocus=null;
+function showAtelier(only){
+  if(only!==undefined) atFocus=only||null;
+  const rows=CARDS.filter(c=>{ const e=state.coll[c.id]; return (!atFocus||c.id===atFocus)&&e&&(spare(c.id)>=1||(+vn(e,c.id).h||0)>=3); }).map(c=>{ const e=state.coll[c.id], sp=spare(c.id), cost=RCOST[c.r]; return {c,e,sp,cost,ok:sp>=cost,kok:(+e.h||0)>=3}; })
     .sort((a,b)=>(b.kok-a.kok)||(b.ok-a.ok)||(b.sp/b.cost-a.sp/a.cost));
   const nxt=r=>RORDER[RORDER.indexOf(r)+1];
   modal(`<h3>🔧 Atelier de recyclage</h3>
@@ -2408,9 +2413,11 @@ function showAtelier(){
       ${nh?`<div class="muted" style="font-size:12.5px;margin-top:6px">${r.kok?`3 ✦ Holo identiques :`:`✦ Holo : ${nh}/3 pour une carte Karma`}</div>
       ${r.kok?`<div class="recbtns"><button class="btn2" data-k="karma" style="background:linear-gradient(180deg,#fff3b0,#e0a92b);color:#3a2400;border:0">✨ Karma</button></div>`:`<div class="recbar"><i style="width:${nh/3*100}%;background:linear-gradient(90deg,#7ff3ff,#ffd75e)"></i></div>`}`:""}
       </div></div>`; }).join("")
-    :'<p class="muted">Tu n\'as pas encore de doublons. Ouvre des billets !</p>'}
-    <button class="btn2" style="width:100%;margin-top:12px" id="rNo">Fermer</button>`, m=>{
+    :atFocus?'<p class="muted">Plus assez d\'exemplaires de cette carte à recycler pour l\'instant.</p>':'<p class="muted">Tu n\'as pas encore de doublons. Ouvre des billets !</p>'}
+    ${atFocus?`<button class="btn2" style="width:100%;margin-top:12px" id="rAll">🔧 Voir tout l'atelier</button>`:""}
+    <button class="btn2" style="width:100%;margin-top:10px" id="rNo">Fermer</button>`, m=>{
       m.querySelector("#rNo").onclick=closeModal;
+      const ra=m.querySelector("#rAll"); if(ra) ra.onclick=()=>showAtelier(0);
       m.querySelectorAll(".recrow [data-k]").forEach(b=>b.onclick=()=>{ SFX.tap(); recycleConfirm(+b.closest(".recrow").dataset.id,b.dataset.k); });
   });
 }
@@ -2942,7 +2949,7 @@ $("#buyBtn").onclick=()=>{
   state.bons-=CFG.price; state.tickets++; save(); SFX.coin(); renderAll(); toast("Billet acheté au guichet !");
 };
 $("#chipT").onclick=()=>{ SFX.tap(); if(!state) return; toast(state.tickets>=CFG.max?`🎫 ${state.tickets} billets : ton stock est plein, composte-les !`:`🎫 ${state.tickets} billet${state.tickets>1?"s":""} à composter. Un nouveau arrive dans ${Math.ceil(nextIn()/60000)} min.`); };
-$("#recBtn").onclick=()=>{ SFX.tap(); showAtelier(); };
+$("#recBtn").onclick=()=>{ SFX.tap(); showAtelier(0); };
 $("#dupBtn").onclick=()=>{ SFX.tap(); showDups(); };
 $("#chipB").onclick=()=>{ SFX.tap(); if(!state) return; toast(`🪙 Bons de compensation : ${state.bons}. Tu en gagnes avec tes doublons, et ${CFG.price} bons = 1 billet au Guichet.`); };
 $("#hiddenCard").onclick=()=>{ const h=$("#hiddenCard"); h.style.opacity=".9"; h.style.transform="rotate(0) scale(1.6)"; setTimeout(()=>unlockSecret("cachee"),300); };
