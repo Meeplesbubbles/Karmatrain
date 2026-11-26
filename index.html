@@ -130,7 +130,54 @@ h3{margin:18px 0 8px;font-size:17px}
 @property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
 @keyframes spin{to{--ang:360deg}}
 .card.r-L{box-shadow:0 0 6cqw #ffd23f66,0 1.5cqw 5cqw #0008}
+.card.karma{background:linear-gradient(135deg,#a06a0c,#ffe08a 18%,#d99a22 34%,#fff0b8 50%,#c98a18 66%,#ffd970 82%,#b57c12)!important;background-size:200% 200%!important;animation:kframe 6s ease-in-out infinite!important;box-shadow:0 0 4cqw #ffcf4daa,0 0 12cqw #e0a92b55,0 1.5cqw 5cqw #0008}
+@keyframes kframe{0%,100%{background-position:0% 0%}50%{background-position:100% 100%}}
+.card.karma .in{background:radial-gradient(120% 70% at 50% 0%,#6a4a14 0%,#3b2a0a 45%,#2a1d06 100%)}
+.card.karma .in::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
+  background:linear-gradient(110deg,transparent 35%,#fff5c866 46%,#fff8e0aa 50%,#fff5c866 54%,transparent 65%),radial-gradient(circle at 18% 22%,#fff 0 .5cqw,transparent 1.2cqw),radial-gradient(circle at 82% 12%,#fff 0 .4cqw,transparent 1cqw),radial-gradient(circle at 70% 58%,#fff 0 .45cqw,transparent 1.1cqw),radial-gradient(circle at 26% 74%,#fff 0 .35cqw,transparent .9cqw),radial-gradient(circle at 88% 86%,#fff 0 .4cqw,transparent 1cqw);background-size:300% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%;animation:kshine 3.2s ease-in-out infinite,ktw 2.4s ease-in-out infinite}
+@keyframes ktw{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6)}}
+@keyframes kshine{0%{background-position:120% 0}60%,100%{background-position:-60% 0}}
+.card.karma .c-art:not([style*="url("]){background:radial-gradient(circle at 50% 35%,#f6cf6a,#9a6a0c 78%)!important}
+.card.karma .c-art{filter:sepia(1) saturate(2.6) hue-rotate(-10deg) contrast(1.12) brightness(.96)}
+.card.karma .cw-sp,.card.karma .in::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;mix-blend-mode:color-dodge;opacity:.3;
+  background:linear-gradient(115deg,transparent 18%,#ffd75e66 28%,#fff3b099 36%,#ffb00055 44%,#fffbe0aa 52%,#e0a92b66 60%,#fff3b077 68%,transparent 78%);
+  background-size:300% 300%;background-position:var(--hx,50%) var(--hy,50%);animation:holo 4s linear infinite}
+.card.karma .c-ph{filter:grayscale(1) contrast(1.2) brightness(.98)}
+.card.karma .c-art[style*="url("]{filter:grayscale(1) contrast(1.2) sepia(1) saturate(2.5) hue-rotate(-12deg) brightness(.98)}
+.card.karma .c-ph{border-color:#ffe27a}
+.card.karma .c-name{background:linear-gradient(180deg,#fffbe6,#ffd75e 55%,#e0a92b);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 .3cqw 0 #5a3700) drop-shadow(0 0 1.5cqw #ffcf4d88)}
+.card.karma .c-board{background:#1a1102e6;color:#ffe7a0;border:.35cqw solid #e0a92b99;box-shadow:inset 0 0 2cqw #ffcf4d22}
+.card.karma .c-stats{color:#f2d58a}.card.karma .c-stats b{color:#ffd75e}
+.card.karma .c-rar{background:linear-gradient(180deg,#fff3b0,#e0a92b);color:#3a2400}
+.card.karma::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;mix-blend-mode:soft-light;opacity:.8;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9 .06' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 .9  0 0 0 0 .6  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");background-size:160px 160px;
+  box-shadow:inset 0 0 0 .5cqw #fffbe6aa,inset 0 .8cqw 1.2cqw #ffffffaa,inset 0 -1.2cqw 2cqw #7a4a0899}
+.k-glare{position:absolute;inset:0;pointer-events:none;z-index:4;mix-blend-mode:overlay;opacity:0;transition:opacity .3s;
+  background:radial-gradient(circle at var(--hx,50%) var(--hy,30%),#fff6d0aa 0%,#ffe9a055 14%,transparent 40%)}
+.detail-card .card.karma .k-glare,.flip .card.karma .k-glare{opacity:1}
+.detail-card .card.karma{transform:translateZ(0)}
+@keyframes klift{0%{transform:scale(.85) rotateX(25deg);filter:brightness(2.2)}60%{transform:scale(1.04) rotateX(-4deg);filter:brightness(1.3)}100%{transform:none;filter:none}}
+.detail-card .tilt.kin{animation:klift .9s cubic-bezier(.2,.9,.3,1.2)}
+.slot .card.karma,.dupc .card.karma,.tw .card.karma,.door .card.karma{animation:none!important;box-shadow:0 0 3cqw #ffcf4d88,0 1.5cqw 5cqw #0008}
+.slot .card.karma .in::before,.dupc .card.karma .in::before,.tw .card.karma .in::before,.door .card.karma .in::before{animation:none}
+.slot .card.karma .in::after,.dupc .card.karma .in::after,.door .card.karma .in::after{animation:none;background-position:30% 0,0 0,0 0,0 0,0 0,0 0}
+@media (prefers-reduced-motion:reduce){.card.karma,.card.karma .in::before,.card.karma .in::after{animation:none!important}}
+.c-kar{position:absolute;left:50%;transform:translateX(-50%);font-size:3.4cqw;font-weight:700;color:#ffe27a;text-shadow:0 0 2cqw #ffb000;white-space:nowrap}
+.c-fl.kfl{display:flex;flex-direction:column;gap:.6cqw;padding-top:1cqw}
+.c-fl.kfl s{font-size:3.3cqw;color:#e6d6ae;text-decoration-color:#ffd75eaa;text-decoration-thickness:.35cqw}
+.kgift{display:inline-block;white-space:nowrap;background:linear-gradient(180deg,#fff3b0,#e0a92b);color:#3a2400;border-radius:1.5cqw;padding:0 1.4cqw;font-style:normal}
+.c-fl.kfl span{font-style:normal;font-weight:600;color:#ffe27a}
+.vb{position:absolute;left:-1px;bottom:-4px;z-index:3;background:#0b0f17e6;border:1px solid #ffffff22;border-radius:9px;padding:1px 6px;font-size:11px;font-weight:700;white-space:nowrap}
+.vb .h{color:#7ff3ff}.vb .k{color:#ffd75e}
+.vtabs{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:10px 0 2px}
+.vtabs button{background:#151c2b;border:1px solid #ffffff22;color:var(--txt);border-radius:999px;padding:6px 12px;font:600 13px Outfit,system-ui,sans-serif}
+.vtabs button.on{border-color:var(--amber);background:#2a2110}
+.vtabs button:disabled{opacity:.35}
+.ksplash{position:fixed;inset:0;z-index:999;display:grid;place-items:center;pointer-events:none;background:radial-gradient(ellipse 90% 40% at center,#000d 0%,#0009 45%,transparent 80%);animation:kfade 2.2s ease-out forwards}
+@keyframes kfade{0%{opacity:0}10%,75%{opacity:1}100%{opacity:0}}
+.ksplash b{font-family:Bungee;font-size:min(8.4vw,40px);padding:0 10px;color:#ffe27a;text-shadow:0 0 18px #ffb000,0 4px 0 #6b4100;text-align:center;line-height:1.1}
+.ksplash small{display:block;font-family:Outfit,system-ui,sans-serif;font-size:16px;color:#fff3c4;letter-spacing:2px;margin-top:8px}
 .card.locked{background:#1b2232}
+.card.locked.sfound{background:linear-gradient(145deg,#3b2f5c,#2a2140)}.card.locked.sfound .q{font-size:18cqw;color:#fff}.card.locked.sfound .ln{color:#c9b8ff}
 .card.locked .in{background:repeating-linear-gradient(45deg,#121826 0 4cqw,#151c2b 4cqw 8cqw);align-items:center;justify-content:center}
 .card.locked .q{font-family:Bungee;font-size:22cqw;color:#2b3650}
 .card.locked .ln{font-family:"JetBrains Mono",monospace;font-size:5cqw;color:#5d6a85;margin-top:2cqw}
@@ -530,12 +577,14 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
         <li>Un nouveau billet arrive toutes les <b>45 min</b> en semaine et toutes les <b>30 min</b> le week-end. Tu peux en stocker <b>5</b>.</li>
         <li>Chaque billet contient <b>5 cartes</b>. La dernière est toujours <b>Rare ou mieux</b>.</li>
         <li>Les doublons sont transformés en <b>bons de compensation 🪙</b>. 150 bons = 1 billet.</li>
-        <li>Certaines cartes sortent en version <b>✦ Holo</b> (4 % de chance).</li>
+        <li>Certaines cartes sortent en version <b>✦ Holo</b> (4 % de chance). Et, très rarement, en version <b style="color:#ffd75e">✨ Karma</b> (0,2 % : environ une tous les 100 billets).</li>
+        <li><b style="color:#ffd75e">✨ Cartes Karma</b> : la version ultime, toute dorée. Le karma s'y retourne : chaque carte Karma a sa propre <b>fin alternative</b>. Elles sont <b>numérotées</b> (Karma n°1, n°2…) dans l'ordre où les joueurs les obtiennent, et chaque nouvelle Karma est annoncée dans le Hall. On l'obtient au tirage, ou à l'Atelier en fusionnant <b>3 exemplaires ✦ Holo</b> identiques. Une carte Karma ne s'offre pas et ne s'échange pas. Environ <b>1 carte Karma sur 10 cache un cadeau 🎁</b> (billets, bons ou billet doré), offert la première fois que tu l'obtiens.</li>
+        <li><b>Classique, Holo, Karma</b> : l'album compte séparément chaque version d'une carte (✦ et ✨ sous la carte, détail dans sa fiche). Seuls les exemplaires classiques en double peuvent être offerts, échangés ou recyclés.</li>
         <li><b>🚉 La Gare du jour</b> : chaque jour à minuit, une nouvelle gare de France ou de Belgique à deviner en 6 essais (la même pour tout le monde). Trouvée : 1 billet, 2 si trouvée en 3 essais ou moins.</li>
         <li>Tu peux <b>offrir tes doublons</b> à un autre joueur (touche une carte que tu as en double dans l'album). Une carte reçue complète l'album, mais n'ajoute pas de retard : le retard cumulé ne compte que les billets que tu as ouverts.</li>
         <li>Les cartes au retard <b>« ?? »</b> tirent un <b>retard mystère</b> au sort à chaque exemplaire (5 à 60 min pour les communes, jusqu'à 4 h pour les plus rares). Il s'ajoute à ton retard cumulé.</li>
         <li><b>🔁 Échanges</b> : propose un de tes doublons contre un doublon d'un autre joueur. Ta carte est mise de côté jusqu'à sa réponse (3 propositions en attente maximum). Comme pour les dons, une carte échangée complète l'album sans ajouter de retard.</li>
-        <li><b>🔧 Atelier de recyclage</b> (dans l'Album) : recycle des exemplaires identiques d'une carte contre sa version ✦ Holo, une carte au hasard de la rareté au-dessus (déjà possédée ou non), ou un billet. Nombre d'exemplaires recyclés selon la rareté : <b>10</b> communes, <b>8</b> peu communes, <b>5</b> rares, <b>4</b> super rares, <b>3</b> ultra rares, légendaires ou mythiques. <b>Tu gardes toujours 1 exemplaire</b> : il faut donc en avoir un de plus (par exemple 11 communes pour en recycler 10, ou 4 ultra rares pour en recycler 3). Ton retard cumulé ne bouge pas.</li>
+        <li><b>🔧 Atelier de recyclage</b> (dans l'Album) : recycle des exemplaires classiques identiques d'une carte contre un exemplaire ✦ Holo, une carte au hasard de la rareté au-dessus (déjà possédée ou non), ou un billet. Nombre d'exemplaires recyclés selon la rareté : <b>10</b> communes, <b>8</b> peu communes, <b>5</b> rares, <b>4</b> super rares, <b>3</b> ultra rares, légendaires ou mythiques. <b>Tu gardes toujours 1 exemplaire</b> : il faut donc en avoir un de plus (par exemple 11 communes pour en recycler 10, ou 4 ultra rares pour en recycler 3). Ton retard cumulé ne bouge pas.</li>
         <li><b>🎄 Calendrier de l'Avent</b> : du 1ᵉʳ au 24 décembre, une case à ouvrir chaque jour au Guichet, avec une carte de Noël exclusive (ligne Noël du rail) et un billet. Les cases 1, 6, 15 et 24 offrent en plus un billet doré : un booster avec au moins une Ultra rare garantie. Une case manquée ne se rattrape pas, mais les cartes de Noël s'échangent et s'offrent. Elles ne comptent pas dans le total de l'album, mais leur retard s'ajoute à ton retard cumulé (sauf pour celles reçues en cadeau ou par échange, comme toujours).</li>
         <li><b>🏅 Succès</b> : chaque nouveau succès débloqué rapporte des bons (10, 25, 50 ou 100 🪙 selon la difficulté).</li>
         <li><b>🥚 Cartes secrètes</b> : quelques cartes cachées ne sortent jamais des billets. Elles se découvrent en faisant quelque chose de bien précis… Touche une case « ? » de la ligne Secrets pour acheter une énigme (200 🪙). Comme les cartes de Noël, elles sont en bonus et ne comptent pas dans le total de l'album.</li>
@@ -930,7 +979,10 @@ function totalDelay(){ return delayOf(state.coll); }
 const meloIn=coll=>{ const c=CARDS.find(x=>x.r==="M"); return !!(c&&coll&&coll[c.id]); };
 const hasMelo=()=>meloIn(state.coll);
 
-const CFG = {max:5, start:3, price:150, perPack:5, holo:.04};
+const CFG = {max:5, start:3, price:150, perPack:5, holo:.04, karma:.002};
+const KGIFT={"29": {"g": 1}, "127": {"g": 1}, "223": {"g": 1}, "275": {"g": 1}, "225": {"g": 1}, "151": {"t": 3}, "27": {"t": 2}, "39": {"t": 2}, "16": {"t": 1}, "124": {"t": 1}, "248": {"t": 1}, "280": {"t": 1}, "11": {"t": 1}, "123": {"t": 1}, "222": {"t": 1}, "278": {"b": 300}, "159": {"b": 200}, "211": {"b": 200}, "192": {"b": 150}, "178": {"b": 150}, "45": {"b": 100}, "36": {"b": 100}, "218": {"b": 100}, "77": {"b": 100}, "88": {"b": 100}, "180": {"b": 100}, "197": {"b": 50}, "112": {"b": 50}};
+const kgTxt=g=>g?(g.g?"🌟 +1 billet doré":g.t?`🎫 +${g.t} billet${g.t>1?"s":""}`:`🪙 +${g.b} bons`):"";
+const KF={"1": "Le feu est passé au vert pour la première fois depuis 1987. Le conducteur, ému aux larmes, t'a laissé klaxonner.", "2": "Le train d'avant t'a reconnu·e : vous aviez déjà voyagé ensemble. Il t'a gardé ta place préférée et a mis le chauffage.", "3": "Fin des travaux annoncée… aujourd'hui. Pour fêter ça, les ouvriers t'ont laissé·e couper le ruban.", "4": "Le train de graviers s'est rangé sur le côté pour te laisser passer. Il t'a même fait un appel de phares.", "5": "Les voyageurs de Tours sont arrivés les bras chargés de rillettes. Ils voulaient s'excuser auprès de toi.", "6": "Dans l'armoire, il y avait une boîte de jeu introuvable. Son propriétaire t'a dit : « Elle est pour toi. »", "7": "Le train était tellement en retard qu'il est arrivé pile à l'heure du train suivant. Le tien. Avec une place libre.", "8": "Ta place existait bien dans une autre rame : en première classe. Le contrôleur t'y a escorté·e.", "9": "Le train a rattrapé ses 5 minutes, puis 10 de plus. Tu es arrivé·e en avance. Personne ne te croit.", "10": "Les feuilles mortes ont tapissé le quai de toutes les couleurs. Ta photo de profil n'a jamais été aussi belle.", "11": "Les clémentines étaient le lot de « la personne la plus patiente du quai ». Le jury t'a choisi·e. Il y avait un billet caché au fond.", "12": "Le raccourci menait tout droit à une boulangerie. Ils t'ont rapporté un pain au chocolat encore chaud.", "13": "Les voleurs de câbles ont été rattrapés par une mamie à vélo. Elle t'a dédié sa victoire.", "14": "Au milieu du champ de colza, un photographe cherchait un modèle. Tu es en couverture du magazine du rail.", "15": "Cinq centimètres de neige : juste assez pour faire le plus beau bonhomme de neige du quai. Prix du jury.", "16": "Ton train de demain est en retard… donc tu as eu le temps de prendre celui d'aujourd'hui. Gratuitement.", "17": "Les raisons d'exploitation ont enfin été révélées : ton anniversaire surprise, organisé par le personnel.", "18": "Le sanglier s'est relevé, a secoué la tête et a poussé le train jusqu'en gare. Un nouvel ami.", "19": "Le chevreuil a continué de fixer le conducteur. Il l'a hypnotisé. Le train roule maintenant 20 % plus vite.", "20": "Les vaches avaient leur billet. Elles t'ont offert un fromage en guise de bienvenue à bord.", "21": "Le pigeon avait un billet de première. Il te l'a laissé en partant par la fenêtre.", "22": "Tu t'es réveillé·e à destination, parfaitement reposé·e. Les 312 moutons ont même porté ta valise.", "23": "Le chat t'a rendu ta place 42. Il a pris celle du chef de gare. Et tu as eu ses croquettes en bonus.", "24": "L'escargot t'a proposé de monter sur sa coquille. Il est passé par un raccourci secret. Arrivée en avance.", "25": "En creusant, le blaireau a trouvé un trésor sous le ballast. Il a partagé avec toi, moitié-moitié.", "26": "La cigogne s'est trompée d'adresse : le bébé était un chiot, et il est à toi maintenant.", "27": "Le second composteur en panne t'a imprimé un billet gratuit valable un an. Bug en ta faveur.", "28": "La prise de la voiture 11 a été libérée. Le voyageur qui l'occupait t'a aussi laissé sa batterie externe.", "29": "Le jambon-beurre contenait un ticket d'or. Un vrai. Le pain, lui, est toujours un concept.", "30": "Les toilettes de la voiture suivante étaient hors service… mais celles de la première classe t'attendaient.", "31": "Le wifi s'est connecté d'un coup. Débit : 1 Go/s. Tu as fini toute ta série avant Vierzon.", "32": "L'écran du quai s'est mis à afficher ton prénom, suivi de « Bon voyage ! ». Personne ne sait pourquoi.", "33": "Dans le sens inverse, tu as vu un arc-en-ciel double. Tu étais la seule personne bien placée.", "34": "La voiture 17 en tête du train, c'était juste devant le café. Tu as été servi·e le premier ou la première.", "35": "Le propriétaire de la valise endormi en voiture 7 était un pâtissier. Il t'a offert une tarte au citron.", "36": "Le bon de 4,20 € a gagné le gros lot de la loterie de la gare. Le lot ? Une pluie de bons de compensation.", "37": "Pendant ta course vers la voie N, un recruteur t'a repéré·e. Tu es la nouvelle star du sprint ferroviaire.", "38": "Inventaire terminé : il manquait une madeleine. Le barman l'a cherchée partout. Elle était dans ta main. Il te l'offre.", "39": "La 40 000ᵉ excuse du jour, c'était pour toi. Pour fêter ça, le réseau t'a offert des trajets gratuits.", "40": "Le voyageur debout était un acrobate. Il a fait un spectacle dans le couloir. Tu as eu la meilleure place.", "41": "Tu as compris « minutes ». La suite, c'était « … de massage offertes en voiture 3 ». Tu y étais le premier ou la première.", "42": "Le contrôleur fantôme est passé le jour où tu avais oublié ta carte. Il t'a dit : « Je vous connais, c'est bon. »", "43": "Gérard parlait d'un trésor caché dans son grenier. Il t'a invité·e à venir le chercher avec lui.", "44": "Le voisin déchaussé était podologue. Il t'a offert une consultation et des semelles sur mesure.", "45": "Les six ont fini par ouvrir le boîtier. Dedans : la panne, et un billet de loterie gagnant à ton nom.", "46": "Le conducteur est arrivé en voiture de sport. Il t'a ramené·e chez toi après le service.", "47": "La vache était une vache à lait au chocolat. Elle a rempli ton thermos.", "48": "Témoignage vérifié par huissier. L'huissier t'a même porté ta valise jusqu'à la correspondance.", "49": "Il a été observé une deuxième fois, en 2026. Le témoin, c'était toi. Tu passes au journal de 20 h.", "50": "Le karma s'est retourné : Mélodye est arrivée à l'heure. C'est le train qui a demandé une indemnisation. À elle.", "51": "L'inconnu à l'aisselle était parfumeur. Il t'a offert le flacon. Tu sens maintenant la lavande de luxe.", "52": "Toilettes bouchées ? Le train s'est arrêté devant un spa. Accès offert à tout le wagon.", "53": "Le bébé s'est arrêté de pleurer en te voyant. Ses parents t'ont offert des places pour un concert.", "54": "Le thon était du thon rouge de luxe. Le voyageur a fait des sushis pour tout le wagon.", "55": "Le contrôleur a mis tellement de temps qu'il a fini par te surclasser en première « pour la gêne occasionnée ».", "56": "Le faux dormeur s'est vraiment endormi. Il ronflait sur une jolie note : tu as composé une chanson. Elle cartonne.", "57": "La clim à 14 °C a gardé ta glace intacte pendant 3 heures. Meilleure glace de ta vie.", "58": "Le conducteur t'a vu·e. Il a rouvert la porte et t'a offert un café pour se faire pardonner.", "59": "Le futur marié banane t'a choisi·e comme témoin. Le mariage était génial. Il y avait des jeux.", "60": "Les négociations ont repris à Salbris. Tu as obtenu l'accoudoir, un coussin, et une partie de tarot.", "61": "Pas de solution de remplacement ? Le chef de gare t'a prêté sa draisine. Tu es rentré·e en pédalant sous les étoiles.", "62": "Le train a reculé jusqu'à la gare précédente, où tu avais oublié ton chargeur. Il t'attendait sur le banc.", "63": "Il a trouvé la dernière chips. Elle avait exactement la forme de ton visage. Il te l'a offerte, encadrée.", "64": "Tu connaissais la fin de la saison. Il t'a payé un café pour que tu ne la lui dises pas.", "65": "Demi-tour, valise à la main… et tu es tombé·e sur un ami perdu de vue depuis 10 ans. Voie 11.", "66": "Il a plu un peu dans la région d'à côté. Un arc-en-ciel s'est posé juste sur ton wagon.", "67": "Le train réfléchissait. Il a fini par trouver le sens de la vie, et il te l'a dit à l'oreille.", "68": "Le train à 2 % de batterie s'est rechargé sur ton énergie positive. Il t'a remercié·e en klaxonnant.", "69": "L'aiguillage a hésité, puis choisi la voie panoramique. Tu as vu des cerfs, une cascade et un château.", "70": "L'agent a sauté du train d'en face au tien, en marche. Il t'a dédié sa cascade et offert des chouquettes.", "71": "Les rails transpiraient tellement qu'un glacier est passé en vendre. Tu as eu la première glace, offerte.", "72": "L'arbre tombé était un pommier. Tout le wagon est reparti avec un panier de pommes. Toi, avec deux.", "73": "Le voyageur de Salbris voulait juste descendre… pour t'offrir des fleurs. Il te cherchait depuis Paris.", "74": "Le car de substitution était un car de tournée. Le groupe à l'arrière t'a invité·e à son concert.", "75": "Les pompiers ont fini en dix minutes. Le calendrier de l'année prochaine, c'est avec toi en couverture.", "76": "La randonnée à travers champs passait devant une ferme. Fromage de chèvre et cidre offerts.", "77": "Le contrôleur a recompté : 30 minutes pile. Remboursement intégral, et une boîte de chocolats en bonus.", "78": "La chèvre est descendue à Nevers, a fait les courses, et t'a rapporté un nougat.", "79": "Les abeilles ont choisi leur nouvelle reine : toi. Tu reçois un pot de miel par mois, à vie.", "80": "La porte voisine bloquée s'est ouverte sur un wagon secret : canapés, plaids et chocolat chaud.", "81": "Les Aubrais, c'était pile la gare où se cachait la boulangerie de tes rêves. Croissants pour toute la semaine.", "82": "Le chauffage à 28 °C a fait pousser des tomates sur la tablette. Tu repars avec une barquette.", "83": "Personne n'a aidé, alors la valise a appelé un ascenseur. Elle t'a laissé·e monter avec elle.", "84": "Le plan du réseau qui remplaçait le banc était un vrai plan au trésor. Tu as trouvé le trésor.", "85": "Le tunnel a coupé ta phrase juste avant que tu dises une bêtise. Merci, le tunnel.", "86": "Le mauvais train allait à la mer. Il faisait beau. Tu as pris ta journée.", "87": "L'hôtel du dernier recours venait d'être racheté par un chef étoilé. Dîner offert, et le petit-déj à 11 h.", "88": "Le wagon entier a regardé. Toi aussi. Et c'est toi qui as gagné la récompense pour l'avoir repéré.", "89": "La tante qui arrivait doucement était une ancienne championne de cuisine. Elle t'a donné sa recette secrète.", "90": "Paris était complet… sauf une place, réservée pour toi en première, dans la meilleure brasserie de la gare.", "91": "Dans le brouillard de Liège, un vendeur de gaufres te cherchait : tu es son 1 000ᵉ client. Gaufres à vie.", "92": "À Laroche-Migennes, le nouveau conducteur était un ancien pilote de rallye. Arrivée 20 minutes en avance.", "93": "Le train en panne devant transportait des jeux de société. Les cheminots ont ouvert les cartons.", "94": "Pour gratter le givre, le conducteur a utilisé un grattoir géant. Il a sculpté ton portrait dans la glace.", "95": "La personne sur les voies de Schaerbeek était un magicien. Il a fait réapparaître les 18 trains, dont le tien.", "96": "La rame de tête s'est perdue. La rame de queue est arrivée à Bordeaux… en plein festival du vin.", "97": "Le train est devenu bateau. Escale imprévue à une plage magnifique. Baignade autorisée.", "98": "La gaufre de Liège abandonnée a gagné un concours de pâtisserie. Le prix, c'est toi qui l'as reçu.", "99": "On l'a éteint et rallumé. Il est revenu avec une nouvelle option : « Trains à l'heure ».", "100": "Les départs suspendus ? Le buffet de la gare a ouvert ses portes. Petit-déj géant offert à tout le monde.", "101": "La mouette t'a rapporté un sandwich gourmet de la boulangerie d'en face. Elle s'excuse pour son cousin.", "102": "Les taureaux de Camargue t'ont escorté·e jusqu'à Nîmes, comme une star. Les gardians t'ont applaudi.", "103": "Tout le monde a eu faim. Le voyageur a appelé la friterie, qui a livré des frites pour tout le wagon.", "104": "Ta valise est montée à l'étage toute seule. Elle t'a gardé la meilleure place, avec vue.", "105": "Pendant la version allemande, un autre train est arrivé. Direct, plus rapide, et avec ta place.", "106": "Brive-la-Gaillarde t'a vu·e passer. Elle t'a envoyé une carte postale et un panier de foie gras.", "107": "À Châlons-en-Champagne, tout le train a été invité à une dégustation. Ton billet pour Strasbourg attendra.", "108": "Tu n'as pas touché le sol de Châtelet à Gare du Nord : tu as officiellement volé. Record homologué.", "109": "À Gand, le touriste t'a offert une bière. Vous êtes amis depuis. Il t'invite à Bruges.", "110": "De la voie A à la voie M, un agent t'a fait monter sur sa voiturette. Sandwich compris.", "111": "Les 14 minutes de sommeil étaient si réparatrices que tu as découvert ta vocation : testeur de couchettes.", "112": "Le billet était dans la poche du manteau d'hier. Avec 50 € oubliés. Tu as payé la régularisation, et il en reste.", "113": "À Marne-la-Vallée, tout le quai t'a laissé passer. Ton serre-tête est le plus beau de la journée.", "114": "À Ottignies, la correspondance a été annulée… remplacée par un minibus direct jusqu'à chez toi.", "115": "Le train en avance a été retenu à Angers. Tu en as profité pour visiter le château. Gratuit, ce jour-là.", "116": "Le ballon dans la caténaire disait « Joyeux anniversaire ». Les contrôleurs t'ont chanté la chanson.", "117": "La voie ne voyait pas le train. Le train ne la voyait pas non plus. Il a pris un raccourci invisible.", "118": "Le drone a filmé ton retard. Ta tête dépitée est devenue un mème. Tu touches des droits d'auteur.", "119": "Le tracteur transportait du foin… et une mariée en retard. Elle t'a invité·e à la fête.", "120": "Les céréales répandues ont attiré des pigeons. Les pigeons ont attiré un ornithologue. Il t'a offert des jumelles.", "121": "Le pantographe a été remplacé par un neuf, doré. Le conducteur t'a donné l'ancien en souvenir.", "122": "La valise a été coincée dans la porte… devant un éditeur de jeux qui cherchait des testeurs. Bienvenue dans l'équipe.", "123": "Les supporters t'ont adopté·e comme porte-bonheur. Leur équipe a gagné. Places offertes à vie.", "124": "Le sac à dos de 14 boîtes avait un double fond : une 15ᵉ boîte. Pour toi.", "125": "Le KarmaTrain s'est abattu… sur le distributeur de friandises. Il a tout donné. À toi.", "126": "Le pigeon a retiré sa plainte. Il t'a embauché·e comme avocat·e. Tu as gagné.", "127": "Julien a chargé 47 boîtes. La 48ᵉ, c'était un cadeau surprise. Ton prénom était écrit dessus.", "128": "Le contrôleur plié en deux a oublié de contrôler… et de te faire payer ta place en première. Augustin t'a gardé un siège.", "129": "Marine et Thibault ont trouvé l'accord parfait pour toi. Ils l'ont mis en bouteille. Tu repars avec une caisse.", "130": "Le train n'osait plus repartir, alors Tom a lancé une partie géante sur le quai. Tu as gagné.", "131": "Le contrôleur ne savait plus quel Augustin était lequel. Il a laissé passer tout le monde. Toi aussi.", "132": "Le train a attendu Coralie. Elle est arrivée avec des viennoiseries pour tout le wagon. Pain au chocolat pour toi.", "133": "Le Japon a envoyé une délégation pour San. Tu as été invité·e au voyage.", "134": "Le contrôleur a demandé la revanche. Eurelise l'a battu. Tu as eu son képi en trophée.", "135": "À la prise n°15, Nicolas t'a demandé de traverser le champ exprès. Le reel a fait un million de vues.", "136": "Aurélien s'est réveillé au bon arrêt. Le tien. Il t'a porté ta valise par gratitude.", "137": "Le vote a désigné le contrôleur Démon. Il a avoué, et offert des chocolats pour se faire pardonner.", "138": "Le contrôle olfactif s'est terminé en raclette géante. Alex t'a gardé la meilleure part du demi-fromage.", "139": "Le meeple sous ton siège était doré. Cindy t'a dit de le garder.", "140": "Krystel a expliqué les règles si clairement que tu as gagné ta toute première partie. Elle t'a même offert la boîte.", "141": "Le bar était fermé. Mathilde a frappé : le barman a ouvert rien que pour elle, et il t'a servi aussi.", "142": "Les trois contrôleurs disparus sont réapparus en voiture-bar : ils jouaient à Blood. Vincent t'a fait gagner.", "143": "Le conducteur a été nominé à deux voix près. Il a démissionné… pour t'offrir sa place. Tu as klaxonné.", "144": "Le composteur exécuté est revenu en fantôme. Il composte maintenant gratuitement. Uniquement pour toi.", "145": "Le contrôleur a refusé de rendre la playlist. Alors il t'a nommé·e DJ officiel·le de la ligne.", "146": "Le contrôleur a fini par jouer au Poisson frétillant. Il a perdu. Gage : te surclasser.", "147": "Cette fois, c'est Augustin qui a demandé un autographe à Théo. Théo a signé, puis t'a confié le feutre.", "148": "Tu as dit « excusez-moi » une 4ᵉ fois. Elle s'est réveillée : c'était une masseuse. Séance offerte.", "149": "Le contrôleur a regardé le plafond… et y a vu une trappe. Dedans : une cabine de première, rien que pour vous deux.", "150": "La licorne t'a laissé la caresser. Depuis, tous tes trains sont à l'heure. Elle t'a jeté un sort.", "151": "Le dragon a accepté ta place en 1re classe. En échange, il t'a laissé son tas de billets. Tous valables.", "152": "Le chaton t'a choisi·e. Ses propriétaires t'ont proposé de l'adopter. Il s'appelle Composteur.", "153": "Le dernier caneton a refusé de bouger… jusqu'à ce que tu le portes. Sa mère t'a nommé·e marraine ou parrain.", "154": "Le hérisson t'a appris à prendre ton temps. Tu as raté ton train, et rencontré l'amour sur le quai.", "155": "L'écureuil a rendu les noisettes, et t'a désigné·e comme héritier·e de toute sa réserve d'hiver.", "156": "Le golden retriever s'est endormi sur tes pieds. Ses maîtres t'ont invité·e à garder le chien quand tu veux.", "157": "L'alpaga a craché sur le pied posé sur ton siège. Le siège est libre. Et il t'a tricoté un bonnet.", "158": "Le joueur aux 7 Bois en a eu marre : il t'a tout donné. Contre rien. Tu as construit une ville.", "159": "Tu es tombé·e sur la case « Erreur de la banque en votre faveur ». La gare t'a remboursé 200 bons.", "160": "Tu avais dit « Uno ». Le contrôleur t'a entendu·e. Victoire, et un billet gratuit.", "161": "Au réveil, le voyageur disparu était à la voiture-bar. Il te payait un café. C'était toi, la voyante.", "162": "Le petit doigt du voisin est guéri. Il t'a remercié·e d'avoir crié « Totem ! » : il t'offre sa place.", "163": "Les trois voyageurs défaussés sont revenus avec des cookies. Score du wagon : +36, et des miettes.", "164": "Celui qui avait bloqué ta route s'est trompé de couleur : ses wagons sont devenus les tiens. Objectif réussi.", "165": "Le médecin a fait son vol. Il en a profité pour te ramener un souvenir de Valence.", "166": "Le fermier couché s'est réveillé : il t'a offert un panier de légumes de son potager.", "167": "Les tuiles tombées formaient un motif parfait. Un architecte t'a commandé une salle de bain.", "168": "Le thon du chariot-bar avait été cuisiné par un grand chef. Meilleur sandwich de ta vie.", "169": "« Un nuage qui pleure sur un rail oublié » est devenu un best-seller. Le chef de bord t'a mis en dédicace.", "170": "Tu as trouvé « Orage », « Pantographe » et « Vent » du premier coup. Le chef de bord t'a offert sa casquette.", "171": "Le 97 est descendu le premier : il t'a gardé une place en terrasse au café de la gare.", "172": "Le conducteur aux cartes à l'envers a demandé ton avis. 25 points. Il t'a laissé·e conduire la fin.", "173": "Avec la chaleur martienne, ta forêt a poussé dans le wagon. Tu fais maintenant de l'ombre à tout le monde.", "174": "Le raton laveur a partagé les croissants avec toi. Il te réserve les meilleurs, tous les matins.", "175": "Au bout de sept cartes, le fantôme a abandonné : il t'a dit la vraie raison à l'oreille. Tu as gagné le pari.", "176": "Les Artisans t'ont offert le feu d'artifice. Tu l'as tiré à l'arrivée : le Shogun t'a remercié·e.", "177": "Le tête-à-quai a placé le train pile devant ton quai. Le conducteur t'a laissé·e choisir la musique.", "178": "L'Assassin s'est trompé de personnage : il a tué le Voleur. La recette du bar t'a été rendue. À toi.", "179": "Le flamant rose a mangé, puis t'a offert ses deux œufs. Ils ont éclos : tu as deux flamants roses.", "180": "Le dé forgé du contrôleur est tombé sur « Amende ×3 »… à son propre nom. Tu touches la prime.", "181": "Le quai qui pivote t'a fait faire un tour complet. Vue panoramique. Le rover t'a ramené un caillou martien.", "182": "Trois voyageurs pensaient l'avoir trouvée. C'était la tienne. Ils t'ont aidé·e à y aller, avec des excuses.", "183": "La gare de banlieue ratée était la plus jolie de la ligne. Tu y as acheté une maison.", "184": "Le wagon a placé la licorne en 3. Vexée, elle a choisi de voyager avec toi. Tu as maintenant une licorne.", "185": "Tout le wagon est descendu à Orléans… sauf toi. Tu as eu tout le train pour toi seul·e.", "186": "1987 entre 1992 et 1995 ? Le DJ a trouvé ça tellement drôle qu'il t'a offert le vinyle.", "187": "À l'étape 5, le conducteur n'avait pas compris. Il t'a demandé de le guider en silence. Tu as réussi.", "188": "Tu as libéré les possédés. Ils t'ont offert un abonnement à vie, en remerciement.", "189": "Tu as demandé un indice au bout de 3 minutes : c'était le code du coffre de la voiture-bar.", "190": "Le train pour Lyon était voie 5. Le tien, voie 3, allait à la mer. Tu as préféré la mer.", "191": "À chaque tunnel, il te racontait un nouveau morceau d'histoire. Le 11ᵉ, c'était la fin : génial.", "192": "Les chiffres du 3ᵉ trimestre t'ont permis d'investir au bon moment. Tu as fait fortune.", "193": "Le chef de bord chantait tellement bien qu'un producteur l'a signé. Il t'a mis sur l'album.", "194": "Au 6ᵉ essai, la valise de 32 kg s'est ouverte. Dedans : des cadeaux pour tout le wagon.", "195": "La barquette de poisson était un repas de grand chef. Il en restait une, pour toi.", "196": "L'annonce disait Marseille. Le train allait vraiment à Marseille. Tu as profité de la plage.", "197": "Sous le siège 47, à côté de la frite de 2019, il y avait un billet de 50 €. Il est pour toi.", "198": "Ça freinait, ça ne redémarrait plus… pile devant un champ de lavande. Pique-nique offert.", "199": "L'agent à vélo était un champion du Tour de France. Il t'a laissé·e porter le maillot jaune.", "200": "L'acte de malveillance était en fait un acte de bienveillance : quelqu'un a offert le café à tout le train.", "201": "Le car en mouvement social a fait la fête. Tu as été invité·e. Meilleure soirée de l'année.", "202": "Le train a reculé de 3 cases… pile sur la case « Bonus ». Tom a même souri. Pour toi.", "203": "En commençant par la fin, le contrôleur s'est trompé de calcul. Tu as gagné 10 points de plus.", "204": "Tu étais sur la 38. La 37, c'était une place en première. Le voyageur t'a laissé changer.", "205": "Les petits soldats et les dinosaures se sont alliés pour te faire une haie d'honneur.", "206": "Le 11 s'est placé dans le premier quartier… parce qu'il était amoureux du 1. Mariage dans la voiture 5.", "207": "Le chat a ouvert un café dans son appartement. Tu as eu la carte de fidélité numéro 1.", "208": "Le train s'arrête maintenant à la boulangerie. Le boulanger t'a nommé·e testeur officiel.", "209": "Ta seule bille arrivée t'a donné une place. Elle était en première. Avec vue.", "210": "Ils étaient là, le contrôleur rouge et le voyageur blanc : ils t'ont invité·e à jouer.", "211": "Ton billet blanc a été retrouvé par un artiste. Il l'a exposé. Le musée t'a payé·e très cher.", "212": "Les esprits de la forêt t'ont offert le Lyken. Il est maintenant dans ta ludothèque, et c'est un fait.", "213": "Le messager t'a donné la 3ᵉ clé en douce. Le château est à toi.", "214": "Tu as poussé comme un 2 alors que tu avais un 7. Erreur géniale : tout le monde a gagné.", "215": "La partie n'est jamais finie. Tu as abandonné à Marseille. Tu as profité de la mer pendant qu'ils jouaient.", "216": "Quelqu'un t'a frappé·e juste avant le butin… mais il a lâché le sien. Tu as tout ramassé.", "217": "La règle changée entre Orléans et Vierzon était la tienne. Tu es maintenant co-auteur·rice.", "218": "Tu es le Voleur sur la boîte. Le jeu a été un énorme succès. Tu touches des royalties.", "219": "Le thermoformage tombé dans l'allée t'a servi d'étagère. Le créateur t'a offert la boîte.", "220": "Il en est à la 17ᵉ prise. Il t'a demandé de faire la voix off. Tu es maintenant célèbre.", "221": "La mise en place était finie à Saint-Pierre-des-Corps. Il t'a laissé·e jouer à sa place. Tu as gagné.", "222": "La vague 2 est arrivée avec une erreur d'envoi : deux exemplaires. L'un est pour toi.", "223": "Tu as dit oui sans lire : c'était un contrat d'ambassadeur·rice. Jeux gratuits à vie.", "224": "Ta valise « jeu d'ambiance » a été choisie pour la soirée jeux de la ludothèque. Tu es l'invité·e d'honneur.", "225": "L'offre au contrôleur a été acceptée. Le nouveau propriétaire de la ligne t'a nommé·e directeur·rice.", "226": "Le tunnel a coupé le réseau… de son adversaire. Victoire par abandon, et il t'a offert sa récompense.", "227": "La pancarte était bien pour Mélodye, cette fois. Théo l'avait cachée derrière le nom d'Augustin.", "228": "Le fromage a gagné. Les boîtes ont voyagé dans les toilettes… et sont devenues une ludothèque de toilettes.", "229": "Mathilde a pris les deux. Marine et Thibault ont créé un nouvel accord : le « café-bière-jeu ». Il cartonne.", "230": "Le train est parti. Les deux Belges ont pris le suivant, avec frites ET gaufres pour toi.", "231": "Le placard à jeux de Marine et Thibault cachait une porte secrète : la plus belle suite de la Villa. Ils t'y ont invité·e.", "232": "En décrivant leurs boîtes de mémoire, Coralie et San en ont oublié une. Elles te l'ont offerte.", "233": "Personne n'est descendu à son arrêt. Le train a donc fait un détour… jusqu'à chez toi.", "234": "Dans leur version, elles ont gagné à chaque fois. Dans la tienne, tu as gagné. Elles t'ont donné la victoire.", "235": "La valise a explosé à Paris. Des jeux partout. Cindy t'a laissé·e choisir celui que tu voulais.", "236": "Le contrôleur chuchotait si bien qu'il a été engagé pour faire des podcasts ASMR. Tu es son invité·e.", "237": "Personne n'a respecté le couvre-feu. Julien a donc inventé le petit-déj à 15 h. Révolutionnaire.", "238": "Les deux sandwichs au thon étaient en fait des sushis. Elles ont mimé un merci. Tu en as eu un.", "239": "Le contrôleur est revenu de Bruxelles avec une caisse de bières. Tom a validé la prononciation, et tu as goûté la meilleure.", "240": "Le vrai contrôleur a composté le spectacle. Augustin t'a offert le billet en souvenir.", "241": "À Marseille, ils en étaient au tour 3. Aurélien t'a dit : « Tu reprends ma place ? » Tu as gagné.", "242": "Le contrôleur a demandé le patron. Cindy lui a vendu. Elle t'a offert un insert en échange de ton aide.", "243": "Le sac de jeux de Gus a eu la fenêtre. Puis il a eu le mal des transports. Tu as eu la fenêtre.", "244": "Le serveur s'est inscrit à la Villa. Il t'a réservé la meilleure chambre.", "245": "La version coopérative a tellement plu que tout le train joue. Tu as été désigné·e capitaine.", "246": "Il en manquait un. C'est le sien. Mais tout le monde avait prévu un cadeau surprise pour Mélodye : le plus beau.", "247": "Le renne au nez qui brille est descendu en gare. Il t'a demandé de l'accompagner au Pôle Nord.", "248": "Les 47 cadeaux étaient bien des boîtes de jeux. Le 47ᵉ avait ton prénom dessus.", "249": "Le chocolat chaud de Mathilde avait des guimauves. Une montagne de guimauves. Pour toi.", "250": "Les épines sont partout. Tu en as trouvé une en or. Gus t'a dit de la garder.", "251": "Le pull clignotant a hypnotisé le wagon. Le contrôleur t'a prêté son pull. Tu brilles.", "252": "Eurelise a gagné le concours, et elle t'a tricoté le même pull. Avec ton meeple personnalisé.", "253": "Le conducteur a fini son chocolat. Marine et Thibault l'ont transformé en bière de Noël. Tu as eu la première.", "254": "Le sèche-cheveux a séché les aiguillages… et ta coiffure. Elle n'a jamais été aussi réussie.", "255": "Il y avait un meeple dans chaque chaussette. Dans la tienne, il y en avait cinq.", "256": "Le contrôleur en a eu deux. Il t'a donné le second. Tom t'a félicité·e pour ton sens du karma.", "257": "Le contrôleur a trouvé tous les titres. Il a avoué : c'était le Père Noël. Il t'a fait un cadeau.", "258": "La dinde vivante t'a cédé sa réservation. Elle préfère passer Noël en liberté.", "259": "Personne n'a ouvert le cadeau de Krystel. Toi si. Dedans : un jeu introuvable.", "260": "C'était de la pluie 46 fois. La 47ᵉ, c'était vraiment de la neige. Aurélien t'a offert un chocolat chaud pour fêter ça.", "261": "Le contrôleur s'est assis à table. Il a apporté du vin. Alex t'a servi le premier.", "262": "Le bonhomme de neige t'a laissé la place 47 et il est parti en vacances au soleil. Il t'envoie une carte.", "263": "Prise n°15 : le gui a refleuri. Nicolas t'a filmé·e dessous. 2 millions de vues.", "264": "Personne n'a voulu rallumer. Alors Augustin a raconté un deuxième conte. Avec toi dedans.", "265": "Les 4 000 lettres ont été livrées par le train de Noël. Le Père Noël t'a écrit pour te remercier.", "266": "Ambre l'avait deviné. Vincent nie tout. Le Père Noël t'a offert le cadeau du Démon.", "267": "La correspondance pour le Pôle Nord est rétablie. Le traîneau t'attend sur le quai.", "268": "Le Père Noël a composté. Il est en retard, mais il a passé le trajet avec toi. Il t'a offert le premier cadeau.", "269": "Le train de Noël a attendu tous les sourires. Puis le photographe a dit : « Encore une ! »", "270": "À 13 h 13, la poisse t'a reconnu·e. Elle t'a fait un clin d'œil et s'est assise ailleurs.", "271": "Le chef de gare t'a offert sa casquette, puis sa gare. Elle porte ton nom maintenant.", "272": "Le conducteur fantôme a klaxonné deux fois. Il t'a déposé·e devant chez toi. Tu ne l'as jamais revu.", "273": "Le train monochrome a été repeint en doré. Rien que pour toi.", "274": "Les fantômes dormaient. Un seul s'est réveillé : il t'a raccompagné·e et a porté ta valise.", "275": "Le contrôleur a admiré ta persévérance. Il t'a offert un abonnement annuel.", "276": "La gare fantôme est apparue dans le brouillard. Elle t'a gardé une place près de la cheminée.", "277": "La fanfare a joué jusqu'au départ du train. Et après. Jusqu'à chez toi.", "278": "Les machines à café ont clignoté. Puis elles ont tout donné. Jackpot. Pour toi.", "279": "Vincent jure qu'il n'y est pour rien. Il a quand même transformé la voie 6 en raccourci vers le paradis.", "280": "Le contrôleur est impressionné. Il t'a donné la carte suivante du règlement : un billet gratuit.", "281": "La personne aux yeux fermés les a ouverts. Une prise. Photo parfaite. Elle est accrochée au salon de la Villa.", "282": "Le contrôleur rigolait tellement qu'il a laissé tomber ses cartes. Tu les as cachées dans ta manche. Victoire.", "283": "Trois 7 d'un coup : victoire immédiate. Le train t'a félicité·e, et il est reparti en avance."};
 
 /* =========================================================
    ÉTAT + SAUVEGARDE
@@ -947,8 +999,29 @@ function clean(s){
   s.best=(s.best||[]).filter(b=>BYID[b.id]);
   for(const e of Object.values(s.coll)) if(e.o==null) e.o=Math.max((+e.n||0)-(+e.g||0),0);
   for(const [id,e] of Object.entries(s.coll)) if(isMystery(BYID[id]) && e.x==null){ let x=0; for(let i=0;i<(+e.n||1);i++) x+=rollMystery(BYID[id]); e.x=x; }
+  normAll(s);
   return s;
 }
+/* Versions d'une carte : classiques, holos (h) et Karma (k, numéros dans ks) */
+function vn(e,id){
+  if(!e) return e; const c=BYID[id];
+  e.n=Math.max(0,+e.n||0);
+  e.k=Math.max(0,Math.min(+e.k||0,e.n));
+  if(!Array.isArray(e.ks)) e.ks=[];
+  if(e.h==null) e.h=e.holo?1:0;
+  e.h=Math.max(0,Math.min(+e.h||0,e.n-e.k));
+  if(c&&c.ah) e.h=e.n-e.k;
+  e.holo=e.h>0||e.k>0;
+  return e;
+}
+function normAll(st){ if(st&&st.coll) for(const [id,e] of Object.entries(st.coll)) if(e) vn(e,id); }
+const clN=e=>e?Math.max(0,(+e.n||0)-(+e.h||0)-(+e.k||0)):0;
+function spareOf(e,id){ if(!e) return 0; vn(e,id); const c=BYID[id]; return c&&c.ah?Math.max(0,e.n-e.k-1):Math.max(0,Math.min(clN(e),e.n-1)); }
+const spare=id=>spareOf(state.coll[id],id);
+const topV=e=>e&&+e.k>0?"k":e&&(+e.h>0||e.holo)?"h":"c";
+const vbHTML=e=>{ if(!e) return ""; const h=+e.h||0,k=+e.k||0; if(!k&&!(h&&e.n>1)) return ""; return `<div class="vb">${h?`<span class="h">✦${h}</span>`:""}${h&&k?" ":""}${k?`<span class="k">✨${k}</span>`:""}</div>`; };
+const bestKs=e=>e&&e.ks&&e.ks.length?Math.min(...e.ks):null;
+const karmaCount=()=>Object.values(state.coll).reduce((a,e)=>a+(+e.k||0),0);
 function loadLocal(){
   try{ const s = localStorage.getItem(KEY); return s ? clean(JSON.parse(s)) : null; }catch(e){ return null; }
 }
@@ -962,8 +1035,8 @@ function mergeSaves(a,b){
     if(!e) continue; const f=m.coll[id];
     if(!f){ m.coll[id]=JSON.parse(JSON.stringify(e)); continue; }
     if(f.t||e.t){ if((+e.t||0)>(+f.t||0)) m.coll[id]=JSON.parse(JSON.stringify(e)); continue; }
-    for(const k of ["n","o","g","x"]) if(e[k]!=null||f[k]!=null) f[k]=Math.max(+f[k]||0,+e[k]||0);
-    f.holo=!!(f.holo||e.holo);
+    for(const k of ["n","o","g","x","h","k"]) if(e[k]!=null||f[k]!=null) f[k]=Math.max(+f[k]||0,+e[k]||0);
+    f.holo=!!(f.holo||e.holo); f.ks=[...new Set([...(f.ks||[]),...(e.ks||[])])];
   }
   m.stats=m.stats||{}; for(const [k,v] of Object.entries(older.stats||{})) if(typeof v==="number") m.stats[k]=Math.max(+m.stats[k]||0,v);
   if(older.ach){ m.ach=m.ach||{}; for(const [k,v] of Object.entries(older.ach)) if(!m.ach[k]||v<m.ach[k]) m.ach[k]=v; }
@@ -979,7 +1052,7 @@ function mergeIn(st,o){
     if(!e) continue; const f=st.coll[id];
     if(!f){ st.coll[id]=JSON.parse(JSON.stringify(e)); ch=true; continue; }
     if(f.t||e.t){ if((+e.t||0)>(+f.t||0)){ st.coll[id]=JSON.parse(JSON.stringify(e)); ch=true; } else if(e.holo&&!f.holo&&(+e.t||0)===(+f.t||0)){ f.holo=true; ch=true; } continue; }
-    for(const k of ["n","o","g","x"]) if((+e[k]||0)>(+f[k]||0)){ f[k]=+e[k]; ch=true; }
+    for(const k of ["n","o","g","x","h","k"]) if((+e[k]||0)>(+f[k]||0)){ f[k]=+e[k]; ch=true; }
     if(e.holo&&!f.holo){ f.holo=true; ch=true; }
   }
   st.stats=st.stats||{}; for(const [k,v] of Object.entries(o.stats||{})) if(typeof v==="number"&&v>(+st.stats[k]||0)){ st.stats[k]=v; ch=true; }
@@ -988,7 +1061,7 @@ function mergeIn(st,o){
 }
 function save(){
   if(!state) return;
-  state.savedAt = Date.now();
+  state.savedAt = Date.now(); normAll(state);
   try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
   cloudSave();
 }
@@ -1026,7 +1099,8 @@ function drawPack(minLast=2){
   for(let i=0;i<CFG.perPack;i++){
     const r = rollRarity(i===CFG.perPack-1 ? minLast : 0);
     const c = pick(POOL.filter(x=>x.r===r));
-    out.push({id:c.id, holo:!!c.ah||Math.random()<CFG.holo});
+    const kr=Math.random()<CFG.karma;
+    out.push({id:c.id, karma:kr, holo:!kr&&(!!c.ah||Math.random()<CFG.holo)});
   }
   // tri : le plus rare à la fin, pour le suspense
   out.sort((a,b)=>RAR[BYID[a.id].r].lvl-RAR[BYID[b.id].r].lvl);
@@ -1034,21 +1108,29 @@ function drawPack(minLast=2){
 }
 function addPull(p){
   const c = BYID[p.id]; const e = state.coll[p.id];
-  let isNew=false, bons=0;
-  if(!e){ state.coll[p.id]={n:1,o:1,holo:!!p.holo,t:Date.now()}; isNew=true; markNew(p.id); }
+  let isNew=false, bons=0, kg=null;
+  if(!e&&p.karma) kg=grantKarmaGift(p.id);
+  if(!e){ state.coll[p.id]=vn({n:1,o:1,h:p.holo?1:0,k:p.karma?1:0,ks:[],kq:p.karma?1:0,kdev:p.karma?DEV:undefined,holo:!!(p.holo||p.karma),t:Date.now()},p.id); isNew=true; markNew(p.id); }
   else{
+    vn(e,p.id); const hadH=e.h>0, hadK=e.k>0;
     e.n++; e.t=Date.now(); e.o=(e.o!=null?+e.o:Math.max(e.n-1-(+e.g||0),0))+1;
-    if(p.holo && !e.holo){ e.holo=true; isNew=true; markNew(p.id); }
-    else { bons = RAR[c.r].bons*(p.holo?2:1); }
+    if(p.karma){ e.k++; e.kq=(+e.kq||0)+1; e.kdev=DEV; }
+    else if(p.holo) e.h++;
+    vn(e,p.id);
+    if(p.karma && !hadK){ isNew=true; markNew(p.id); }
+    if(p.karma && !hadK) kg=grantKarmaGift(p.id);
+    else if(p.holo && !hadH && !hadK && !c.ah){ isNew=true; markNew(p.id); }
+    else { bons = RAR[c.r].bons*(p.karma?5:p.holo?2:1); }
   }
+  if(p.karma) state.stats.karma=(+state.stats.karma||0)+1;
   let mx=0; if(isMystery(c)){ mx=rollMystery(c); const ce=state.coll[p.id]; ce.x=(+ce.x||0)+mx; }
   state.bons += bons; state.stats.bonsWon += bons; state.stats.pulled++;
   if(p.holo) state.stats.holo++;
   if(RAR[c.r].lvl>=3){
-    state.best.unshift({id:p.id,holo:!!p.holo,at:Date.now()});
+    state.best.unshift({id:p.id,holo:!!p.holo,karma:!!p.karma,at:Date.now()});
     state.best = state.best.slice(0,12);
   }
-  return {isNew,bons,mx};
+  return {isNew,bons,mx,kg,n:+state.coll[p.id].n||1};
 }
 const owned = ()=>Object.keys(state.coll).filter(id=>BYID[id]&&!isBonus(BYID[id])).length;
 
@@ -1068,19 +1150,23 @@ function vibrate(p){ try{ navigator.vibrate && navigator.vibrate(p); }catch(e){}
    RENDU D'UNE CARTE
    ========================================================= */
 const LOGO_SVG = `<svg viewBox="0 0 64 64"><rect x="12" y="6" width="40" height="44" rx="12" fill="#ffb000"/><rect x="18" y="13" width="28" height="15" rx="4" fill="#0b0f17"/><circle cx="23" cy="38" r="4" fill="#0b0f17"/><circle cx="41" cy="38" r="4" fill="#0b0f17"/><path d="M18 50 10 60M46 50l8 10M14 56h36" stroke="#ffb000" stroke-width="4" stroke-linecap="round"/></svg>`;
-function cardHTML(c,{holo=false}={}){
+function cardHTML(c,{holo=false,karma=false,serial=null}={}){
   if(c.ah) holo=true;
+  if(karma) holo=false;
   const L = LIGNES[c.l], R = RAR[c.r];
   const emo = c.wph ? "" : c.ph ? `<img class="c-ph" src="${PHOTOS[c.ph]}" alt=""><span class="c-badge">${c.e}</span>` : c.img ? `<div class="c-rain">${c.e2||""}</div>` : c.e2 ? `<div class="c-emo duo"><small>${c.e2}</small>${c.e}</div>` : `<div class="c-emo">${c.e}</div>`;
-  return `<div class="cw"><div class="card r-${c.r}${holo?" holo":""}" style="--fc:${R.c}">
+  return `<div class="cw"><div class="card r-${c.r}${holo?" holo":""}${karma?" karma":""}" style="--fc:${karma?"#f2c14e":R.c}">
     <div class="in">
-      <div class="c-top"><span>${num(c.id)}</span><span class="c-rar">${c.r}</span></div>
+      <div class="c-top"><span>${num(c.id)}</span>${karma?`<span class="c-kar">✨ KARMA${serial?` n°${serial}`:""}</span>`:""}<span class="c-rar">${c.r}</span></div>
       <div class="c-art" style="--h1:${L.h1};--h2:${L.h2}${c.img?`;background:url(${MELO_IMG}) center 30%/cover`:c.wph?`;background:url(${PHOTOS[c.wph]}) center/cover`:""}"><span class="c-ligne">${L.ic} L${c.l}</span>${emo}</div>
       <div class="c-name">${esc(c.t)}</div>
       <div class="c-board">${esc(c.m)}</div>
       <div class="c-stats"><span>${/\d\s*(min|h)\b|\?\?/.test(c.d)?"RETARD":"EFFET"}</span><b>${esc(c.d)}</b></div>
-      <div class="c-fl">${esc(c.f)}</div>
+      ${karma?`<div class="k-glare"></div><div class="c-fl kfl"><s>${esc(c.f)}</s><span>↺ ${esc(KF[c.id]||"Le karma s'est retourné. En ta faveur, pour une fois.")}${KGIFT[c.id]?` <b class="kgift">🎁 ${kgTxt(KGIFT[c.id])}</b>`:""}</span></div>`:`<div class="c-fl">${esc(c.f)}</div>`}
     </div></div></div>`;
+}
+function secretFoundHTML(c){
+  return `<div class="cw"><div class="card locked sfound"><div class="in"><span class="c-rar" style="background:${RAR[c.r].c}">${c.r}</span><div class="q">🥚</div><div class="ln">TROUVÉE</div><div class="ln" style="font-size:4cqw;margin-top:1cqw">secret gardé</div></div></div></div>`;
 }
 function lockedHTML(c){
   return `<div class="cw"><div class="card locked"><div class="in"><span class="c-rar" style="background:${RAR[c.r].c}">${c.r}</span><div class="q">?</div><div class="ln">${num(c.id)}</div></div></div></div>`;
@@ -1122,7 +1208,8 @@ const SFX = {
     for(let i=0;i<Math.min(l+2,6);i++) tone(base[i],.35,"triangle",.11,i*.07);
     if(l>=5){ for(let i=0;i<6;i++) tone(base[i]*2,.6,"sine",.06,.45+i*.06); }
   },
-  coin(){ tone(988,.08,"square",.06); tone(1319,.2,"square",.06,.08); }
+  coin(){ tone(988,.08,"square",.06); tone(1319,.2,"square",.06,.08); },
+  karma(){ [[659,0],[523,.32],[784,.64]].forEach(([f,w])=>{ tone(f,.55,"sine",.16,w); tone(f*2,.4,"triangle",.04,w); }); [1047,1319,1568,2093].forEach((f,i)=>tone(f,.7,"sine",.07,1.1+i*.09)); }
 };
 
 /* =========================================================
@@ -1161,6 +1248,46 @@ function colorsFor(r){
    ========================================================= */
 let opening=false;
 let noTix=0, noTixT=0;
+/* Numérotation des cartes Karma (serveur) */
+const DEV=(()=>{ try{ let d=localStorage.getItem("kt_dev"); if(!d){ d=Math.random().toString(36).slice(2,10); localStorage.setItem("kt_dev",d); } return d; }catch(e){ return "x"; } })();
+let karmaBusy=null;
+function claimKarma(){
+  if(karmaBusy) return karmaBusy;
+  karmaBusy=(async()=>{
+    const got=[];
+    try{
+      if(!session||!online()) return got;
+      for(const [id,e] of Object.entries(state.coll)){
+        if(e&&(+e.kq||0)>0&&e.kdev&&e.kdev!==DEV&&Date.now()-(+e.t||0)<86400000) continue;
+        while(e&&(+e.kq||0)>0){
+          const n=await rpc("kt_karma_claim",{p_token:session.token,p_card:+id});
+          const serial=+(Array.isArray(n)?n[0]:n)||0; if(!serial) break;
+          e.ks=e.ks||[]; e.ks.push(serial); e.kq--; e.t=Date.now(); got.push({id:+id,serial});
+        }
+      }
+    }catch(err){}
+    finally{ karmaBusy=null; if(got.length){ save(); feedLoaded=0; } }
+    return got;
+  })();
+  return karmaBusy;
+}
+function grantKarmaGift(id){
+  const g=KGIFT[id]; state.kgift=state.kgift||{};
+  if(!g||state.kgift[id]) return null;
+  state.kgift[id]=1;
+  if(g.g) state.golden=(+state.golden||0)+1;
+  if(g.t) state.tickets+=g.t;
+  if(g.b){ state.bons+=g.b; state.stats.bonsWon=(+state.stats.bonsWon||0)+g.b; }
+  return g;
+}
+function karmaSplash(){
+  const d=document.createElement("div"); d.className="ksplash"; d.innerHTML=`<b>✨ SURCLASSEMENT ! ✨<small>CARTE KARMA</small></b>`;
+  document.body.appendChild(d); flash("#ffd75e",1400); SFX.karma(); vibrate([60,80,60,80,200]);
+  anim(d.firstChild,[{transform:"scale(.2) rotate(-8deg)",opacity:0},{transform:"scale(1.15) rotate(2deg)",opacity:1,offset:.25},{transform:"scale(1)",opacity:1,offset:.8},{transform:"scale(1.4)",opacity:0}],{duration:2200,easing:"ease-out",fill:"forwards"});
+  setTimeout(()=>d.remove(),2300);
+  const goldRain=()=>{ for(let i=0;i<5;i++) setTimeout(()=>burst(innerWidth*(.1+.2*i),innerHeight*.15,["#ffe27a","#ffd75e","#fff3b0","#ffb000"],45,10),i*120); };
+  goldRain(); setTimeout(goldRain,700);
+}
 async function openBooster(opts={}){
   refill();
   if(opening) return;
@@ -1173,6 +1300,7 @@ async function openBooster(opts={}){
   const pack = drawPack(golden?4:2);
   const linesBefore=completedLines();
   const results = pack.map(p=>({...p, ...addPull(p)}));
+  if(results.some(r=>r.karma)) claimKarma();
   { const now=new Date(), h=now.getHours(), wd=now.getDay(), y=new Date(now); y.setDate(y.getDate()-1);
     if(h>=2&&h<5) state.stats.night=1;
     if(wd===6) state.stats.sat=todayKey(now);
@@ -1242,7 +1370,7 @@ async function revealCards(results, skipped){
     const el=document.createElement("div"); el.className="flip";
     el.style.zIndex=String(10-i);
     el.style.setProperty("--glow",RAR[c.r].c);
-    el.innerHTML=`<div class="fi"><div class="face back">${backHTML()}</div><div class="face front">${cardHTML(c,{holo:p.holo})}</div></div>`;
+    el.innerHTML=`<div class="fi"><div class="face back">${backHTML()}</div><div class="face front">${cardHTML(c,{holo:p.holo,karma:p.karma})}</div></div>`;
     stack.appendChild(el); return el;
   });
   // distribution
@@ -1259,8 +1387,17 @@ async function revealCards(results, skipped){
     await new Promise(res=>{ el.onclick=res; });
     if(skipped()) return;
     el.onclick=null; hint.classList.remove("pulse"); hint.textContent="";
+    // surclassement Karma
+    if(p.karma){
+      el.classList.add("charge"); SFX.charge(6); vibrate([30,40,30,40,60]);
+      await sleep(1500); el.classList.remove("charge");
+      karmaSplash(); await sleep(1900);
+      if(karmaBusy) await Promise.race([karmaBusy,sleep(2500)]);
+      const ke=state.coll[p.id], sn=ke&&ke.ks&&ke.ks.length?ke.ks[ke.ks.length-1]:null;
+      if(sn) el.querySelector(".face.front").innerHTML=cardHTML(c,{karma:true,serial:sn});
+    }
     // suspense pour les cartes rares
-    if(lvl>=2){
+    else if(lvl>=2){
       el.classList.add("charge"); SFX.charge(lvl); vibrate(lvl>=4?[30,40,30,40,60]:30);
       await sleep(lvl>=5?1600:lvl>=4?1100:lvl>=3?750:400);
       el.classList.remove("charge");
@@ -1272,14 +1409,18 @@ async function revealCards(results, skipped){
     if(lvl>=4){ flash(RAR[c.r].c, lvl>=5?900:500); }
     if(lvl>=5){ setTimeout(()=>burst(rr.left+rr.width/2,rr.top,colorsFor(c.r),120,13),350); }
     if(p.holo) burst(rr.left+rr.width/2,rr.top+rr.height/2,["#0ff","#f0f","#ff0","#fff"],40,8);
+    if(p.karma){ burst(rr.left+rr.width/2,rr.top+rr.height/2,["#ffe27a","#ffd75e","#fff3b0","#ffb000"],140,12); flash("#ffd75e",900); }
     SFX.reveal(lvl);
     // badges
     const b=document.createElement("div");
     b.className="badge "+(p.isNew?"new":"dup");
-    b.textContent=p.isNew?(p.holo&&state.coll[p.id].n>1?"✦ HOLO NOUVELLE !":"NOUVEAU !"):`Doublon · +${p.bons} 🪙`;
+    b.textContent=p.karma?(p.isNew?"✨ KARMA !":`✨ KARMA · +${p.bons} 🪙`):p.isNew?(p.holo&&state.coll[p.id].n>1?"✦ HOLO NOUVELLE !":"NOUVEAU !"):`Doublon · +${p.bons} 🪙`;
+    if(p.karma) b.style.cssText+="background:linear-gradient(180deg,#fff3b0,#e0a92b);color:#3a2400";
     el.appendChild(b);
     const nm=document.createElement("div"); nm.className="rname"; nm.style.color=RAR[c.r].c;
-    nm.textContent=RAR[c.r].n+(p.holo?" ✦ Holo":""); el.appendChild(nm);
+    nm.textContent=RAR[c.r].n+(p.karma?" ✨ Karma":p.holo?" ✦ Holo":""); el.appendChild(nm);
+    if(p.kg){ const gk=document.createElement("div"); gk.style.cssText="font-size:16px;color:#ffd75e;margin-top:6px;font-weight:700;font-family:Outfit,system-ui,sans-serif"; gk.textContent="🎁 Cadeau du karma : "+kgTxt(p.kg); nm.appendChild(gk); setTimeout(()=>SFX.coin(),400); }
+    { const sk=document.createElement("div"); sk.style.cssText="font-size:15px;color:var(--txt);margin-top:4px;font-weight:600;font-family:Outfit,system-ui,sans-serif;letter-spacing:0"; sk.textContent=`📦 En stock : ×${p.n||1}`; nm.appendChild(sk); }
     if(p.mx){ const mm=document.createElement("div"); mm.className="mono"; mm.style.cssText="font-size:14px;color:var(--red);margin-top:4px;font-family:'JetBrains Mono',monospace"; mm.textContent="Retard mystère tiré : +"+fmtDelay(p.mx); nm.appendChild(mm); }
     anim(b,[{transform:"translateX(-50%) scale(0)"},{transform:"translateX(-50%) scale(1)"}],{duration:350,easing:"cubic-bezier(.3,1.8,.5,1)"});
     if(!p.isNew&&p.bons) SFX.coin();
@@ -1288,7 +1429,7 @@ async function revealCards(results, skipped){
     if(skipped()) return;
     el.onclick=null; hint.textContent="";
     SFX.whoosh();
-    const mini=document.createElement("div"); mini.className="tw"; mini.innerHTML=cardHTML(c,{holo:p.holo}); tray.appendChild(mini);
+    const mini=document.createElement("div"); mini.className="tw"; mini.innerHTML=cardHTML(c,{holo:p.holo,karma:p.karma}); tray.appendChild(mini);
     anim(mini,[{transform:"scale(0)"},{transform:"scale(1)"}],{duration:300,easing:"cubic-bezier(.3,1.6,.5,1)"});
     await anim(el,[{transform:"none",opacity:1},{transform:`translate(${i%2?40:-40}vw,-50vh) rotate(${i%2?30:-30}deg) scale(.3)`,opacity:0}],{duration:420,easing:"ease-in",fill:"forwards"});
     el.remove();
@@ -1302,14 +1443,15 @@ function showSummary(results){
   st.innerHTML=`<div class="summary">
     <h2 style="margin:0">Ton tirage</h2>
     <div class="muted">${nNew} nouvelle${nNew>1?"s":""} carte${nNew>1?"s":""}${bons?` · +${bons} 🪙`:""} · ${owned()}/${TOTAL} dans l'album</div>
+    ${results.filter(r=>r.kg).map(r=>`<div style="color:#ffd75e;font-weight:700;text-align:center">🎁 Cadeau du karma : ${kgTxt(r.kg)}</div>`).join("")}
     ${packDelay?`<div class="mono" style="color:var(--red);font-weight:700;font-size:14px;text-align:center">+${fmtDelay(packDelay)} de retard ajoutés · total ${fmtDelay(totalDelay())}</div>`:""}
-    <div class="sg">${results.map((p,i)=>`<div class="slot" data-id="${p.id}" data-holo="${p.holo?1:0}" style="animation-delay:${i*80}ms">${p.isNew?'<div class="cnt" style="background:#3ddc84;color:#04220f">NEW</div>':""}${cardHTML(BYID[p.id],{holo:p.holo})}</div>`).join("")}</div>
+    <div class="sg">${results.map((p,i)=>`<div class="slot" data-id="${p.id}" data-holo="${p.holo?1:0}" data-v="${p.karma?"k":p.holo?"h":"c"}" style="animation-delay:${i*80}ms">${p.isNew?'<div class="cnt" style="background:#3ddc84;color:#04220f">NEW</div>':`<div class="cnt">×${(state.coll[p.id]&&state.coll[p.id].n)||1}</div>`}${cardHTML(BYID[p.id],{holo:p.holo,karma:p.karma,serial:p.karma?bestKs(state.coll[p.id]):null})}</div>`).join("")}</div>
     <div class="row" style="justify-content:center">
       <button class="bigbtn" id="againBtn" style="width:auto;padding:14px 22px" ${state.tickets?"":"disabled"}>🎫 Encore un (${state.tickets})</button>
       <button class="btn2" id="toAlbum">📒 Album</button>
       <button class="btn2" id="closeSt">Fermer</button>
     </div></div>`;
-  st.querySelectorAll(".slot").forEach(s=>s.onclick=()=>showDetail(+s.dataset.id,s.dataset.holo==="1"));
+  st.querySelectorAll(".slot").forEach(s=>s.onclick=()=>showDetail(+s.dataset.id,false,null,null,s.dataset.v));
   $("#againBtn").onclick=()=>{ opening=false; openBooster(); };
   $("#toAlbum").onclick=()=>{ closeStage(); location.hash="album"; };
   $("#closeSt").onclick=closeStage;
@@ -1320,16 +1462,24 @@ function closeStage(){ $("#stage").classList.remove("on"); $("#stage").innerHTML
 /* =========================================================
    DÉTAIL D'UNE CARTE (inclinaison 3D)
    ========================================================= */
-function showDetail(id,forceHolo,otherColl,otherName){
-  const c=BYID[id], e=(otherColl||state.coll)[id], ov=$("#detail");
+function showDetail(id,forceHolo,otherColl,otherName,view){
+  const c=BYID[id], e=vn((otherColl||state.coll)[id],id), ov=$("#detail");
   if(!otherColl&&(newShow[id]||(state.newC&&state.newC[id]))){ delete newShow[id]; if(state.newC) delete state.newC[id]; save(); updateBadges(); setTimeout(()=>{ if(location.hash==="#album") renderAlbum(); },300); }
-  const holo = forceHolo || (e&&e.holo);
+  const nc=e?(c.ah?0:clN(e)):0, nh=e?+e.h||0:0, nk=e?+e.k||0:0;
+  let v=view||(forceHolo?"h":topV(e));
+  if(e&&((v==="k"&&!nk)||(v==="h"&&!nh)||(v==="c"&&!nc))) v=topV(e);
+  const ks=e&&e.ks?[...e.ks].sort((a,b)=>a-b):[];
+  const tabs=e&&((nc>0)+(nh>0)+(nk>0))>1?`<div class="vtabs">${nc?`<button data-v="c" class="${v==="c"?"on":""}">Classique ×${nc}</button>`:""}${nh?`<button data-v="h" class="${v==="h"?"on":""}">✦ Holo ×${nh}</button>`:""}${nk?`<button data-v="k" class="${v==="k"?"on":""}">✨ Karma ×${nk}</button>`:""}</div>`:"";
+  const vers=e&&(nh||nk)?`<div style="margin-top:4px">${[nc&&!c.ah?`Classique ×${nc}`:"",nh?`<span style="color:#7ff3ff">✦ Holo ×${nh}</span>`:"",nk?`<span style="color:#ffd75e">✨ Karma ×${nk}</span>`:""].filter(Boolean).join(" · ")}</div>`:"";
+  const kline=nk?`<div style="margin-top:4px;color:#ffd75e">✨ ${ks.length?ks.map(n=>`Karma n°${n}${n===1?" (la toute première !)":""}`).join(" · "):"Numéro Karma en cours d'attribution…"}${(+e.kq||0)&&ks.length?" · 1 numéro en attente":""}</div>`:"";
   ov.innerHTML=`<button class="iconbtn close" aria-label="Fermer">✕</button>
-    <div class="detail-card"><div class="tilt">${cardHTML(c,{holo})}</div></div>
+    <div class="detail-card"><div class="tilt">${cardHTML(c,{holo:v==="h",karma:v==="k",serial:v==="k"&&ks.length?ks[0]:null})}</div></div>
+    ${tabs}
     <div class="dmeta">${LIGNES[c.l].ic} Ligne ${c.l} · ${LIGNES[c.l].n}<br>
-    <b style="color:${RAR[c.r].c}">${RAR[c.r].n}</b> · ${otherName?esc(otherName)+" la possède":"Possédée"} ×${e?e.n:0}${e&&+e.g?` (dont ${+e.g} reçue${+e.g>1?"s":""})`:""}${e&&e.x?` · retards mystère : ${fmtDelay(+e.x)}`:""}${e&&e.holo?" · ✦ Holo débloquée":""}<div id="ownPct" style="margin-top:6px;font-size:13px"></div></div>
-    ${!otherColl&&session&&e&&e.n>=2?`<div class="row" style="margin-top:14px;gap:8px;justify-content:center"><button class="btn2 amber" id="giftBtn">🎁 Offrir</button><button class="btn2 amber" id="tradeBtn">🔁 Échanger</button></div>`:""}
-    ${!otherColl&&session&&e&&e.n===1?`<div class="muted" style="margin-top:12px;font-size:13px">Tu pourras l'offrir ou l'échanger quand tu l'auras en double.</div>`:""}`;
+    <b style="color:${RAR[c.r].c}">${RAR[c.r].n}</b> · ${otherName?esc(otherName)+" la possède":"Possédée"} ×${e?e.n:0}${e&&+e.g?` (dont ${+e.g} reçue${+e.g>1?"s":""})`:""}${e&&e.x?` · retards mystère : ${fmtDelay(+e.x)}`:""}${vers}${kline}<div id="ownPct" style="margin-top:6px;font-size:13px"></div></div>
+    ${!otherColl&&session&&e&&spareOf(e,id)>=1?`<div class="row" style="margin-top:14px;gap:8px;justify-content:center"><button class="btn2 amber" id="giftBtn">🎁 Offrir</button><button class="btn2 amber" id="tradeBtn">🔁 Échanger</button></div>`:""}
+    ${!otherColl&&session&&e&&spareOf(e,id)<1?`<div class="muted" style="margin-top:12px;font-size:13px">${e.n>=2?"Seuls les exemplaires classiques en double peuvent être offerts ou échangés.":"Tu pourras l'offrir ou l'échanger quand tu l'auras en double."}</div>`:""}`;
+  ov.querySelectorAll(".vtabs button").forEach(b=>b.onclick=ev=>{ ev.stopPropagation(); showDetail(id,false,otherColl,otherName,b.dataset.v); });
   ov.classList.add("on");
   fillOwnPct(id);
   const gb=ov.querySelector("#giftBtn"); if(gb) gb.onclick=ev=>{ ev.stopPropagation(); ov.classList.remove("on"); ov.innerHTML=""; showGift(id); };
@@ -1342,7 +1492,23 @@ function showDetail(id,forceHolo,otherColl,otherName){
   };
   tilt.addEventListener("pointermove",mv);
   tilt.addEventListener("pointerleave",()=>tilt.style.transform="");
-  ov.onclick=ev=>{ if(!ev.target.closest(".tilt")) { ov.classList.remove("on"); ov.innerHTML=""; } };
+  if(card&&card.classList.contains("karma")){
+    tilt.classList.add("kin"); setTimeout(()=>{ const r=tilt.getBoundingClientRect(); burst(r.left+r.width/2,r.top+r.height*.4,["#fffbe6","#ffe27a","#ffd75e","#fff"],60,8); },250);
+    if(!view) SFX.reveal(3);
+  }
+  if(card&&card.classList.contains("karma")){ let base=null;
+    const gy=ev=>{ if(!tilt.isConnected){ removeEventListener("deviceorientation",gy); return; }
+      if(ev.beta==null) return; if(!base) base={b:ev.beta,g:ev.gamma};
+      const x=Math.max(-1,Math.min(1,(ev.gamma-base.g)/25)), y=Math.max(-1,Math.min(1,(ev.beta-base.b)/25));
+      tilt.style.transform=`rotateY(${x*14}deg) rotateX(${-y*14}deg)`;
+      card.style.setProperty("--hx",(x/2+.5)*100+"%"); card.style.setProperty("--hy",(y/2+.5)*100+"%"); };
+    try{
+      if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==="function"){
+        DeviceOrientationEvent.requestPermission().then(r=>{ if(r==="granted") addEventListener("deviceorientation",gy); }).catch(()=>{});
+      } else if(window.DeviceOrientationEvent) addEventListener("deviceorientation",gy);
+    }catch(e){}
+  }
+  ov.onclick=ev=>{ if(!ev.target.closest(".tilt")&&!ev.target.closest(".vtabs")) { ov.classList.remove("on"); ov.innerHTML=""; } };
   SFX.tap();
 }
 
@@ -1412,7 +1578,7 @@ function readCode(code){
     const o=JSON.parse(decodeURIComponent(escape(atob(m[2]))));
     if(typeof o.p!=="string"||typeof o.c!=="object") return null;
     const coll={};
-    for(const [id,e] of Object.entries(o.c||{})) if(BYID[id]&&e&&e.n>0) coll[id]={n:Math.min(+e.n|0,9999),holo:!!e.holo};
+    for(const [id,e] of Object.entries(o.c||{})) if(BYID[id]&&e&&e.n>0) coll[id]=vn({n:Math.min(+e.n|0,9999),holo:!!e.holo,h:e.h,k:Math.min(+e.k|0,9999),ks:Array.isArray(e.ks)?e.ks.map(x=>+x|0).filter(x=>x>0).slice(0,50):[]},id);
     const s=fresh(o.p.slice(0,20));
     Object.assign(s,{since:+o.s||Date.now(),tickets:Math.min(Math.max(+o.t|0,0),CFG.max),last:+o.l||Date.now(),bons:Math.max(+o.b|0,0),coll,
       stats:Object.assign(s.stats,o.st||{}),best:(o.be||[]).filter(b=>BYID[b.id]).slice(0,12)});
@@ -1505,7 +1671,7 @@ function showAdvent(){
   modal(`<h3>🎄 Calendrier de l'Avent</h3>
     <p class="muted" style="margin:-4px 0 10px;font-size:13px">Une case par jour, du 1ᵉʳ au 24 décembre. Chaque case contient une carte de Noël exclusive et un billet (ou 50 🪙 si tes billets sont pleins). Les cases 🌟 1, 6, 15 et 24 offrent en plus un <b style="color:#ffd23f">billet doré</b> (Ultra rare garantie). Une case manquée ne se rattrape pas… sauf par un échange !</p>
     <div class="advgrid">${ADVPOS.map(d=>{ const c=ADV[d-1]; if(!c) return "";
-      if(op[d]) return `<div class="door open" data-d="${d}"><span class="dn">${d}</span>${cardHTML(c,{holo:state.coll[c.id]&&state.coll[c.id].holo})}</div>`;
+      if(op[d]) return `<div class="door open" data-d="${d}"><span class="dn">${d}</span>${cardHTML(c,{holo:state.coll[c.id]&&state.coll[c.id].holo,karma:topV(state.coll[c.id])==="k",serial:bestKs(state.coll[c.id])})}</div>`;
       if(d===today) return `<div class="door today" data-d="${d}"><span class="big">${d}</span><span class="dl">Ouvrir !</span></div>`;
       if(d<today) return `<div class="door missed"><span class="big">${d}</span><span class="dl">Manquée</span></div>`;
       return `<div class="door locked${ADVGOLD.includes(d)?" gold":""}"><span class="big">${d}</span><span class="dl">${ADVGOLD.includes(d)?"🌟":"🔒"}</span></div>`; }).join("")}</div>
@@ -1646,7 +1812,7 @@ function renderAlbum(){
     shown+=cs.length;
     return `<div class="lhead"><h3>${LIGNES[l].ic} Ligne ${l} · ${LIGNES[l].n}</h3><span class="muted mono">${filtered?cs.length+" carte"+(cs.length>1?"s":""):got+"/"+all.length}</span></div>
       <div class="grid">${cs.map(c=>{ const e=state.coll[c.id];
-        return `<div class="slot" data-id="${c.id}" data-own="${e?1:0}">${e&&isNewCard(c.id)?'<div class="newb">NOUVEAU</div>':""}${e&&e.n>1?`<div class="cnt">×${e.n}</div>`:""}${e?cardHTML(c,{holo:e.holo}):lockedHTML(c)}</div>`; }).join("")}</div>`;
+        return `<div class="slot" data-id="${c.id}" data-own="${e?1:0}">${e&&isNewCard(c.id)?'<div class="newb">NOUVEAU</div>':""}${e&&e.n>1?`<div class="cnt">×${e.n}</div>`:""}${e?vbHTML(vn(e,c.id))+cardHTML(c,{holo:topV(e)==="h",karma:topV(e)==="k",serial:bestKs(e)}):lockedHTML(c)}</div>`; }).join("")}</div>`;
   }).join("");
   $("#albumBody").innerHTML = (albumFilter==="new"&&nNew?`<button class="btn2" id="seenAll" style="width:100%;margin-bottom:10px">✓ Tout marquer comme vu</button>`:"")
     + (html||`<div class="panel muted" style="text-align:center">${albumFilter==="new"?"Aucune nouvelle carte. Ouvre un billet !":albumFilter==="dup"?"Aucun doublon ici.":albumFilter==="miss"?"Rien ne manque ici. Bravo !":"Aucune carte."}</div>`);
@@ -1670,19 +1836,22 @@ function renderHall(){
   const cnt=lvl=>Object.keys(state.coll).filter(id=>RAR[BYID[id].r].lvl>=lvl).length;
   $("#stats").innerHTML=[
     [state.stats.opened,"billets compostés"],[Object.values(state.coll).reduce((a,e)=>a+(+e.n||0),0),"cartes en stock"],
-    [`${o}/${TOTAL}`,"motifs uniques"],[state.stats.holo,"cartes holo"],
+    [`${o}/${TOTAL}`,"motifs uniques"],[(()=>{ const hh=Object.values(state.coll).reduce((x,e)=>x+(+e.h||0),0), kk=karmaCount(); return kk?`${hh} · <span style="color:#ffd75e">✨${kk}</span>`:hh; })(),karmaCount()?"✦ holo · ✨ karma":"cartes ✦ holo"],
     [cnt(5),"légendaires & mythiques"],[state.stats.bonsWon,"bons gagnés 🪙"],
     [Math.round(o/TOTAL*100)+" %","indice de poisse"],[state.bons,"bons en poche"],
     [fmtDelay(totalDelay()),"de retard cumulé ⏱️"]
   ].map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("");
-  $("#bestGrid").innerHTML = state.best.length ? state.best.slice(0,8).map(b=>`<div class="slot" data-id="${b.id}" data-holo="${b.holo?1:0}">${cardHTML(BYID[b.id],{holo:b.holo})}</div>`).join("")
+  $("#bestGrid").innerHTML = state.best.length ? state.best.slice(0,8).map(b=>`<div class="slot" data-id="${b.id}" data-v="${b.karma?"k":b.holo?"h":"c"}">${cardHTML(BYID[b.id],{holo:b.holo,karma:b.karma})}</div>`).join("")
     : `<div class="muted" style="grid-column:1/-1">Tes cartes Super rares et plus apparaîtront ici.</div>`;
-  $("#bestGrid").querySelectorAll(".slot").forEach(s=>s.onclick=()=>showDetail(+s.dataset.id,s.dataset.holo==="1"));
+  $("#bestGrid").querySelectorAll(".slot").forEach(s=>s.onclick=()=>showDetail(+s.dataset.id,false,null,null,s.dataset.v));
   renderBoard();
 }
 function renderRules(){
   $("#odds").innerHTML=`<tr class="muted" style="font-size:12px"><td>Rareté</td><td style="text-align:right">Chance</td><td style="text-align:right">Doublon</td></tr>`+RORDER.map(r=>{ const n=CARDS.filter(c=>c.r===r).length;
-    return `<tr><td><span class="dot" style="background:${RAR[r].c}"></span><b>${RAR[r].n}</b><div class="muted" style="font-size:12px;margin-left:17px">${n} carte${n>1?"s":""}</div></td><td style="text-align:right;white-space:nowrap" class="mono">${String(RAR[r].w).replace(".",",")} %</td><td style="text-align:right;white-space:nowrap" class="muted">+${RAR[r].bons} 🪙</td></tr>`; }).join("");
+    return `<tr><td><span class="dot" style="background:${RAR[r].c}"></span><b>${RAR[r].n}</b><div class="muted" style="font-size:12px;margin-left:17px">${n} carte${n>1?"s":""}</div></td><td style="text-align:right;white-space:nowrap" class="mono">${String(RAR[r].w).replace(".",",")} %</td><td style="text-align:right;white-space:nowrap" class="muted">+${RAR[r].bons} 🪙</td></tr>`; }).join("")
+    +`<tr class="muted" style="font-size:12px"><td colspan="3" style="padding-top:12px">Versions spéciales (pour chaque carte tirée)</td></tr>
+    <tr><td><b style="color:#7ff3ff">✦ Holo</b><div class="muted" style="font-size:12px">doublon ×2 bons</div></td><td style="text-align:right" class="mono">${String(CFG.holo*100).replace(".",",")} %</td><td style="text-align:right" class="muted">1 sur ${Math.round(1/CFG.holo)}</td></tr>
+    <tr><td><b style="color:#ffd75e">✨ Karma</b><div class="muted" style="font-size:12px">doublon ×5 bons</div></td><td style="text-align:right" class="mono">${String(CFG.karma*100).replace(".",",")} %</td><td style="text-align:right" class="muted">1 sur ${Math.round(1/CFG.karma)}</td></tr>`;
   $("#lignesInfo").innerHTML=Object.entries(LIGNES).map(([k,v])=>`<div style="padding:6px 0">${v.ic} <b>Ligne ${k}</b> · ${v.n} <span class="muted">(${CARDS.filter(c=>String(c.l)===k).length} cartes)</span></div>`).join("");
 }
 let logoTaps=0, logoT=0;
@@ -1961,14 +2130,15 @@ function showOtherAlbum(v){
     ${v.title&&ACHBY[v.title]?`<div style="text-align:center;color:var(--amber);font-weight:700;margin:4px 0 8px">${ACHBY[v.title].ic} ${esc(ACHBY[v.title].n)}</div>`:""}
     <div class="ostats">
       <div><b>${v.achn!=null?`${+v.achn}/${ACH.length}`:"–"}</b><span>🏅 succès</span></div>
-      <div><b>${Object.values(coll).filter(e=>e.holo).length}</b><span>✦ holos</span></div>
+      <div><b>${Object.values(coll).filter(e=>e.holo).length}${Object.values(coll).some(e=>+e.k>0)?` · <span style="color:#ffd75e">✨${Object.values(coll).reduce((a,e)=>a+(+e.k||0),0)}</span>`:""}</b><span>${Object.values(coll).some(e=>+e.k>0)?"✦ holos · ✨ karma":"✦ holos"}</span></div>
       <div><b>${v.gare&&v.gare.wins!=null?+v.gare.wins:0}</b><span>🚉 gares</span></div>
       <div><b>${ADV.filter(c=>coll[c.id]).length+SECRETS.filter(c=>coll[c.id]).length}</b><span>🎁 bonus</span></div>
     </div>
     ${Object.entries(LIGNES).map(([l,L])=>{ const cs=CARDS.filter(c=>String(c.l)===l), got=cs.filter(c=>coll[c.id]);
       return `<div class="lhead" style="margin-top:14px"><b>${L.ic} ${L.n}</b><span class="muted mono">${got.length}/${cs.length}</span></div>
       <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px">${cs.map(c=>{ const e=coll[c.id];
-        return `<div class="slot" data-id="${c.id}" data-own="${e?1:0}">${e&&e.n>1?`<div class="cnt">×${e.n}</div>`:""}${e?cardHTML(c,{holo:e.holo}):lockedHTML(c)}</div>`; }).join("")}</div>`; }).join("")}
+        if(e&&c.sec&&!state.coll[c.id]) return `<div class="slot" data-id="${c.id}" data-own="0">${secretFoundHTML(c)}</div>`;
+        return `<div class="slot" data-id="${c.id}" data-own="${e?1:0}">${e&&e.n>1?`<div class="cnt">×${e.n}</div>`:""}${e?vbHTML(vn(e,c.id))+cardHTML(c,{holo:topV(e)==="h",karma:topV(e)==="k",serial:bestKs(e)}):lockedHTML(c)}</div>`; }).join("")}</div>`; }).join("")}
     <button class="btn2" style="width:100%;margin-top:16px" id="oaClose">Fermer</button>`, m=>{
       m.querySelector(".modal").style.maxWidth="560px";
       m.querySelector("#oaClose").onclick=closeModal;
@@ -2016,6 +2186,7 @@ async function loadFeed(force){
       let ic="🚆", txt="";
       if(v.kind==="pull"){ ic=c&&c.r==="M"?"🌈":c&&c.r==="L"?"🏆":"🔥"; txt=`${who} a tiré ${cn(v.card)}${c?` <span style="color:${RAR[c.r].c}">(${RAR[c.r].n})</span>`:""}`; }
       else if(v.kind==="holo"){ ic="✦"; txt=`${who} a tiré ${cn(v.card)} en version Holo`; }
+      else if(v.kind==="karma"){ ic="✨"; txt=`${who} a obtenu ${cn(v.card)} en version <b style="color:#ffd75e">Karma n°${+v.target||"?"}</b>${+v.target===1?" : la toute première !":""}`; }
       else if(v.kind==="ligne"){ ic="🏁"; txt=`${who} a complété la ligne ${+v.card}${LIGNES[v.card]?" · "+esc(LIGNES[v.card].n):""}`; }
       else if(v.kind==="complete"){ ic="👑"; txt=`${who} a complété TOUT l'album !`; }
       else if(v.kind==="join"){ ic="🚉"; txt=`${who} est monté·e à bord de Karmatrain`; }
@@ -2053,14 +2224,14 @@ async function loadFeed(force){
 /* ================= ÉCHANGES (jusqu'à 3 cartes de chaque côté) ================= */
 let tradeSent=[];
 const TMAX=3;
-const myDups=()=>CARDS.filter(c=>state.coll[c.id]&&state.coll[c.id].n>=2).map(c=>c.id);
+const myDups=()=>CARDS.filter(c=>spare(c.id)>=1).map(c=>c.id);
 async function showTrade(id){
   if(!session) return toast("Connecte-toi pour échanger");
   try{ const fr=await rpc("kt_leaderboard",{}); if(fr) lbRows=fr; }catch(e){ return toast(errMsg(e)); }
   const me=session.pseudo.toLowerCase();
   const others=lbRows.filter(v=>String(v.pseudo).toLowerCase()!==me).map(v=>{
     const coll=v.coll||{};
-    const offer=Object.entries(coll).filter(([k,e])=>BYID[k]&&e&&e.n>=2&&!(state.coll[k]&&state.coll[k].n>0)).map(([k])=>+k).sort((x,y)=>x-y);
+    const offer=Object.entries(coll).filter(([k,e])=>BYID[k]&&e&&spareOf(e,k)>=1&&!(state.coll[k]&&state.coll[k].n>0)).map(([k])=>+k).sort((x,y)=>x-y);
     const lacks=!(coll[id]&&coll[id].n>0);
     return {pseudo:String(v.pseudo),coll,offer,lacks};
   }).filter(o=>o.offer.length).sort((a,b)=>(b.lacks-a.lacks)||(b.offer.length-a.offer.length));
@@ -2124,7 +2295,7 @@ function tradeConfirm(T){
       const G=m.querySelector("#tGo"), E=m.querySelector("#tE");
       m.querySelector("#tBack").onclick=()=>tradePickGive(T);
       G.onclick=async()=>{
-        if(T.give.some(k=>!state.coll[k]||state.coll[k].n<2)){ E.textContent="Tu dois garder au moins un exemplaire de chaque carte."; return; }
+        if(T.give.some(k=>spare(k)<1)){ E.textContent="Tu dois garder au moins un exemplaire de chaque carte."; return; }
         G.disabled=true; G.textContent="Envoi…";
         try{
           await pushNow();
@@ -2186,7 +2357,7 @@ function showTradeDone(r,next){
   if(ok){ SFX.reveal(3); const r0=document.querySelector("#modal .modal"); if(r0){ const rr=r0.getBoundingClientRect(); burst(rr.left+rr.width/2,rr.top+80,["#ffb000","#3ddc84","#4da3ff","#fff"],70,9); } }
 }
 function showTradeOffer(r,next){
-  const has=r.o_want.every(k=>state.coll[k]&&state.coll[k].n>=2);
+  const has=r.o_want.every(k=>spare(k)>=1);
   modal(`<h3>🔁 Proposition d'échange</h3>
     <p class="muted" style="margin:0;font-size:14px"><b style="color:var(--txt)">${esc(String(r.o_who).slice(0,20))}</b> te propose :</p>
     ${swapHTML(r.o_want,r.o_give,"Tu donnes","Tu reçois")}
@@ -2218,21 +2389,25 @@ function showTradeOffer(r,next){
 /* ================= ATELIER DE RECYCLAGE ================= */
 const RCOST={C:10,PC:8,R:5,SR:4,UR:3,L:3,M:3};
 function showAtelier(){
-  const rows=CARDS.filter(c=>state.coll[c.id]&&state.coll[c.id].n>=2).map(c=>{ const n=state.coll[c.id].n, cost=RCOST[c.r]; return {c,n,cost,ok:n-1>=cost}; })
-    .sort((a,b)=>(b.ok-a.ok)||((b.n-1)/b.cost-(a.n-1)/a.cost));
+  const rows=CARDS.filter(c=>{ const e=state.coll[c.id]; return e&&(spare(c.id)>=1||(+vn(e,c.id).h||0)>=3); }).map(c=>{ const e=state.coll[c.id], sp=spare(c.id), cost=RCOST[c.r]; return {c,e,sp,cost,ok:sp>=cost,kok:(+e.h||0)>=3}; })
+    .sort((a,b)=>(b.kok-a.kok)||(b.ok-a.ok)||(b.sp/b.cost-a.sp/a.cost));
   const nxt=r=>RORDER[RORDER.indexOf(r)+1];
   modal(`<h3>🔧 Atelier de recyclage</h3>
-    <p class="muted" style="margin:-4px 0 12px;font-size:14px">Recycle des exemplaires identiques contre une récompense. Tu gardes toujours 1 exemplaire, et ton retard ne bouge pas.</p>
-    ${rows.length?rows.map(r=>{ const e=state.coll[r.c.id], up=nxt(r.c.r), full=state.tickets>=CFG.max;
-      return `<div class="recrow" data-id="${r.c.id}"><div class="dupc">${cardHTML(r.c,{holo:e.holo})}</div>
-      <div style="min-width:0"><b>${esc(r.c.t)}</b> <span class="muted mono">×${r.n}</span>
-      <div class="muted" style="font-size:12.5px;margin-top:2px">${r.ok?`Recycler <b style="color:var(--txt)">${r.cost}</b> exemplaires :`:`Encore ${r.cost-(r.n-1)} exemplaire${r.cost-(r.n-1)>1?"s":""} pour recycler (${r.n-1}/${r.cost})`}</div>
+    <p class="muted" style="margin:-4px 0 12px;font-size:14px">Recycle tes exemplaires classiques en double contre une récompense (tu gardes toujours 1 exemplaire). Et avec 3 ✦ Holo identiques, tu obtiens une carte <b style="color:#ffd75e">✨ Karma</b>. Ton retard ne bouge pas.</p>
+    ${rows.length?rows.map(r=>{ const e=r.e, up=nxt(r.c.r), full=state.tickets>=CFG.max, nc=r.c.ah?0:clN(e), nh=+e.h||0, nk=+e.k||0;
+      return `<div class="recrow" data-id="${r.c.id}"><div class="dupc">${cardHTML(r.c,{holo:topV(e)==="h",karma:topV(e)==="k",serial:bestKs(e)})}</div>
+      <div style="min-width:0"><b>${esc(r.c.t)}</b>
+      <div class="muted mono" style="font-size:12px;margin-top:2px">${[r.c.ah?"":`Classique ×${nc}`,nh?`<span style="color:#7ff3ff">✦ Holo ×${nh}</span>`:"",nk?`<span style="color:#ffd75e">✨ Karma ×${nk}</span>`:""].filter(Boolean).join(" · ")}</div>
+      ${r.sp>=1?`<div class="muted" style="font-size:12.5px;margin-top:4px">${r.ok?`Recycler <b style="color:var(--txt)">${r.cost}</b> ${r.c.ah?"exemplaires":"classiques"} :`:`Encore ${r.cost-r.sp} ${r.c.ah?"exemplaire":"classique"}${r.cost-r.sp>1?"s":""} pour recycler (${r.sp}/${r.cost})`}</div>
       ${r.ok?`<div class="recbtns">
-        <button class="btn2 amber" data-k="holo" ${e.holo||r.c.ah?"disabled":""}>✦ Holo</button>
+        ${r.c.ah?"":`<button class="btn2 amber" data-k="holo">✦ Holo</button>`}
         ${up?`<button class="btn2 amber" data-k="up">⬆️ ${RAR[up].n}</button>`:""}
         <button class="btn2 amber" data-k="ticket" ${full?"disabled":""}>🎫 Billet</button></div>
-        ${e.holo||r.c.ah?'<div class="muted" style="font-size:11.5px;margin-top:4px">Déjà en Holo.</div>':""}${full?'<div class="muted" style="font-size:11.5px;margin-top:4px">Tes 5 billets sont déjà pleins.</div>':""}`
-      :`<div class="recbar"><i style="width:${Math.min(100,(r.n-1)/r.cost*100)}%"></i></div>`}</div></div>`; }).join("")
+        ${full?'<div class="muted" style="font-size:11.5px;margin-top:4px">Tes 5 billets sont déjà pleins.</div>':""}`
+      :`<div class="recbar"><i style="width:${Math.min(100,r.sp/r.cost*100)}%"></i></div>`}`:""}
+      ${nh?`<div class="muted" style="font-size:12.5px;margin-top:6px">${r.kok?`3 ✦ Holo identiques :`:`✦ Holo : ${nh}/3 pour une carte Karma`}</div>
+      ${r.kok?`<div class="recbtns"><button class="btn2" data-k="karma" style="background:linear-gradient(180deg,#fff3b0,#e0a92b);color:#3a2400;border:0">✨ Karma</button></div>`:`<div class="recbar"><i style="width:${nh/3*100}%;background:linear-gradient(90deg,#7ff3ff,#ffd75e)"></i></div>`}`:""}
+      </div></div>`; }).join("")
     :'<p class="muted">Tu n\'as pas encore de doublons. Ouvre des billets !</p>'}
     <button class="btn2" style="width:100%;margin-top:12px" id="rNo">Fermer</button>`, m=>{
       m.querySelector("#rNo").onclick=closeModal;
@@ -2240,35 +2415,59 @@ function showAtelier(){
   });
 }
 function recycleConfirm(id,k){
-  const c=BYID[id], cost=RCOST[c.r], up=RORDER[RORDER.indexOf(c.r)+1];
-  const what=k==="holo"?"sa version <b>✦ Holo</b>":k==="up"?`une carte <b style="color:${RAR[up].c}">${RAR[up].n}</b> au hasard`:"<b>1 billet 🎫</b>";
-  modal(`<h3>🔧 Recycler ?</h3>
-    <div style="width:42%;margin:0 auto 10px">${cardHTML(c,{holo:state.coll[id].holo})}</div>
-    <p style="text-align:center;margin:0 0 14px">Tu recycles <b>${cost} exemplaires</b> de « ${esc(c.t)} » contre ${what}.</p>
-    <button class="bigbtn" id="rGo">🔧 Recycler</button>
+  const c=BYID[id], cost=RCOST[c.r], up=RORDER[RORDER.indexOf(c.r)+1], e=state.coll[id];
+  const what=k==="karma"?`une carte <b style="color:#ffd75e">✨ Karma</b> numérotée`:k==="holo"?"<b>1 exemplaire ✦ Holo</b>":k==="up"?`une carte <b style="color:${RAR[up].c}">${RAR[up].n}</b> au hasard`:"<b>1 billet 🎫</b>";
+  const src=k==="karma"?"<b>3 exemplaires ✦ Holo</b>":`<b>${cost} exemplaires${c.ah?"":" classiques"}</b>`;
+  modal(`<h3>${k==="karma"?"✨ Surclasser ?":"🔧 Recycler ?"}</h3>
+    <div style="width:42%;margin:0 auto 10px">${cardHTML(c,{holo:k==="karma"||topV(e)==="h",karma:false})}</div>
+    <p style="text-align:center;margin:0 0 14px">Tu ${k==="karma"?"fusionnes":"recycles"} ${src} de « ${esc(c.t)} » contre ${what}.</p>
+    <button class="bigbtn" id="rGo">${k==="karma"?"✨ Surclasser":"🔧 Recycler"}</button>
     <button class="btn2" style="width:100%;margin-top:10px" id="rBack">← Retour</button>`, m=>{
       m.querySelector("#rBack").onclick=showAtelier;
       m.querySelector("#rGo").onclick=()=>doRecycle(id,k);
   });
 }
-function doRecycle(id,k){
-  const c=BYID[id], e=state.coll[id], cost=RCOST[c.r];
-  if(!e||e.n-1<cost) return showAtelier();
+async function doRecycle(id,k){
+  const c=BYID[id], e=vn(state.coll[id],id), cost=RCOST[c.r];
+  if(!e) return showAtelier();
+  if(k==="karma"){
+    if((+e.h||0)<3) return showAtelier();
+    e.h-=3; e.k=(+e.k||0)+1; e.kq=(+e.kq||0)+1; e.kdev=DEV; e.n-=2; e.t=Date.now(); vn(e,id);
+    if(+e.g&&e.g>e.n) e.g=e.n;
+    state.stats.karma=(+state.stats.karma||0)+1; state.stats.karmaMade=(+state.stats.karmaMade||0)+1;
+    const kg=grantKarmaGift(id);
+    markNew(id); save(); renderAll(); closeModal();
+    karmaSplash(); const got=await Promise.race([claimKarma(),sleep(4000).then(()=>[])]);
+    const sn=(got||[]).filter(g=>g.id===id).map(g=>g.serial).pop()||null;
+    await sleep(1200);
+    setTimeout(()=>checkAch(),1500);
+    modal(`<h3>✨ Surclassement réussi !</h3>
+      <div style="width:60%;margin:0 auto 10px">${cardHTML(c,{karma:true,serial:sn})}</div>
+      <p style="text-align:center">${sn?`Tu possèdes la <b style="color:#ffd75e">Karma n°${sn}</b> de « ${esc(c.t)} »${sn===1?" : <b>la toute première</b> au monde !":"."}`:`Ton numéro Karma sera attribué dès que tu seras connecté·e.`}</p>
+      ${kg?`<p style="text-align:center;color:#ffd75e;font-weight:700;font-size:17px;margin:-4px 0 12px">🎁 Cadeau du karma : ${kgTxt(kg)}</p>`:""}
+      <button class="bigbtn" id="rOk">Magnifique !</button>
+      <button class="btn2" style="width:100%;margin-top:10px" id="rMore">🔧 Retour à l'atelier</button>`, m=>{
+        m.querySelector("#rOk").onclick=closeModal; m.querySelector("#rMore").onclick=showAtelier;
+    });
+    return;
+  }
+  if(spare(id)<cost) return showAtelier();
   if(k==="ticket"&&state.tickets>=CFG.max) return toast("Tes billets sont déjà pleins");
-  if(k==="holo"&&e.holo) return showAtelier();
-  e.n-=cost; e.t=Date.now(); if(+e.g&&e.g>e.n) e.g=e.n;
+  if(k==="holo"&&c.ah) return showAtelier();
+  if(k==="holo"){ e.n-=cost-1; e.h=(+e.h||0)+1; } else e.n-=cost;
+  e.t=Date.now(); vn(e,id); if(+e.g&&e.g>e.n) e.g=e.n;
   state.stats.recycled=(state.stats.recycled||0)+1;
   let html="", got=null;
-  if(k==="holo"){ e.holo=true; markNew(id); got=id; html=`<p style="text-align:center">« ${esc(c.t)} » brille désormais dans ton album.</p>`; }
+  if(k==="holo"){ markNew(id); got=id; html=`<p style="text-align:center">Un exemplaire ✦ Holo de plus : tu en as maintenant <b>${e.h}</b>.${e.h>=3?" Assez pour une carte <b style=\"color:#ffd75e\">✨ Karma</b> !":""}</p>`; }
   else if(k==="up"){
     const up=RORDER[RORDER.indexOf(c.r)+1], pool=POOL.filter(x=>x.r===up);
     const w=pick(pool), isNew=!state.coll[w.id]; addCard(w.id,false); got=w.id;
-    if(w.ah) state.coll[w.id].holo=true;
+    vn(state.coll[w.id],w.id);
     html=`<p style="text-align:center;margin-bottom:0">${isNew?'<b style="color:#3ddc84">NOUVELLE CARTE !</b>':"Tu l'avais déjà : un exemplaire de plus."}</p>`;
   } else { state.tickets++; html=`<p style="text-align:center">Un billet de plus au Guichet. Bon voyage !</p>`; }
   save(); renderAll(); SFX.coin(); setTimeout(()=>checkAch(),1500);
   modal(`<h3>🔧 Recyclage réussi !</h3>
-    ${got?`<div style="width:55%;margin:0 auto 10px">${cardHTML(BYID[got],{holo:k==="holo"||state.coll[got].holo})}</div>`:`<div style="font-size:64px;text-align:center">🎫</div>`}
+    ${got?`<div style="width:55%;margin:0 auto 10px">${cardHTML(BYID[got],{holo:k==="holo"||!!BYID[got].ah})}</div>`:`<div style="font-size:64px;text-align:center">🎫</div>`}
     ${html}
     <button class="bigbtn" id="rOk">Super !</button>
     <button class="btn2" style="width:100%;margin-top:10px" id="rMore">🔧 Retour à l'atelier</button>`, m=>{
@@ -2325,7 +2524,7 @@ async function checkBonus(){
 }
 async function showDups(){
   if(!session) return toast("Connecte-toi pour offrir des cartes");
-  const dups=CARDS.filter(c=>state.coll[c.id]&&state.coll[c.id].n>=2);
+  const dups=CARDS.filter(c=>spare(c.id)>=1);
   if(!dups.length) return toast("Tu n'as pas encore de doublon à offrir");
   const B=$("#dupBtn"); B.disabled=true; B.textContent="🔎 Je regarde les albums…";
   try{ const fr=await rpc("kt_leaderboard",{}); if(fr) lbRows=fr; }catch(e){ return toast(errMsg(e)); }
@@ -2337,7 +2536,7 @@ async function showDups(){
     <p class="muted" style="margin:-4px 0 12px;font-size:14px">Pour chaque doublon, les joueurs qui ne l'ont pas encore. Choisis de l'offrir ou de l'échanger.</p>
     ${rows.map(r=>`<div class="duprow" data-id="${r.c.id}">
       <div class="dupc">${cardHTML(r.c,{})}</div>
-      <div style="min-width:0"><b>${esc(r.c.t)}</b> <span class="muted mono">×${state.coll[r.c.id].n-1}</span>
+      <div style="min-width:0"><b>${esc(r.c.t)}</b> <span class="muted mono">×${spare(r.c.id)}</span>
       <div class="muted" style="font-size:13px;margin-top:4px">${r.who.length?"Manque à : "+r.who.map(esc).join(", "):"Tout le monde l'a déjà : idéal pour un échange."}</div>
       <div class="row" style="gap:6px;margin-top:8px">${r.who.length?`<button class="btn2 amber dg" style="padding:6px 10px;font-size:13px">🎁 Offrir</button>`:""}<button class="btn2 amber dt" style="padding:6px 10px;font-size:13px">🔁 Échanger</button></div></div>
     </div>`).join("")}
@@ -2377,7 +2576,7 @@ async function showGift(id){
       G.onclick=async()=>{
         const to=T.value.trim(); E.textContent="";
         if(!to){ E.textContent="Choisis à qui offrir la carte."; return; }
-        if(!state.coll[id]||state.coll[id].n<2){ E.textContent="Tu dois garder au moins un exemplaire."; return; }
+        if(spare(id)<1){ E.textContent="Tu dois garder au moins un exemplaire (et seuls les classiques s'offrent)."; return; }
         G.disabled=true; G.textContent="Envoi…";
         try{
           await pushNow();
@@ -2395,6 +2594,7 @@ async function showGift(id){
 let inboxBusy=false;
 async function checkInbox(){
   if(!session||!state||!online()||inboxBusy) return;
+  if(Object.values(state.coll).some(e=>e&&+e.kq>0)) claimKarma();
   inboxBusy=true;
   try{
     const rows=await rpc("kt_inbox",{p_token:session.token});
@@ -2496,7 +2696,13 @@ const ACH=[
  {id:"adv24",ic:"🌟",n:"Calendrier parfait",d:"Ouvrir les 24 cases, sans en manquer une seule",v:()=>[Object.keys(state.advent||{}).length,24]},
  {id:"adveve",ic:"🎅",n:"Nuit de Noël",d:"Ouvrir la case n°24 le 24 décembre",v:()=>[(state.advent||{})[24]?1:0,1]},
  {id:"sec1",ic:"🥚",n:"Chasseur·se de secrets",d:"Découvrir une carte secrète",v:()=>[SECRETS.filter(c=>state.coll[c.id]).length?1:0,1]},
- {id:"secall",ic:"🗝️",n:"Gardien·ne des secrets",d:"Découvrir toutes les cartes secrètes",v:()=>[SECRETS.filter(c=>state.coll[c.id]).length,SECRETS.length]}
+ {id:"secall",ic:"🗝️",n:"Gardien·ne des secrets",d:"Découvrir toutes les cartes secrètes",v:()=>[SECRETS.filter(c=>state.coll[c.id]).length,SECRETS.length]},
+ {id:"k1",ic:"✨",n:"Surclassé·e",d:"Obtenir ta première carte Karma",v:()=>[Math.min(karmaCount(),1),1]},
+ {id:"k5",ic:"🌟",n:"Bon karma",d:"Posséder 5 cartes Karma",v:()=>[Math.min(karmaCount(),5),5]},
+ {id:"k15",ic:"💫",n:"Karma infini",d:"Posséder 15 cartes Karma",v:()=>[Math.min(karmaCount(),15),15]},
+ {id:"kfirst",ic:"🥇",n:"La toute première",d:"Posséder une carte Karma n°1",v:()=>[Object.values(state.coll).some(e=>e&&(e.ks||[]).includes(1))?1:0,1]},
+ {id:"kleg",ic:"👑",n:"Karma légendaire",d:"Obtenir une Légendaire (ou mieux) en Karma",v:()=>[Object.entries(state.coll).some(([id,e])=>+e.k>0&&BYID[id]&&RAR[BYID[id].r].lvl>=5)?1:0,1]},
+ {id:"kline",ic:"🏆",n:"Ligne karmique",d:"Avoir une ligne entière en Karma",v:()=>{ const best=Math.max(0,...Object.keys(LIGNES).filter(l=>!LIGNES[l].bonus).map(l=>{ const cs=CARDS.filter(c=>String(c.l)===l); return cs.filter(c=>state.coll[c.id]&&+state.coll[c.id].k>0).length/cs.length; })); return [Math.floor(best*100),100]; }}
 ];
 const ACHBY=Object.fromEntries(ACH.map(a=>[a.id,a]));
 let achQueue=[], achShowing=false;
@@ -2529,13 +2735,14 @@ const ACHFAM=[
   ["🎫","Billets & retards",id=>/^(b\d|d\d|d30j|night|weekend|gold|twin)/.test(id)],
   ["📒","Collection",id=>/^(c\d+|call|l\d|heure|melo|wagon|magnet)$/.test(id)],
   ["✦","Holographiques",id=>/^(h\d|h\d+|hline|hall|lholo)$/.test(id)],
+  ["✨","Karma",id=>/^k(\d+|first|leg|line)$/.test(id)],
   ["🚉","Gare du jour",id=>/^g(\d|fast|s7)/.test(id)],
   ["🤝","Dons, échanges & atelier",id=>/^(gift|trade|ref|rec)/.test(id)],
   ["🎄","Noël",id=>/^(noel|adv)/.test(id)],
   ["🥚","Secrets",id=>/^sec/.test(id)],
   ["🏅","Ultime",id=>id==="all"]
 ];
-const REW100=/^(call|hall|all|b365|d30j|g50|trade50|ref50|h100|adv24|noel24|secall|l\d)$/, REW50=/^(b100|c50|d7j|g25|gs7|trade20|ref20|gift20|rec10|h50|hline|magnet|gold|lholo|heure|melo|wagon|sec1|adveve)$/, REW25=/^(b25|c25|d1j|g10|trade5|trade10|ref5|gift5|h10|h25|adv7|adv12|night|weekend|twin|gfast)$/;
+const REW100=/^(call|hall|all|kline|k15|kfirst|b365|d30j|g50|trade50|ref50|h100|adv24|noel24|secall|l\d)$/, REW50=/^(b100|k5|kleg|c50|d7j|g25|gs7|trade20|ref20|gift20|rec10|h50|hline|magnet|gold|lholo|heure|melo|wagon|sec1|adveve)$/, REW25=/^(b25|k1|c25|d1j|g10|trade5|trade10|ref5|gift5|h10|h25|adv7|adv12|night|weekend|twin|gfast)$/;
 const achReward=id=>REW100.test(id)?100:REW50.test(id)?50:REW25.test(id)?25:10;
 const famOf=id=>{ const f=ACHFAM.findIndex(f=>f[2](id)); return f<0?ACHFAM.length-1:f; };
 let achOpen={};
