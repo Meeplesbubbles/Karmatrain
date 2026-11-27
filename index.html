@@ -137,7 +137,7 @@ h3{margin:18px 0 8px;font-size:17px}
   background:linear-gradient(110deg,transparent 35%,#fff5c866 46%,#fff8e0aa 50%,#fff5c866 54%,transparent 65%),radial-gradient(circle at 18% 22%,#fff 0 .5cqw,transparent 1.2cqw),radial-gradient(circle at 82% 12%,#fff 0 .4cqw,transparent 1cqw),radial-gradient(circle at 70% 58%,#fff 0 .45cqw,transparent 1.1cqw),radial-gradient(circle at 26% 74%,#fff 0 .35cqw,transparent .9cqw),radial-gradient(circle at 88% 86%,#fff 0 .4cqw,transparent 1cqw);background-size:300% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%;animation:kshine 3.2s ease-in-out infinite,ktw 2.4s ease-in-out infinite}
 @keyframes ktw{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6)}}
 @keyframes kshine{0%{background-position:120% 0}60%,100%{background-position:-60% 0}}
-.card.karma .cw-sp,.card.karma .in::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;mix-blend-mode:color-dodge;opacity:.3;
+.card.karma .in::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;mix-blend-mode:color-dodge;opacity:.3;
   background:linear-gradient(115deg,transparent 18%,#ffd75e66 28%,#fff3b099 36%,#ffb00055 44%,#fffbe0aa 52%,#e0a92b66 60%,#fff3b077 68%,transparent 78%);
   background-size:300% 300%;background-position:var(--hx,50%) var(--hy,50%);animation:holo 4s linear infinite}
 .card.karma .c-ph{border-color:#ffe27a}
@@ -154,7 +154,6 @@ h3{margin:18px 0 8px;font-size:17px}
 @keyframes klift{0%{transform:scale(.85) rotateX(25deg);filter:brightness(2.2)}60%{transform:scale(1.04) rotateX(-4deg);filter:brightness(1.3)}100%{transform:none;filter:none}}
 .detail-card .tilt.kin{animation:klift .9s cubic-bezier(.2,.9,.3,1.2)}
 .slot .card.karma,.dupc .card.karma,.tw .card.karma,.door .card.karma{animation:none!important;box-shadow:0 0 3cqw #ffcf4d88,0 1.5cqw 5cqw #0008}
-.slot .card.karma .in::before,.dupc .card.karma .in::before,.tw .card.karma .in::before,.door .card.karma .in::before{animation:none}
 .slot .card.karma .in::after,.dupc .card.karma .in::after,.door .card.karma .in::after{animation:none;background-position:30% 0,0 0,0 0,0 0,0 0,0 0}
 @media (prefers-reduced-motion:reduce){.card.karma,.card.karma .in::before,.card.karma .in::after{animation:none!important}}
 .card.karma .c-art{height:auto;flex:1 1 0;min-height:20%}
@@ -172,7 +171,6 @@ h3{margin:18px 0 8px;font-size:17px}
 .c-kar{position:absolute;left:50%;transform:translateX(-50%);font-size:3.4cqw;font-weight:700;color:#ffe27a;text-shadow:0 0 2cqw #ffb000;white-space:nowrap}
 .c-fl.kfl{display:flex;flex-direction:column;gap:.6cqw;padding-top:1cqw}
 .c-fl.kfl s{font-size:3.3cqw;color:#e6d6ae;text-decoration-color:#ffd75eaa;text-decoration-thickness:.35cqw}
-.kgift{display:inline-block;white-space:nowrap;background:linear-gradient(180deg,#fff3b0,#e0a92b);color:#3a2400;border-radius:1.5cqw;padding:0 1.4cqw;font-style:normal}
 .c-fl.kfl span{font-style:normal;font-weight:600;color:#ffe27a}
 .vb{position:absolute;left:-1px;bottom:-4px;z-index:3;background:#0b0f17e6;border:1px solid #ffffff22;border-radius:9px;padding:1px 6px;font-size:11px;font-weight:700;white-space:nowrap}
 .vb .h{color:#7ff3ff}.vb .k{color:#ffd75e}
@@ -598,8 +596,8 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
         <li>Chaque billet contient <b>5 cartes</b>. La dernière est toujours <b>Rare ou mieux</b>.</li>
         <li>Les doublons sont transformés en <b>bons de compensation 🪙</b>. 150 bons = 1 billet.</li>
         <li>Certaines cartes sortent en version <b>✦ Holo</b> (4 % de chance). Et, très rarement, en version <b style="color:#ffd75e">✨ Karma</b> (0,2 % : environ une tous les 100 billets).</li>
-        <li><b style="color:#ffd75e">✨ Cartes Karma</b> : la version ultime, toute dorée. Le karma s'y retourne : chaque carte Karma a sa propre <b>fin alternative</b>. Elles sont <b>numérotées</b> (Karma n°1, n°2…) dans l'ordre où les joueurs les obtiennent, et chaque nouvelle Karma est annoncée dans le Hall. On l'obtient au tirage, ou à l'Atelier en fusionnant <b>3 exemplaires ✦ Holo</b> identiques. Une carte Karma ne s'offre pas et ne s'échange pas. Environ <b>1 carte Karma sur 10 cache un cadeau 🎁</b> (billets, bons ou billet doré), offert la première fois que tu l'obtiens.</li>
-        <li><b>Classique, Holo, Karma</b> : l'album compte séparément chaque version d'une carte (✦ et ✨ sous la carte, détail dans sa fiche). Seuls les exemplaires classiques en double peuvent être offerts, échangés ou recyclés.</li>
+        <li><b style="color:#ffd75e">✨ Cartes Karma</b> : la version ultime, toute dorée. Le karma s'y retourne : chaque carte Karma a sa propre <b>fin alternative</b>. Elles sont <b>numérotées</b> (Karma n°1, n°2…) dans l'ordre où les joueurs les obtiennent, et chaque nouvelle Karma est annoncée dans le Hall. On l'obtient au tirage, ou à l'Atelier en fusionnant <b>3 exemplaires ✦ Holo</b> identiques. Une carte Karma peut s'offrir ou s'échanger (elle garde son numéro d'origine) tant que tu gardes un autre exemplaire de la carte, mais elle ne se recycle pas. Environ <b>1 carte Karma sur 10 cache un cadeau 🎁</b> (billets, bons ou billet doré), offert la première fois que tu l'obtiens.</li>
+        <li><b>Classique, Holo, Karma</b> : l'album compte séparément chaque version d'une carte (✦ et ✨ sous la carte, détail dans sa fiche). Seuls les exemplaires classiques en double peuvent être recyclés ; on peut offrir ou échanger ses classiques en double et ses Karma.</li>
         <li><b>🚉 La Gare du jour</b> : chaque jour à minuit, une nouvelle gare de France ou de Belgique à deviner en 6 essais (la même pour tout le monde). Trouvée : 1 billet, 2 si trouvée en 3 essais ou moins.</li>
         <li>Tu peux <b>offrir tes doublons</b> à un autre joueur (touche une carte que tu as en double dans l'album). Une carte reçue complète l'album, mais n'ajoute pas de retard : le retard cumulé ne compte que les billets que tu as ouverts.</li>
         <li>Les cartes au retard <b>« ?? »</b> tirent un <b>retard mystère</b> au sort à chaque exemplaire (5 à 60 min pour les communes, jusqu'à 4 h pour les plus rares). Il s'ajoute à ton retard cumulé.</li>
@@ -1226,7 +1224,7 @@ function cardHTML(c,{holo=false,karma=false,serial=null}={}){
       <div class="c-name">${esc(c.t)}</div>
       <div class="c-board">${esc(c.m)}</div>
       <div class="c-stats"><span>${/\d\s*(min|h)\b|\?\?/.test(c.d)?"RETARD":"EFFET"}</span><b>${esc(c.d)}</b></div>
-      ${karma?`<div class="k-glare"></div><div class="c-fl kfl"><s>${esc(c.f)}</s><span>↺ ${esc(KF[c.id]||"Le karma s'est retourné. En ta faveur, pour une fois.")}${KGIFT[c.id]?` <b class="kgift">🎁 ${kgTxt(KGIFT[c.id])}</b>`:""}</span></div>`:`<div class="c-fl">${esc(c.f)}</div>`}
+      ${karma?`<div class="k-glare"></div><div class="c-fl kfl"><s>${esc(c.f)}</s><span>↺ ${esc(KF[c.id]||"Le karma s'est retourné. En ta faveur, pour une fois.")}</span></div>`:`<div class="c-fl">${esc(c.f)}</div>`}
     </div></div></div>`;
 }
 function secretFoundHTML(c){
@@ -1524,9 +1522,9 @@ function showSummary(results){
   $("#againBtn").onclick=()=>{ opening=false; openBooster(); };
   $("#toAlbum").onclick=()=>{ closeStage(); location.hash="album"; };
   $("#closeSt").onclick=closeStage;
-  opening=false;
+  opening=false; flushPending();
 }
-function closeStage(){ $("#stage").classList.remove("on"); $("#stage").innerHTML=""; opening=false; renderAll(); setTimeout(()=>loadFeed(true),1200); }
+function closeStage(){ $("#stage").classList.remove("on"); $("#stage").innerHTML=""; opening=false; flushPending(); renderAll(); setTimeout(()=>loadFeed(true),1200); }
 
 /* =========================================================
    DÉTAIL D'UNE CARTE (inclinaison 3D)
@@ -1549,8 +1547,8 @@ function showDetail(id,forceHolo,otherColl,otherName,view){
     ${tabs}
     <div class="dmeta">${LIGNES[c.l].ic} Ligne ${c.l} · ${LIGNES[c.l].n}<br>
     <b style="color:${RAR[c.r].c}">${RAR[c.r].n}</b> · ${otherName?esc(otherName)+" la possède":"Possédée"} ×${e?e.n:0}${e&&+e.g?` (dont ${+e.g} reçue${+e.g>1?"s":""})`:""}${e&&e.x?` · retards mystère : ${fmtDelay(+e.x)}`:""}${vers}${kline}<div id="ownPct" style="margin-top:6px;font-size:13px"></div></div>
-    ${!otherColl&&e&&(spareOf(e,id)>=1||(+e.h||0)>=3)?`<div class="row" style="margin-top:14px;gap:8px;justify-content:center">${session&&spareOf(e,id)>=1?`<button class="btn2 amber" id="giftBtn">🎁 Offrir</button><button class="btn2 amber" id="tradeBtn">🔁 Échanger</button>`:""}${(+e.h||0)>=3?`<button class="btn2" id="karDBtn" style="background:linear-gradient(180deg,#fff3b0,#e0a92b);color:#3a2400;border:0">✨ Surclasser en Karma</button>`:""}${spareOf(e,id)>=1?`<button class="btn2 amber" id="recDBtn">🔧 Recycler</button>`:""}</div>`:""}
-    ${!otherColl&&session&&e&&spareOf(e,id)<1?`<div class="muted" style="margin-top:12px;font-size:13px">${e.n>=2?"Seuls les exemplaires classiques en double peuvent être offerts ou échangés.":"Tu pourras l'offrir ou l'échanger quand tu l'auras en double."}</div>`:""}`;
+    ${!otherColl&&e&&(spareOf(e,id)>=1||(+e.h||0)>=3||myKarmaCodes(id).length)?`<div class="row" style="margin-top:14px;gap:8px;justify-content:center;flex-wrap:wrap">${session&&(spareOf(e,id)>=1||myKarmaCodes(id).length)?`<button class="btn2 amber" id="giftBtn">🎁 Offrir</button><button class="btn2 amber" id="tradeBtn">🔁 Échanger</button>`:""}${(+e.h||0)>=3?`<button class="btn2" id="karDBtn" style="background:linear-gradient(180deg,#fff3b0,#e0a92b);color:#3a2400;border:0">✨ Surclasser en Karma</button>`:""}${spareOf(e,id)>=1?`<button class="btn2 amber" id="recDBtn">🔧 Recycler</button>`:""}</div>`:""}
+    ${!otherColl&&session&&e&&spareOf(e,id)<1&&!myKarmaCodes(id).length?`<div class="muted" style="margin-top:12px;font-size:13px">${(+e.k||0)>0?"Une carte Karma peut s'offrir ou s'échanger (avec son numéro) dès que tu as un autre exemplaire de cette carte.":e.n>=2?"Seuls les exemplaires classiques en double (et les Karma) peuvent être offerts ou échangés.":"Tu pourras l'offrir ou l'échanger quand tu l'auras en double."}</div>`:""}`;
   ov.querySelectorAll(".vtabs button").forEach(b=>b.onclick=ev=>{ ev.stopPropagation(); showDetail(id,false,otherColl,otherName,b.dataset.v); });
   ov.classList.add("on");
   fillOwnPct(id);
@@ -1843,6 +1841,7 @@ function showSecretHint(c){
 }
 function unlockSecret(key){
   const c=SECRETS.find(x=>x.sec===key); if(!c||!state||state.coll[c.id]) return;
+  if(opening){ if(!secPending.includes(key)) secPending.push(key); return; }
   state.coll[c.id]={n:1,o:1,holo:false,t:Date.now()}; markNew(c.id);
   state.stats.secrets=(state.stats.secrets||0)+1;
   save(); renderAll();
@@ -1867,7 +1866,7 @@ function renderAlbum(){
     .map(([k,n])=>`<button data-tab="${k}" class="${albumTab===k?"on":""}">${n}</button>`).join("");
   $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{ albumTab=b.dataset.tab; renderAlbum(); });
   const nNew=newShown();
-  const F=[["all","Toutes"],["miss","🔒 Manquantes"],["dup","×2 Doublons"],["new",`✨ Nouvelles${nNew?" ("+nNew+")":""}`]];
+  const F=[["all","Toutes"],["miss","🔒 Manquantes"],["dup","×2 Doublons"],["new",`🆕 Nouvelles${nNew?" ("+nNew+")":""}`]];
   const RF=[["","Toutes raretés"],...RORDER.map(r=>[r,RAR[r].n])];
   $("#filt").innerHTML=F.map(([k,n])=>`<button data-f="${k}" class="${albumFilter===k?"on":""}">${n}</button>`).join("")
     +`<select id="rarSel" class="rarsel${albumRar?" on":""}">${RF.map(([k,n])=>`<option value="${k}"${albumRar===k?" selected":""}>${k?n:"✦ Rareté"}</option>`).join("")}</select>`;
@@ -2218,7 +2217,7 @@ function lbTable(list,valFn,subFn){
   return `<table class="lb">${shown.map(([v,i],k)=>{
     const gap=k>0&&i-shown[k-1][1]>1?`<tr class="lbgap"><td colspan="3">⋯ ${i-shown[k-1][1]-1} joueur${i-shown[k-1][1]-1>1?"s":""} ⋯</td></tr>`:"";
     const mine=me&&String(v.pseudo).toLowerCase()===me, hasC=v.coll&&typeof v.coll==="object", sub=subFn(v);
-    return gap+`<tr data-p="${esc(String(v.pseudo))}"${mine?' style="background:#ffb00014"':""}${hasC?' class="lbrow"':""}><td>${medals[i]||(i+1)}</td><td>${esc(String(v.pseudo).slice(0,20))}${mine?' <span class="muted">(toi)</span>':""}${v.mythic?` <span title="Légendaires & mythiques">✨${+v.mythic}</span>`:""}${v.title&&ACHBY[v.title]?`<div style="font-size:12px;color:var(--amber)">${ACHBY[v.title].ic} ${esc(ACHBY[v.title].n)}</div>`:""}${sub?`<div class="muted mono" style="font-size:12px;margin-top:2px">${sub}</div>`:""}</td><td class="n" style="white-space:nowrap">${valFn(v)}${hasC?' <span style="color:var(--mute)">›</span>':""}</td></tr>`;}).join("")}</table>`;
+    return gap+`<tr data-p="${esc(String(v.pseudo))}"${mine?' style="background:#ffb00014"':""}${hasC?' class="lbrow"':""}><td>${medals[i]||(i+1)}</td><td>${esc(String(v.pseudo).slice(0,20))}${mine?' <span class="muted">(toi)</span>':""}${v.mythic?` <span title="Légendaires & mythiques">👑${+v.mythic}</span>`:""}${v.title&&ACHBY[v.title]?`<div style="font-size:12px;color:var(--amber)">${ACHBY[v.title].ic} ${esc(ACHBY[v.title].n)}</div>`:""}${sub?`<div class="muted mono" style="font-size:12px;margin-top:2px">${sub}</div>`:""}</td><td class="n" style="white-space:nowrap">${valFn(v)}${hasC?' <span style="color:var(--mute)">›</span>':""}</td></tr>`;}).join("")}</table>`;
 }
 function gareStats(v){
   const g=v.gare&&typeof v.gare==="object"?v.gare:null; if(!g) return null;
@@ -2359,38 +2358,48 @@ async function loadFeed(force){
 /* ================= ÉCHANGES (jusqu'à 3 cartes de chaque côté) ================= */
 let tradeSent=[];
 const TMAX=3;
+/* Codes d'échange : n > 0 = un exemplaire classique de la carte n ; n < 0 = la carte Karma numérotée -(id*10000+numéro) */
+const KC=10000;
+const cidOf=k=>k<0?Math.floor(-k/KC):k, serOf=k=>k<0?(-k)%KC:0, kcode=(id,sn)=>-(id*KC+sn);
+const codeCard=k=>cardHTML(BYID[cidOf(k)],{karma:k<0,serial:k<0?serOf(k):null});
+function karmaCodesOf(coll){ const out=[]; for(const [id,e] of Object.entries(coll||{})){ if(!BYID[id]||!e||(+e.n||0)<2) continue; for(const sn of (e.ks||[])) out.push(kcode(+id,+sn)); } return out; }
+const myKarmaCodes=id=>karmaCodesOf(id?{[id]:state.coll[id]}:state.coll);
+function codeOk(k){ if(k>0) return spare(k)>=1; const e=state.coll[cidOf(k)]; return !!(e&&(+e.n||0)>=2&&(e.ks||[]).map(Number).includes(serOf(k))); }
+function takeCode(k){ const id=cidOf(k), e=state.coll[id]; if(!e) return; e.n--; e.t=Date.now(); if(k<0){ e.k=Math.max(0,(+e.k||0)-1); e.ks=(e.ks||[]).map(Number).filter(x=>x!==serOf(k)); } if(+e.g&&e.g>e.n) e.g=e.n; vn(e,id); }
+function addCode(k,asGift){ if(k>0) return addCard(k,asGift); const id=cidOf(k); addCard(id,asGift); const e=state.coll[id]; e.k=(+e.k||0)+1; e.ks=[...(e.ks||[]).map(Number),serOf(k)]; vn(e,id); markNew(id); }
 const myDups=()=>CARDS.filter(c=>spare(c.id)>=1).map(c=>c.id);
-async function showTrade(id){
+async function showTrade(id,code){
   if(!session) return toast("Connecte-toi pour échanger");
+  const first=code||(spare(id)>=1?id:(myKarmaCodes(id)[0]||id));
   try{ const fr=await rpc("kt_leaderboard",{}); if(fr) lbRows=fr; }catch(e){ return toast(errMsg(e)); }
   const me=session.pseudo.toLowerCase();
   const others=lbRows.filter(v=>String(v.pseudo).toLowerCase()!==me).map(v=>{
     const coll=v.coll||{};
-    const miss=k=>!(state.coll[k]&&state.coll[k].n>0);
-    const offer=Object.entries(coll).filter(([k,e])=>BYID[k]&&e&&spareOf(e,k)>=1).map(([k])=>+k).sort((x,y)=>(miss(y)-miss(x))||(x-y));
+    const miss=k=>!(state.coll[cidOf(k)]&&state.coll[cidOf(k)].n>0);
+    const offer=[...karmaCodesOf(coll),...Object.entries(coll).filter(([k,e])=>BYID[k]&&e&&spareOf(e,k)>=1).map(([k])=>+k).sort((x,y)=>(miss(y)-miss(x))||(x-y))];
     const nmiss=offer.filter(miss).length;
     const lacks=!(coll[id]&&coll[id].n>0);
     return {pseudo:String(v.pseudo),coll,offer,lacks,nmiss};
   }).filter(o=>o.offer.length).sort((a,b)=>(b.lacks-a.lacks)||(b.nmiss-a.nmiss)||(b.offer.length-a.offer.length));
   modal(`<h3>🔁 Échanger des cartes</h3>
-    <div style="width:38%;margin:0 auto 8px">${cardHTML(BYID[id],{})}</div>
-    <p class="muted" style="margin:0 0 12px;font-size:14px;text-align:center">Tu proposes « ${esc(BYID[id].t)} ». Avec qui ?</p>
+    <div style="width:38%;margin:0 auto 8px">${codeCard(first)}</div>
+    <p class="muted" style="margin:0 0 12px;font-size:14px;text-align:center">Tu proposes « ${esc(BYID[id].t)} »${first<0?` en version <b style="color:#ffd75e">✨ Karma n°${serOf(first)}</b>`:""}. Avec qui ?</p>
     ${others.length?others.map((o,i)=>`<button class="tplayer" data-i="${i}"><span><b>${esc(o.pseudo.slice(0,20))}</b><small>${o.offer.length} doublon${o.offer.length>1?"s":""}${o.nmiss?` · ${o.nmiss} qui te manque${o.nmiss>1?"nt":""}`:""}</small></span>${o.lacks?'<span class="tag">✨ n\'a pas ta carte</span>':""}</button>`).join(""):'<p class="muted">Personne n\'a de doublon qui te manque pour l\'instant.</p>'}
     <button class="btn2" style="width:100%;margin-top:6px" id="tNo">Annuler</button>`, m=>{
       m.querySelector("#tNo").onclick=closeModal;
-      m.querySelectorAll(".tplayer").forEach(b=>b.onclick=()=>{ SFX.tap(); tradePickWant({first:id,o:others[+b.dataset.i],want:[],give:[id]}); });
+      m.querySelectorAll(".tplayer").forEach(b=>b.onclick=()=>{ SFX.tap(); tradePickWant({first:id,code:first,o:others[+b.dataset.i],want:[],give:[first]}); });
   });
 }
 function pickGrid(ids,sel,mark){
-  return `<div class="tgrid">${ids.map(k=>`<div class="slot${sel.includes(k)?" sel":""}" data-id="${k}">${sel.includes(k)?'<div class="cnt tick">✓</div>':""}${mark&&mark(k)?'<div class="cnt" style="left:4px;right:auto;background:#3ddc84;color:#04220f">✨</div>':""}${cardHTML(BYID[k],{})}</div>`).join("")}</div>`;
+  return `<div class="tgrid">${ids.map(k=>`<div class="slot${sel.includes(k)?" sel":""}" data-id="${k}">${sel.includes(k)?'<div class="cnt tick">✓</div>':""}${mark&&mark(k)?'<div class="cnt" style="left:4px;right:auto;background:#3ddc84;color:#04220f">🆕</div>':""}${codeCard(k)}</div>`).join("")}</div>`;
 }
 function tradePickWant(T){
   modal(`<h3>🔁 Tu reçois…</h3>
-    <p class="muted" style="margin:0;font-size:14px">Choisis jusqu'à ${TMAX} doublons de <b style="color:var(--txt)">${esc(T.o.pseudo.slice(0,20))}</b>. ✨ = tu ne l'as pas encore. Les autres sont parfaites pour l'Atelier !</p>
-    ${pickGrid(T.o.offer,T.want,k=>!(state.coll[k]&&state.coll[k].n>0))}
+    <p class="muted" style="margin:0;font-size:14px">Choisis jusqu'à ${TMAX} cartes de <b style="color:var(--txt)">${esc(T.o.pseudo.slice(0,20))}</b>, y compris ses <b style="color:#ffd75e">✨ Karma</b>. 🆕 = tu ne l'as pas encore.</p>
+    ${pickGrid(T.o.offer,T.want,k=>!(state.coll[cidOf(k)]&&state.coll[cidOf(k)].n>0))}
     <button class="bigbtn" id="tNext" ${T.want.length?"":"disabled"}>Suivant (${T.want.length}/${TMAX}) →</button>
     <button class="btn2" style="width:100%;margin-top:10px" id="tBack">← Changer de joueur</button>`, m=>{
-      m.querySelector("#tBack").onclick=()=>showTrade(T.first);
+      m.querySelector("#tBack").onclick=()=>showTrade(T.first,T.code);
       m.querySelector("#tNext").onclick=()=>tradePickGive(T);
       m.querySelectorAll(".tgrid .slot").forEach(s=>s.onclick=()=>{ const k=+s.dataset.id, i=T.want.indexOf(k);
         if(i>=0) T.want.splice(i,1); else if(T.want.length<TMAX) T.want.push(k); else return toast(`${TMAX} cartes maximum`);
@@ -2398,11 +2407,12 @@ function tradePickWant(T){
   });
 }
 function tradePickGive(T){
-  const mine=myDups(); T.give=T.give.filter(k=>mine.includes(k));
-  const lacks=k=>!(T.o.coll[k]&&T.o.coll[k].n>0);
-  mine.sort((a,b)=>(lacks(b)-lacks(a))||(a-b));
+  const mine=[...myDups(),...myKarmaCodes()]; T.give=T.give.filter(k=>mine.includes(k));
+  const lacks=k=>!(T.o.coll[cidOf(k)]&&T.o.coll[cidOf(k)].n>0);
+  const val=k=>(k<0?100:0)+RAR[BYID[cidOf(k)].r].lvl;
+  mine.sort((a,b)=>(val(a)-val(b))||(lacks(b)-lacks(a))||(cidOf(a)-cidOf(b)));
   modal(`<h3>🔁 …et tu donnes</h3>
-    <p class="muted" style="margin:0;font-size:14px">Choisis jusqu'à ${TMAX} de tes doublons. ✨ = ${esc(T.o.pseudo.slice(0,20))} ne l'a pas encore.</p>
+    <p class="muted" style="margin:0;font-size:14px">Choisis jusqu'à ${TMAX} de tes doublons ou de tes <b style="color:#ffd75e">✨ Karma</b>. 🆕 = ${esc(T.o.pseudo.slice(0,20))} ne l'a pas encore.</p>
     ${pickGrid(mine,T.give,lacks)}
     <button class="bigbtn" id="tNext" ${T.give.length?"":"disabled"}>Voir l'échange (${T.give.length}/${TMAX}) →</button>
     <button class="btn2" style="width:100%;margin-top:10px" id="tBack">← Retour</button>`, m=>{
@@ -2415,10 +2425,10 @@ function tradePickGive(T){
 }
 function sideHTML(ids,lbl,badge){
   const one=ids.length===1;
-  return `<div><div class="lbl">${lbl}</div><div class="sidegrid${one?" one":""}">${ids.map(k=>`<div>${cardHTML(BYID[k],{})}${badge?badge(k):""}</div>`).join("")}</div></div>`;
+  return `<div><div class="lbl">${lbl}</div><div class="sidegrid${one?" one":""}">${ids.map(k=>`<div>${codeCard(k)}${badge?badge(k):""}</div>`).join("")}</div></div>`;
 }
-const ownBadge=k=>{ const e=state.coll[k]; return e&&e.n>0?`<div class="ownb have">Déjà ×${e.n}</div>`:`<div class="ownb new">✨ Nouvelle</div>`; };
-const leftBadge=k=>{ const e=state.coll[k]; const n=e?e.n:0; return `<div class="ownb keep">${n>=2?`Il t'en restera ${n-1}`:"Plus en double"}</div>`; };
+const ownBadge=k=>{ const e=state.coll[cidOf(k)]; return k<0?`<div class="ownb new" style="background:#e0a92b;color:#3a2400">✨ Karma n°${serOf(k)}</div>`:e&&e.n>0?`<div class="ownb have">Déjà ×${e.n}</div>`:`<div class="ownb new">🆕 Nouvelle</div>`; };
+const leftBadge=k=>{ const e=state.coll[cidOf(k)]; const n=e?e.n:0; return `<div class="ownb keep">${n>=2?`Il t'en restera ${n-1}`:"Plus en double"}</div>`; };
 function swapHTML(give,get,lg,lr,plain){
   return `<div class="swap">${sideHTML(give,lg,plain?null:leftBadge)}<div class="arr">⇄</div>${sideHTML(get,lr,plain?null:ownBadge)}</div>`;
 }
@@ -2432,12 +2442,12 @@ function tradeConfirm(T){
       const G=m.querySelector("#tGo"), E=m.querySelector("#tE");
       m.querySelector("#tBack").onclick=()=>tradePickGive(T);
       G.onclick=async()=>{
-        if(T.give.some(k=>spare(k)<1)){ E.textContent="Tu dois garder au moins un exemplaire de chaque carte."; return; }
+        if(T.give.some(k=>!codeOk(k))){ E.textContent="Tu dois garder au moins un exemplaire de chaque carte."; return; }
         G.disabled=true; G.textContent="Envoi…";
         try{
           await pushNow();
           await rpc("kt_trade_propose",{p_token:session.token,p_to:T.o.pseudo,p_give:T.give,p_want:T.want});
-          for(const k of T.give){ const e=state.coll[k]; e.n--; e.t=Date.now(); if(+e.g&&e.g>e.n) e.g=e.n; }
+          T.give.forEach(takeCode);
           save(); renderAll(); closeModal(); SFX.coin(); toast(`🔁 Proposition envoyée à ${T.o.pseudo} !`); loadTrades();
         }catch(err){
           const msg=String(err.message);
@@ -2452,7 +2462,7 @@ function addCard(id,asGift){
   if(!e){ state.coll[id]={n:1,o:0,g:asGift?1:0,holo:false,t:Date.now()}; markNew(id); }
   else { if(e.o==null) e.o=Math.max((+e.n||0)-(+e.g||0),0); e.n++; e.t=Date.now(); if(asGift) e.g=(+e.g||0)+1; }
 }
-const arr=x=>(Array.isArray(x)?x:[x]).map(Number).filter(k=>BYID[k]);
+const arr=x=>(Array.isArray(x)?x:[x]).map(Number).filter(k=>BYID[cidOf(k)]);
 async function loadTrades(){
   if(!session||!online()) return [];
   let rows=[]; try{ rows=await rpc("kt_trade_inbox",{p_token:session.token})||[]; }catch(e){ return []; }
@@ -2461,7 +2471,7 @@ async function loadTrades(){
   renderTrades();
   return rows;
 }
-const minis=ids=>ids.map(k=>`<div class="tm">${cardHTML(BYID[k],{})}</div>`).join("");
+const minis=ids=>ids.map(k=>`<div class="tm">${codeCard(k)}</div>`).join("");
 function renderTrades(){
   const box=$("#tradeBox"); if(!box) return;
   if(!session||!tradeSent.length){ box.innerHTML=""; box.style.display="none"; return; }
@@ -2469,7 +2479,7 @@ function renderTrades(){
   box.innerHTML=`<h3 style="margin:0 0 8px">🔁 Mes échanges en attente</h3><div class="muted" style="font-size:12.5px;margin:-4px 0 8px">Tes cartes proposées sont mises de côté jusqu'à la réponse. Tu peux annuler à tout moment.</div>${tradeSent.map(r=>`<div class="tsent"><div class="tml">${minis(r.o_give)}</div><div>⇄</div><div class="tml">${minis(r.o_want)}</div><div>avec <b>${esc(String(r.o_who).slice(0,20))}</b><div class="muted">en attente</div></div><button class="btn2" data-x="${r.o_id}" style="padding:6px 10px;font-size:13px">Annuler</button></div>`).join("")}`;
   box.querySelectorAll("[data-x]").forEach(b=>b.onclick=async()=>{
     b.disabled=true;
-    try{ const g=arr(await rpc("kt_trade_cancel",{p_token:session.token,p_id:+b.dataset.x})||[]); g.forEach(k=>addCard(k,false)); state.stats.cancels=(+state.stats.cancels||0)+1; if(state.stats.cancels>=3) setTimeout(()=>unlockSecret("boomerang"),1500); save(); renderAll(); toast(g.length>1?"Proposition annulée, tes cartes sont revenues.":"Proposition annulée, ta carte est revenue."); }
+    try{ const g=arr(await rpc("kt_trade_cancel",{p_token:session.token,p_id:+b.dataset.x})||[]); g.forEach(k=>addCode(k,false)); state.stats.cancels=(+state.stats.cancels||0)+1; if(state.stats.cancels>=3) setTimeout(()=>unlockSecret("boomerang"),1500); save(); renderAll(); toast(g.length>1?"Proposition annulée, tes cartes sont revenues.":"Proposition annulée, ta carte est revenue."); }
     catch(e){ toast(errMsg(e)); }
     loadTrades();
   });
@@ -2479,7 +2489,7 @@ async function checkTrades(){
   const done=rows.filter(r=>r.o_kind==="accepted"||r.o_kind==="refused");
   const offers=rows.filter(r=>r.o_kind==="offer");
   if(done.length){
-    for(const r of done){ if(r.o_kind==="accepted"){ r.o_want.forEach(k=>addCard(k,true)); state.stats.traded=(state.stats.traded||0)+1; } else r.o_give.forEach(k=>addCard(k,false)); }
+    for(const r of done){ if(r.o_kind==="accepted"){ r.o_want.forEach(k=>addCode(k,true)); state.stats.traded=(state.stats.traded||0)+1; } else r.o_give.forEach(k=>addCode(k,false)); }
     save(); renderAll(); setTimeout(()=>checkAch(),2500);
   }
   const queue=[...done.map(r=>({t:"done",r})),...offers.map(r=>({t:"offer",r}))];
@@ -2489,13 +2499,13 @@ async function checkTrades(){
 function showTradeDone(r,next){
   const ok=r.o_kind==="accepted", pl=r.o_give.length>1;
   modal(`<h3>${ok?"🔁 Échange accepté !":"🔁 Échange refusé"}</h3>
-    ${ok?swapHTML(r.o_give,r.o_want,"Tu as donné","Tu as reçu",true):`<div class="sidegrid${pl?"":" one"}" style="width:${pl?80:42}%;margin:0 auto 10px">${r.o_give.map(k=>`<div>${cardHTML(BYID[k],{})}</div>`).join("")}</div>`}
+    ${ok?swapHTML(r.o_give,r.o_want,"Tu as donné","Tu as reçu",true):`<div class="sidegrid${pl?"":" one"}" style="width:${pl?80:42}%;margin:0 auto 10px">${r.o_give.map(k=>`<div>${codeCard(k)}</div>`).join("")}</div>`}
     <p class="muted" style="font-size:14px;margin:0 0 12px">${ok?`<b style="color:var(--txt)">${esc(String(r.o_who).slice(0,20))}</b> a accepté. Les cartes reçues complètent ton album, sans ajouter de retard.`:`<b style="color:var(--txt)">${esc(String(r.o_who).slice(0,20))}</b> a refusé. ${pl?"Tes cartes sont revenues":"Ta carte est revenue"} dans ton album.`}</p>
     <button class="bigbtn" id="tOk">${ok?"Génial !":"Tant pis"}</button>`, m=>{ m.querySelector("#tOk").onclick=()=>{ closeModal(); setTimeout(next,250); }; });
   if(ok){ SFX.reveal(3); const r0=document.querySelector("#modal .modal"); if(r0){ const rr=r0.getBoundingClientRect(); burst(rr.left+rr.width/2,rr.top+80,["#ffb000","#3ddc84","#4da3ff","#fff"],70,9); } }
 }
 function showTradeOffer(r,next){
-  const has=r.o_want.every(k=>spare(k)>=1);
+  const has=r.o_want.every(codeOk);
   modal(`<h3>🔁 Proposition d'échange</h3>
     <p class="muted" style="margin:0;font-size:14px"><b style="color:var(--txt)">${esc(String(r.o_who).slice(0,20))}</b> te propose :</p>
     ${swapHTML(r.o_want,r.o_give,"Tu donnes","Tu reçois")}
@@ -2510,7 +2520,7 @@ function showTradeOffer(r,next){
         try{
           if(ok) await pushNow();
           await rpc("kt_trade_answer",{p_token:session.token,p_id:r.o_id,p_accept:ok});
-          if(ok){ for(const k of r.o_want){ const e=state.coll[k]; e.n--; e.t=Date.now(); if(+e.g&&e.g>e.n) e.g=e.n; } r.o_give.forEach(k=>addCard(k,true)); state.stats.traded=(state.stats.traded||0)+1; save(); renderAll(); SFX.coin(); toast("🔁 Échange réussi !"); setTimeout(()=>checkAch(),2000); }
+          if(ok){ r.o_want.forEach(takeCode); r.o_give.forEach(k=>addCode(k,true)); state.stats.traded=(state.stats.traded||0)+1; save(); renderAll(); SFX.coin(); toast("🔁 Échange réussi !"); setTimeout(()=>checkAch(),2000); }
           else { state.stats.refused=(state.stats.refused||0)+1; save(); toast("Proposition refusée."); setTimeout(()=>checkAch(),1200); }
           closeModal(); feedLoaded=0; setTimeout(next,250);
         }catch(err){
@@ -2574,7 +2584,7 @@ async function doRecycle(id,k){
   if(!e) return showAtelier();
   if(k==="karma"){
     if((+e.h||0)<3) return showAtelier();
-    e.h-=3; e.k=(+e.k||0)+1; e.kq=(+e.kq||0)+1; e.kdev=DEV; e.n-=2; e.t=Date.now(); vn(e,id);
+    e.h-=3; e.k=(+e.k||0)+1; e.kq=(+e.kq||0)+1; e.kdev=DEV; e.n-=2; if(+e.g) e.g=Math.max(0,e.g-2); e.t=Date.now(); vn(e,id);
     if(+e.g&&e.g>e.n) e.g=e.n;
     state.stats.karma=(+state.stats.karma||0)+1; state.stats.karmaMade=(+state.stats.karmaMade||0)+1;
     const kg=grantKarmaGift(id);
@@ -2721,8 +2731,10 @@ async function showDups(){
       });
   });
 }
-async function showGift(id){
+async function showGift(id,code){
   const c=BYID[id];
+  if(!code&&spare(id)<1) code=myKarmaCodes(id)[0]||null;
+  const kOpts=myKarmaCodes(id);
   try{ const fr=await rpc("kt_leaderboard",{}); if(fr) lbRows=fr; }catch(e){}
   const me=session.pseudo.toLowerCase();
   const others=lbRows.filter(v=>String(v.pseudo).toLowerCase()!==me);
@@ -2730,8 +2742,9 @@ async function showGift(id){
   const need=others.filter(lacks).map(v=>String(v.pseudo)), has=others.filter(v=>!lacks(v)).map(v=>String(v.pseudo));
   const btns=(arr,cls)=>arr.map(p=>`<button data-p="${esc(p)}" class="${cls}">${esc(p)}</button>`).join("");
   modal(`<h3>🎁 Offrir une carte</h3>
-    <div style="width:46%;margin:0 auto 10px">${cardHTML(c,{})}</div>
-    <p class="muted" style="margin:0;font-size:14px">Tu offres <b>1 exemplaire</b> de « ${esc(c.t)} ». La carte complète l'album de ton ami·e, mais n'ajoute pas de retard à son compteur.</p>
+    <div style="width:46%;margin:0 auto 10px">${code?codeCard(code):cardHTML(c,{})}</div>
+    ${kOpts.length&&(spare(id)>=1||kOpts.length>1)?`<div class="vtabs" style="margin-top:0">${spare(id)>=1?`<button data-g="0" class="${code?"":"on"}">Classique</button>`:""}${kOpts.map(k=>`<button data-g="${k}" class="${code===k?"on":""}">✨ Karma n°${serOf(k)}</button>`).join("")}</div>`:""}
+    <p class="muted" style="margin:0;font-size:14px">Tu offres <b>${code?`ta carte ✨ Karma n°${serOf(code)}`:"1 exemplaire"}</b> de « ${esc(c.t)} ». La carte complète l'album de ton ami·e, mais n'ajoute pas de retard à son compteur.</p>
     <div style="margin-top:12px"><b>À qui ?</b></div>
     ${!others.length?'<div class="plist"><span class="muted">Aucun autre joueur pour l\'instant.</span></div>':`
     <div class="muted" style="font-size:13px;margin-top:6px">✨ Ne l'ont pas encore (${need.length})</div>
@@ -2744,15 +2757,17 @@ async function showGift(id){
       const T=m.querySelector("#gTo"), E=m.querySelector("#gE"), G=m.querySelector("#gGo");
       m.querySelectorAll(".plist button").forEach(b=>b.onclick=()=>{ m.querySelectorAll(".plist button").forEach(x=>x.classList.remove("on")); b.classList.add("on"); T.value=b.dataset.p; });
       m.querySelector("#gNo").onclick=closeModal;
+      m.querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>showGift(id,+b.dataset.g||null));
       G.onclick=async()=>{
         const to=T.value.trim(); E.textContent="";
         if(!to){ E.textContent="Choisis à qui offrir la carte."; return; }
-        if(spare(id)<1){ E.textContent="Tu dois garder au moins un exemplaire (et seuls les classiques s'offrent)."; return; }
+        if(code?!codeOk(code):spare(id)<1){ E.textContent="Tu dois garder au moins un exemplaire de cette carte."; return; }
         G.disabled=true; G.textContent="Envoi…";
         try{
           await pushNow();
-          await rpc("kt_gift",{p_token:session.token,p_to:to,p_card:id});
-          const e=state.coll[id]; e.n--; e.t=Date.now(); if(+e.g&&e.g>e.n) e.g=e.n; state.stats.given=(state.stats.given||0)+1;
+          if(code){ await rpc("kt_kgift_send",{p_token:session.token,p_to:to,p_code:code}); takeCode(code); }
+          else { await rpc("kt_gift",{p_token:session.token,p_to:to,p_card:id}); const e=state.coll[id]; e.n--; e.t=Date.now(); if(+e.g&&e.g>e.n) e.g=e.n; }
+          state.stats.given=(state.stats.given||0)+1;
           if(timeChecked){ const dk=parisNow().key; state.giftDay=state.giftDay&&state.giftDay.d===dk?state.giftDay:{d:dk,n:0}; state.giftDay.n++; if(state.giftDay.n>=5) setTimeout(()=>unlockSecret("perenoel"),1500); }
           save(); renderAll(); closeModal(); SFX.coin(); toast(`🎁 « ${c.t} » offerte à ${to} !`); feedLoaded=0;
         }catch(err){
@@ -2764,9 +2779,20 @@ async function showGift(id){
   });
 }
 let inboxBusy=false;
+async function checkKarmaGifts(){
+  let rows=[]; try{ rows=(await rpc("kt_kgift_inbox",{p_token:session.token}))||[]; }catch(e){ return; }
+  rows=rows.filter(r=>BYID[cidOf(+r.o_code)]&&+r.o_code<0); if(!rows.length) return;
+  rows.forEach(r=>addCode(+r.o_code,true)); save(); renderAll(); SFX.karma();
+  modal(`<h3>✨ Tu as reçu ${rows.length>1?rows.length+" cartes Karma":"une carte Karma"} !</h3>
+    ${rows.map(r=>`<div class="muted" style="margin:6px 0 4px"><b style="color:var(--txt)">${esc(String(r.o_from).slice(0,20))}</b> t'a offert :</div><div style="width:55%;margin:0 auto 10px">${codeCard(+r.o_code)}</div>`).join("")}
+    <p class="muted" style="font-size:13px">Elle garde son numéro d'origine. Quel cadeau précieux !</p>
+    <button class="bigbtn" id="kgOk">Merci ✨</button>`, m=>{ m.querySelector("#kgOk").onclick=closeModal; });
+  setTimeout(()=>checkAch(),2500);
+}
 async function checkInbox(){
   if(!session||!state||!online()||inboxBusy) return;
   if(Object.values(state.coll).some(e=>e&&+e.kq>0)) claimKarma();
+  if(!$("#modal").classList.contains("on")) checkKarmaGifts();
   inboxBusy=true;
   try{
     const rows=await rpc("kt_inbox",{p_token:session.token});
@@ -2880,8 +2906,11 @@ const ACH=[
 const ACH_ALL=ACH;
 const ACHBY=Object.fromEntries(ACH.map(a=>[a.id,a]));
 let achQueue=[], achShowing=false;
+let achPending=false, secPending=[];
+function flushPending(){ if(opening) return; if(achPending){ achPending=false; setTimeout(()=>checkAch(),700); } const q=secPending; secPending=[]; q.forEach((k,i)=>setTimeout(()=>unlockSecret(k),1500+i*400)); }
 function checkAch(silent){
   if(!state) return;
+  if(opening&&!silent){ achPending=true; return; }
   state.ach=state.ach||{};
   const fresh=[];
   for(const a of ACH){ if(state.ach[a.id]) continue; const [c,t]=a.v(); if(c>=t){ state.ach[a.id]=Date.now(); fresh.push(a); } }
